@@ -26,6 +26,7 @@
 			username-parameter : 기본값 username
 			password-parameter : 기본값 password
 		 -->
+		 <!-- 
 		<form-login 
 			login-page="/member/memberLogin.do" 
 			login-processing-url="/member/memberLogin.do"
@@ -35,9 +36,9 @@
 			password-parameter="password"
 			authentication-success-forward-url="/member/memberLoginSuccess.do"			
 			/>
-		
+		 -->
 		<!-- 이거 controller에 로그아웃 안만들어도 됨 -> 이 logoutUrl을 실행하면 로그아웃을 수행해줌. 성공시 success으로 날림 -->
-		<logout logout-url="/member/memberLogout.do" logout-success-url="/"/>		
+		<!-- <logout logout-url="/member/memberLogout.do" logout-success-url="/"/> -->		
 			<!-- 
 				Cross Site Request Forgery공격대비 설정.
 				- 사용자의 특정권한을 이용하여 공격자의 의도된 행동을 실행하게 만드는 공격방법
@@ -49,7 +50,7 @@
 		<remember-me data-source-ref="dataSource"	token-validity-seconds="1209600"/>
 		
 		<!-- 403 accessDenied.do가 뜨는 경우 -->
-		<access-denied-handler error-page="/error/accessDenied.do" />
+		<!--  <access-denied-handler error-page="/error/accessDenied.do" />  -->
 		
 	</http>
 	
@@ -59,6 +60,6 @@
 		</authentication-provider>
 	</authentication-manager>
 	
-	<context:component-scan base-package="com.kh.security"/>
+	<!--  <context:component-scan base-package="com.kh.security"/>  -->
 	
 </beans:beans>
