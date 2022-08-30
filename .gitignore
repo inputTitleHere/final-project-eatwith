@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,node,windows,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,node,windows,eclipse
 
+### Oracle DB Wallet ###
+db_wallet/
+
 ### Eclipse ###
 .metadata
 bin/
@@ -13,6 +16,27 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse m2e generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+
 
 # External tool builders
 .externalToolBuilders/
@@ -257,5 +281,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
 
 # End of https://www.toptal.com/developers/gitignore/api/java,node,windows,eclipse
