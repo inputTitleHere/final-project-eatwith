@@ -3,6 +3,7 @@
 
 ## db ##
 db_wallet/
+target/**
 
 pom.properties
 
