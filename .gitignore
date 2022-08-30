@@ -20,6 +20,8 @@ local.properties
 .loadpath
 .recommenders
 
+pom.properties
+MANIFEST.MF
 # External tool builders
 .externalToolBuilders/
 
@@ -305,3 +307,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,maven,python,windows
+
