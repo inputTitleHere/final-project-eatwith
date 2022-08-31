@@ -4,4 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.eatwith.member.model.dao.MemberDao">
   
+  <select id="selectOneMember" resultType="member">
+  	select
+  		*
+  	from
+  		member
+  	where
+  		id = #{id}
+  </select>
 </mapper>
