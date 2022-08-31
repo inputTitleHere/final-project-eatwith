@@ -49,7 +49,6 @@ public class MemberController {
 			log.error("회원 가입 오류 : "+e.getMessage(),e);
 			throw e;
 		}
-		
 		return "redirect:/";
 	}
 	
