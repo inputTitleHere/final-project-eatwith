@@ -4,6 +4,7 @@ import com.kh.eatwith.member.model.dto.Member;
 
 public interface MemberService {
 
-	Member selectOneMember(String id);
+	int insertMember(Member member);
 
+	Member selectOneMember(String id);
 }
