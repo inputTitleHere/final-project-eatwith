@@ -29,6 +29,7 @@ public class TestController {
 		log.debug("number = {}",numberResult);
 		result.put("number", numberResult);
 		return ResponseEntity.ok(result);
+		
 	}
 	
 }
