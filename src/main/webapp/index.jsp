@@ -9,17 +9,9 @@
 <body>
 
 <!-- 여기 위에 HEADER를 배치한다.-->
+<h1>임시 인덱스 페이지!!!</h1>
 
 <div id="content-root">
-  <div id="best-review-root">
-    <h2 class="div-header">BEST리뷰 TOP4</h2>
-  </div>
-
-
-
-
-
-
 
 </div>
 
