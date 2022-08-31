@@ -18,6 +18,8 @@
 	<http auto-config="true">
 		<!-- permitAll ,hasAnyRole(A,B,C), isAnonymous(), isAuthenticated(), hasRole(A) -->
 
+		<intercept-url pattern="/**" access="permitAll"/>
+		
 		<!-- 
 			login-page : 로그인 폼을 요청. 작성필요
 			login-processing-url : security로그인 처리. controller에 작성 불필요.(자동처리됨)
@@ -55,11 +57,12 @@
 	</http>
 	
 	<authentication-manager>
+		<!-- UserDetailsService 구현체. 같은 application-context에 등록된 빈이어야 함.(@service으로 등록)(implements UserDatailsService를 해야함.) -->
 		<authentication-provider user-service-ref="memberSecurityService">
 			<password-encoder ref="bcryptPasswordEncoder"/>
 		</authentication-provider>
 	</authentication-manager>
 	
-	<!--  <context:component-scan base-package="com.kh.security"/>  -->
+	<context:component-scan base-package="com.kh.eatwith.security"/>
 	
 </beans:beans>

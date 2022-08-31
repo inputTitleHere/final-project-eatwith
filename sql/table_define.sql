@@ -6,10 +6,12 @@ insert into tester_table values(20);
 commit;
 select * from tester_table;
 
+--select * from authority;
+
 -- 백승윤 START
 
 CREATE TABLE MEMBER (
-	no	number		NOT NULL,
+	no number		NOT NULL,
 	id	varchar2(30)		NOT NULL,
 	name	varchar2(30)		NOT NULL,
 	password	varchar2(300)		NOT NULL,
@@ -17,12 +19,18 @@ CREATE TABLE MEMBER (
 	phone	char(11)		NOT NULL,
 	enrolled_at	Date	DEFAULT sysdate	NOT NULL,
 	role	char(1)	DEFAULT 'U'	NOT NULL,
-	point	number	DEFAULT 0	NOT NULL,
+	point	number	DEFAULT 1000	NOT NULL,
 	age	number		NOT NULL,
 	gender	char(1)		NOT NULL,
   CONSTRAINT pk_member_no PRIMARY KEY(no)
 );
 select * from member;
+alter table member rename column age to born_at;
+alter table member add fav_region varchar2(2000);
+alter table member add fav_food_type varchar2(2000);
+alter table member add constraint ck_member_gender check(gender in ('M','F'));
+alter table member add constraint uq_member_name unique(name);
+alter table member add constraint uq_member_id unique(id);
 --alter table member add deleted_at date;
 
 COMMENT ON COLUMN MEMBER.no IS 'seq_member_no.nextval';
@@ -180,7 +188,7 @@ COMMENT ON COLUMN MEMBER_GATHER.gather_no IS 'seq_gather_no.nextval';
 CREATE TABLE AUTHORITY (
 	auth	varchar2(50)		NOT NULL,
 	no	number		NOT NULL,
-  constraint pk_authority_auth PRIMARY KEY(auth),
+  constraint pk_authority_auth PRIMARY KEY(no, auth),
   constraint fk_authority_no FOREIGN KEY(no) references MEMBER(no) on delete cascade
 );
 
