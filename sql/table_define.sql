@@ -283,6 +283,11 @@ create sequence seq_chat_log_no;
 -- 백승윤 END
 
 -- 박우석 START
+drop table enroll_count;
+drop table visitant_count;
+drop table notice;
+drop table restaurant;
+drop table quit_member;
 
 -- 박우석 END
 
