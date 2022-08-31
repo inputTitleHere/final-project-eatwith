@@ -252,6 +252,31 @@ CREATE TABLE CHAT_LOG (
 COMMENT ON COLUMN CHAT_LOG.no IS 'seq_chat_log_no';
 COMMENT ON COLUMN CHAT_LOG.user_no IS 'seq_member_no.nextval';
 
+create sequence test_seq;
+select test_seq.nextval from dual;
+select test_seq.currval from dual;
+
+-- member 시퀀스
+create sequence seq_member_no;
+select seq_member_no.currval from dual;
+-- gather 시퀀스
+create sequence seq_gather_no;
+
+-- notification 시퀀스
+create sequence seq_notification_no;
+
+-- review 시퀀스
+create sequence seq_review_no;
+
+-- review image 시퀀스
+create sequence seq_review_image_no;
+
+-- notice 시퀀스
+create sequence seq_notice_no;
+
+-- chat_log 시퀀스
+create sequence seq_chat_log_no;
+
 
 
 
