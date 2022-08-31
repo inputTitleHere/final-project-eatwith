@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src=""<%= request.getContextPath() %>/js/jquery-3.6.0.js"></script>
+    <script src=""<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>
     <title>리뷰 작성하기</title>
     <style>
 aside{
