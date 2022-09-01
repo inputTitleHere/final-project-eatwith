@@ -25,6 +25,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/style.css" />
 
 
+<c:if test="${not empty msg}">
+	<script>
+	alert("${msg}");
+	</script>	
+</c:if>
+
 </head>
 <body>
 
@@ -43,7 +49,7 @@
 				<!--로그인폼 -->
 				<!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 				<form:form
-					action="${pageContext.request.contextPath}/member/memberLogin.do"
+					action="${pageContext.request.contextPath}/member/memberLogin"
 					method="post">
 					<div class="modal-body">
 						<c:if test="${param.error != null}">
