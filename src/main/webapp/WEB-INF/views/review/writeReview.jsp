@@ -243,7 +243,7 @@ input[type=checkbox]{
         $("#counter").html(0);
         $("#max-counter").html(MAX_COUNTER);
 
-        $(ReviewContent).keyup((e)=>{
+        $(content).keyup((e)=>{
             const {target:{value}}=e;
             console.log(value);
             const len=value.length;
