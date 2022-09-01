@@ -25,6 +25,9 @@ CREATE TABLE MEMBER (
   CONSTRAINT pk_member_no PRIMARY KEY(no)
 );
 select * from member;
+select seq_member_no.currval from dual;
+select seq_member_no.nextval from dual;
+alter table member modify point number default 1000;
 alter table member rename column age to born_at;
 alter table member add fav_region varchar2(2000);
 alter table member add fav_food_type varchar2(2000);

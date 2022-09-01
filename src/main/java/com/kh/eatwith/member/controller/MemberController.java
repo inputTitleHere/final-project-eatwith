@@ -29,14 +29,13 @@ public class MemberController {
 	
 	@GetMapping("/memberEnroll")
 	public void memberEnroll() {
-		
+		// memberEnroll.jsp으로 보내자.
 	}
 	
 	@PostMapping("/memberEnroll")
 	public String memberEnroll(Member member) {
 		try {
 			log.debug("member = {} ",member);
-			
 			// 비번 암호화
 			String rawPwd = member.getPassword();
 			String encodePwd = bcpe.encode(rawPwd);
