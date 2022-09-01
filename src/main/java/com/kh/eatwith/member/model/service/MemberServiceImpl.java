@@ -17,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	MemberDao memberDao;
+	
 	@Autowired
 	MemberSecurityDao memberSecurityDao;
 	
@@ -28,4 +29,8 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
+	public Member selectOneMember(String id) {
+		return memberDao.selectOneMember(id);
+	}
 }
