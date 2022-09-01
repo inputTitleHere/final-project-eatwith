@@ -234,7 +234,7 @@ input[type=checkbox]{
                 </tbody>
             </table>
             <hr>
-            <div><input type="button" id="submitReview" value="리뷰 등록하기"></div>
+            <div><input type="submit" id="submitReview" value="리뷰 등록하기"></div>
         </form:form>
         </section>
     </div>
