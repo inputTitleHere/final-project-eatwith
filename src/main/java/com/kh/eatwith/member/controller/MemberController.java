@@ -3,6 +3,7 @@ package com.kh.eatwith.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberEnroll")
-	public String memberEnroll(Member member) {
+	public String memberEnroll(Member member, Model model) {
 		try {
 			log.debug("member = {} ",member);
 			// 비번 암호화
@@ -44,6 +45,7 @@ public class MemberController {
 			
 			int result = memberService.insertMember(member);
 			log.debug("회원가입에 성공했습니다. : {}",member);
+			model.addAttribute("member",member);
 		}catch(Exception e) {
 			log.error("회원 가입 오류 : "+e.getMessage(),e);
 			throw e;

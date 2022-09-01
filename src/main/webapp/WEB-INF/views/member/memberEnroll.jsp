@@ -10,11 +10,20 @@
 <head>
 <meta charset="UTF-8">
 <title>같이먹을래 - 회원가입</title>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
 </head>
 <body>
+<div id="react-practice"></div>
 <h1>임시 같이 먹을래 memberEnroll.jsp</h1>
 
+
+
+
 <form action="${pageContext.request.contextPath }/member/memberEnroll" method="POST">
+	<div id="form-root"></div>
 	<input type="text" name="id" placeholder="사용할 아이디를 입력해주세요" id="id"/>
 	
 	<br />
@@ -37,6 +46,9 @@
 	<br />
 	<button>가입하기</button>
 </form>
+
+	
+<script type="text/babel" src="/eatwith/resources/js/member/enroll/memberEnroll.js"></script>
 
 
 </body>
