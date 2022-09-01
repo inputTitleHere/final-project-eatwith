@@ -234,7 +234,7 @@ input[type=checkbox]{
                 </tbody>
             </table>
             <hr>
-            <div><input type="button" id="submitReview" value="리뷰 등록하기"></div>
+            <div><input type="submit" id="submitReview" value="리뷰 등록하기"></div>
         </form:form>
         </section>
     </div>
@@ -243,7 +243,7 @@ input[type=checkbox]{
         $("#counter").html(0);
         $("#max-counter").html(MAX_COUNTER);
 
-        $(ReviewContent).keyup((e)=>{
+        $(content).keyup((e)=>{
             const {target:{value}}=e;
             console.log(value);
             const len=value.length;
