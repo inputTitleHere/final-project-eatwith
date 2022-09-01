@@ -6,4 +6,5 @@ public interface MemberService {
 
 	int insertMember(Member member);
 
+	Member selectOneMember(String id);
 }

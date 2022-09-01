@@ -10,4 +10,6 @@ public interface MemberDao {
 	// mapper.xml에 배치
 	int insertMember(Member member);
 
+	Member selectOneMember(String id);
+
 }

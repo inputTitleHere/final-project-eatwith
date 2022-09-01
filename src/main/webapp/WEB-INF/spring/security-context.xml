@@ -17,7 +17,7 @@
 	<!-- intercept url은 구체적인 것 => 일반적인 설정 순으로 작동한다. -->
 	<http auto-config="true">
 		<!-- permitAll ,hasAnyRole(A,B,C), isAnonymous(), isAuthenticated(), hasRole(A) -->
-
+		
 		<intercept-url pattern="/**" access="permitAll"/>
 		
 		<!-- 
