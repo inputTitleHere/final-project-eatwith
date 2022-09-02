@@ -12,8 +12,8 @@ select * from tester_table;
 
 CREATE TABLE MEMBER (
 	no number		NOT NULL,
-	id	varchar2(30)		NOT NULL,
-	name	varchar2(30)		NOT NULL,
+	id	varchar2(30)		NOT NULL, -- 300으로 확장
+	name	varchar2(30)		NOT NULL, -- 50으로 확장
 	password	varchar2(300)		NOT NULL,
 	email	varchar2(128)		NOT NULL,
 	phone	char(11)		NOT NULL,
@@ -25,6 +25,11 @@ CREATE TABLE MEMBER (
   CONSTRAINT pk_member_no PRIMARY KEY(no)
 );
 select * from member;
+select seq_member_no.currval from dual;
+select seq_member_no.nextval from dual;
+alter table member modify name varchar2(50);
+alter table member modify id varchar2(300);
+alter table member modify point number default 1000;
 alter table member rename column age to born_at;
 alter table member add fav_region varchar2(2000);
 alter table member add fav_food_type varchar2(2000);
@@ -93,6 +98,11 @@ CREATE TABLE DISTRICT (
 	name	varchar2(15)		NOT NULL,
   CONSTRAINT pk_district_code PRIMARY KEY(code)
 );
+select * from district;
+insert into district values('9876543','테스트구');
+commit;
+
+
 
 CREATE TABLE VISITANT_COUNT (
 	visitants_date	date		NOT NULL,
@@ -108,6 +118,9 @@ CREATE TABLE FOOD_TYPE (
 	type	varchar2(45)		NOT NULL,
   CONSTRAINT pk_food_type_code PRIMARY KEY(code)
 );
+select * from food_type;
+insert into food_type values('999','테스트음식타입');
+commit;
 
 CREATE TABLE RESTAURANT (
 	no	 char(22)		NOT NULL,
@@ -124,6 +137,7 @@ CREATE TABLE RESTAURANT (
   CONSTRAINT fk_restaurant_destrict_code FOREIGN KEY(district_code) references DISTRICT(code) on delete set null,
   CONSTRAINT fk_restaurant_food_code FOREIGN KEY(food_code) references FOOD_TYPE(code) on delete set null
 );
+select * from restaurant;
 
 COMMENT ON COLUMN RESTAURANT.no IS '공공데이터의 사업자등록번호를 고유키로 사용';
 
@@ -191,6 +205,7 @@ CREATE TABLE AUTHORITY (
   constraint pk_authority_auth PRIMARY KEY(no, auth),
   constraint fk_authority_no FOREIGN KEY(no) references MEMBER(no) on delete cascade
 );
+select * from authority;
 
 COMMENT ON COLUMN AUTHORITY.auth IS '유저번호와 함께 복합PK이룸';
 COMMENT ON COLUMN AUTHORITY.no IS 'is PK and FK';
