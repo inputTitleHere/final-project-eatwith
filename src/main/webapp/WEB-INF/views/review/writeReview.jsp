@@ -11,9 +11,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src=""<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>
+    <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>
     <title>리뷰 작성하기</title>
-    <style>
+<style>
 aside{
     float: left;
     width:200px;
@@ -24,7 +24,7 @@ aside{
     padding-bottom: 20px;
     background-color: white;
 }
-#content{
+#review{
     float: left;
     width: 750px;
     background-color: white;
@@ -44,32 +44,32 @@ td{
 tr{
     margin-top: 30px;
 }
-#RateStars fieldset{
+#rateStars{
 display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
 direction: rtl; /* 이모지 순서 반전 */
 border: 0; /* 필드셋 테두리 제거 */
 }
-#TasteStars fieldset,#PriceStars fieldset,#ServiceStars fieldset{
+#tasteStars,#priceStars,#serviceStars{
     border: 0;
 }
-#RateStars fieldset legend{
+#rateStars fieldset legend{
     text-align: left;
 }
-#RateStars input[type=radio]{
+#rateStars input[type=radio]{
     display: none; /* 라디오박스 감춤 */
 }
-#RateStars label{
+#rateStars label{
     font-size: 2em; /* 이모지 크기 */
     color: transparent; /* 기존 이모지 컬러 제거 */
     text-shadow: 0 0 0 #e3e3e3; /* 새 이모지 색상 부여 */
 }
-#RateStars label:hover{
+#rateStars label:hover{
     text-shadow: 0 0 0 #3A3C68 ; /* 마우스 호버 */
 }
-#RateStars label:hover ~ label{
+#rateStars label:hover ~ label{
     text-shadow: 0 0 0 #3A3C68 ; /* 마우스 호버 뒤에오는 이모지들 */
 }
-#RateStars input[type=radio]:checked ~ label{
+#rateStars input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 #3A3C68 ; /* 마우스 클릭 체크 */
 }
 #stars{
@@ -84,7 +84,7 @@ border: 0; /* 필드셋 테두리 제거 */
 #checkstars{
     width: 350px;
 }
-#ReviewContent{
+#content{
     height: 200px;
     width: 700px;
     margin: 20px;
@@ -128,7 +128,8 @@ input[type=checkbox]{
             <h6>음식점 주소</h6>
             <h6>음식점 전화번호</h6>
         </aside>
-        <section id="content">
+        <section id="review">
+            <form:form method="post" action="${pageContext.request.contextPath}/review/writeReview">
             <table>
                 <tbody>
                     <tr>
@@ -136,15 +137,13 @@ input[type=checkbox]{
                         <td id="checkstars">전체평점 * <br>이 음식점에 대한 전반적인 평가를 해주세요.</td>
                         <td id="starsName">평점</td>
                         <td id="stars">
-                            <form name="RateStars" id="RateStars" method="post" action="./save">
-                                <fieldset>
-                                    <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
-                                    <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
-                                    <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
-                                    <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
-                                    <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
+                                <fieldset id="rateStars">
+                                    <input type="radio" name="rateStars" value="5" id="rate1"><label for="rate1">⭐</label>
+                                    <input type="radio" name="rateStars" value="4" id="rate2"><label for="rate2">⭐</label>
+                                    <input type="radio" name="rateStars" value="3" id="rate3"><label for="rate3">⭐</label>
+                                    <input type="radio" name="rateStars" value="1" id="rate5"><label for="rate5">⭐</label>
+                                    <input type="radio" name="rateStars" value="2" id="rate4"><label for="rate4">⭐</label>
                                 </fieldset>
-                            </form>
                         </td>
                     </tr>
                 </tbody>
@@ -152,22 +151,20 @@ input[type=checkbox]{
             <hr>
             <table>
                 <tbody>
-                    <tr id="rateStars">
+                    <tr>
                         <td id="checkstars">항목별 평점 * <br>이 음식점의 맛, 가격, 서비스를 항목별로 나누어 평가해주세요.</td>
                         <td id="starsName">
                             맛
                         </td>
                         <td id="stars">
-                            <form name ="TasteStars" id="TasteStars" method="post" action="./save">
-                                <fieldset>
-                                    <input type="radio" name="rating" value="1">
+                                <fieldset id="tasteStars">
+                                    <input type="radio" name="tasteStars" value="1">
                                     맛없음
-                                    <input type="radio" name="rating" value="3">
+                                    <input type="radio" name="tasteStars" value="3">
                                     보통
-                                    <input type="radio" name="rating" value="5">
+                                    <input type="radio" name="tasteStars" value="5">
                                     맛있음
                                 </fieldset>
-                            </form>
                         </td>
                     </tr>
                     <tr>
@@ -176,16 +173,14 @@ input[type=checkbox]{
                             가격
                         </td>
                         <td id="stars">
-                            <form name ="PriceStars" id="PriceStars" method="post" action="./save">
-                                <fieldset>
-                                    <input type="radio" name="rating" value="1">
+                                <fieldset id="priceStars">
+                                    <input type="radio" name="priceStars" value="1">
                                     불만족
-                                    <input type="radio" name="rating" value="3">
+                                    <input type="radio" name="priceStars" value="3">
                                     보통
-                                    <input type="radio" name="rating" value="5">
+                                    <input type="radio" name="priceStars" value="5">
                                     만족함
                                 </fieldset>
-                            </form>
                         </td>
                     </tr>
                     <tr>
@@ -194,23 +189,21 @@ input[type=checkbox]{
                             서비스
                         </td>
                         <td id="stars">
-                            <form name ="ServiceStars" id="ServiceStars" method="post" action="./save">
-                                <fieldset>
-                                    <input type="radio" name="rating" value="1">
+                                <fieldset id="serviceStars">
+                                    <input type="radio" name="serviceStars" value="1">
                                     불친절
-                                    <input type="radio" name="rating" value="3">
+                                    <input type="radio" name="serviceStars" value="3">
                                     보통
-                                    <input type="radio" name="rating" value="5">
+                                    <input type="radio" name="serviceStars" value="5">
                                     친절함
                                 </fieldset>
-                            </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <hr>
             <div>방문후기*</div>
-            <textarea name="ReviewContent" id="ReviewContent" cols="30" rows="10"></textarea>
+            <textarea name="content" id="content" cols="30" rows="10" placeholder="음식, 서비스, 분위기, 위생상태 등의 방문 경험을 적어주세요."></textarea>
             <p><span id="counter"></span> / <span id="max-counter"></span></p>
             <hr>
             <table>
@@ -241,7 +234,8 @@ input[type=checkbox]{
                 </tbody>
             </table>
             <hr>
-            <div><input type="button" id="submitReview" value="리뷰 등록하기"></div>
+            <div><input type="submit" id="submitReview" value="리뷰 등록하기"></div>
+        </form:form>
         </section>
     </div>
     <script>
@@ -249,7 +243,7 @@ input[type=checkbox]{
         $("#counter").html(0);
         $("#max-counter").html(MAX_COUNTER);
 
-        $(ReviewContent).keyup((e)=>{
+        $(content).keyup((e)=>{
             const {target:{value}}=e;
             console.log(value);
             const len=value.length;

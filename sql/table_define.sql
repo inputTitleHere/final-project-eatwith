@@ -315,7 +315,15 @@ drop table quit_member;
 -- 박우석 END
 
 -- 신유경 START
-
+select*from review;
+select*from restaurant;
+select*from food_type;
+select*from gather;
+select*from member;
+insert into restaurant values('3110000-101-2022-00001','9876543','999','김밥천국','대방동','서울시 동작구 여의대방로21길 유경건물 1층','매일 08:00-20:00','야채김밥:3000원, 참치김밥:5000원','02-822-1234','분식');
+insert into review values(1,1,'3110000-101-2022-00001',4,3,3,3,'그냥무난무난한 맛이었어요');
+insert into gather values(1,'3110000-101-2022-00001','2인3메뉴 조질사람',1,to_date('2022-09-11','YYYY-MM-DD'),'999','9876543','여의도에서 일하는 30대 남성입니다.편하게 먹고가요',5,35,30,'M');
+commit;
 -- 신유경 END
 
 -- 임규완 START
