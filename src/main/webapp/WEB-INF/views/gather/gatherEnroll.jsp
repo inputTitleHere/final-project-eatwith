@@ -147,47 +147,13 @@ td{
                             모임 장소
                         </th>
                         <td>
-                            <input type="text" id="findStore" name="findStore" placeholder="검색 버튼을 클릭하세요" readonly><button class="openBtn">검색</button>
+                            <input type="text" id="findStore" name="findStore" placeholder="가게 이름을 입력해주세요."><button type="button" class="openBtn">검색</button>
                             <div class="modal hidden">
                                 <div class="bg"></div>
                                 <div class="modalBox">
-                                    <button class="closeBtn">✖</button>
-                                    <div class="searchBox">
-                                        <input type="text" id="search" onkeyup="filter()" placeholder="음식점 이름을 검색하세요." />
-                                  
-                                      </div>
-                                  
-                                      <div class="listBox">
-                                        <div class="listInner">
-                                            <span class="storeName">을지다락</span><strong> | </strong>
-                                            <span class="storeLoca">종로구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                            
-                                        </div>
-                                        <div class="listInner">
-                                            <span class="storeName">을지냉면</span><strong> | </strong>
-                                            <span class="storeLoca">강남구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                        </div>
-                                        <div class="listInner">
-                                            <span class="storeName">을지보쌈</span><strong> | </strong>
-                                            <span class="storeLoca">동작구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                        </div>
-                                        <div class="listInner">
-                                            <span class="storeName">을지김밥</span><strong> | </strong>
-                                            <span class="storeLoca">서대문구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                        </div>
-                                        <div class="listInner">
-                                            <span class="storeName">을지국수</span><strong> | </strong>
-                                            <span class="storeLoca">종로구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                        </div>
-                                        <div class="listInner">
-                                            <span class="storeName">을지국시</span><strong> | </strong>
-                                            <span class="storeLoca">동대문구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                        </div>
-                                        <div class="listInner">
-                                            <span class="storeName">을지국밥</span><strong> | </strong>
-                                            <span class="storeLoca">중랑구</span><span><input type="button" class="selectStore" value="선택"></span>
-                                        </div>
-                                      </div>
+                                    <!-- 모달창 내부 -->
+                                    <button type="button" class="closeBtn">✖</button>
+										
                                 </div>
                             </div>
                         </td>
@@ -195,6 +161,19 @@ td{
                     <script>
                           const open = () => {
                             document.querySelector(".modal").classList.remove("hidden");
+                            const searchString = document.querySelector('#findStore').value;
+                            
+                            $.ajax({
+                            	url:"${pageContext.request.contextPath}/restaurant/findRestaurantByName",
+                            	method:"GET",
+                            	data:{
+                            		"searchString":searchString
+                            	},
+                            	success(response){
+                            		console.log(response);
+                            	},
+                            	error:console.log
+                            })
                         }
 
                         const close = () => {
@@ -205,24 +184,6 @@ td{
                         document.querySelector(".closeBtn").addEventListener("click", close);
                         document.querySelector(".bg").addEventListener("click", close);
 
-
-                        function filter() {
-                        let search = document.getElementById("search").value;
-                        let listInner = document.getElementsByClassName("listInner");
-
-                        for (let i = 0; i < listInner.length; i++) {
-                        city = listInner[i].getElementsByClassName("storeName");
-                        country = listInner[i].getElementsByClassName("storeLoca");
-                        if (city[0].innerHTML.toLowerCase().indexOf(search) != -1 ||
-                            country[0].innerHTML.toLowerCase().indexOf(search) != -1
-                        ) {
-                            listInner[i].style.display = "flex"
-                        } else {
-                            listInner[i].style.display = "none"
-                        }
-                        }
-
-                    }
                     </script>
                     <tr>
                         <th> 
