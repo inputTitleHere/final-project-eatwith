@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.model.dto;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper=true)

@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.kh.eatwith.member.model.dto.MemberSecurity;
 import com.kh.eatwith.security.model.dao.MemberSecurityDao;
+
 
 @Service
 public class MemberSecurityService implements UserDetailsService {
@@ -16,8 +18,11 @@ public class MemberSecurityService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		MemberSecurity memberSecurity = memberSecurityDao.loadUserByUsername(username);
+		if(memberSecurity == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return memberSecurity;
 	}
 
 }

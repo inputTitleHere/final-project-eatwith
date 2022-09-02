@@ -6,8 +6,8 @@ insert into tester_table values(20);
 commit;
 select * from tester_table;
 
---select * from authority;
-
+--select * from authority where no = 5;
+--select * from member where name='홍길동' and phone='01012345678';
 -- 백승윤 START
 
 CREATE TABLE MEMBER (
@@ -313,6 +313,15 @@ drop table notice;
 drop table restaurant;
 drop table quit_member;
 
+-- spring-security remember-me 테이블
+create table persistent_logins (
+    username varchar2(64) not null,
+    series varchar2(64) primary key,
+    token varchar2(64) not null, -- username, password, expiry time 등을 hashing한 값
+    last_used timestamp not null
+);
+
+select * from persistent_logins;
 -- 박우석 END
 
 -- 신유경 START

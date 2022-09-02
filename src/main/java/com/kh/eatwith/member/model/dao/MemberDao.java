@@ -24,4 +24,5 @@ public interface MemberDao {
 
 	@Select("select * from member where name=#{nickname}")
 	Member selectOneByNickname(String nickname);
+
 }

@@ -22,7 +22,7 @@ import com.kh.eatwith.member.model.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+//@Controller
 @Slf4j
 @RequestMapping("/member")
 @SessionAttributes({"loginMember"}) // model에 저장하고 여기에 저장된 이름을 사용하면, 세션에 저장됨.

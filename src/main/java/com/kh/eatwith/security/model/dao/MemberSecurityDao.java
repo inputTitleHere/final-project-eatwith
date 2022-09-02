@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.eatwith.member.model.dto.Member;
+import com.kh.eatwith.member.model.dto.MemberSecurity;
 
 @Mapper
 public interface MemberSecurityDao {
@@ -15,6 +16,8 @@ public interface MemberSecurityDao {
 	 */
 	@Insert("insert into authority values('ROLE_USER',#{no})")
 	int insertMember(Member member);
+
+	MemberSecurity loadUserByUsername(String username);
 	
 	
 	
