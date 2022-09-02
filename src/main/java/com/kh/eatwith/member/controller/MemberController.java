@@ -1,6 +1,10 @@
 package com.kh.eatwith.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,6 +62,35 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	@GetMapping("/checkDuplicateId")
+	@ResponseBody
+	public ResponseEntity<?> checkDuplicateId(@RequestParam String id){
+		log.debug("check duplicate id = {} ",id);
+		Member member = memberService.selectOneMember(id);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		if(member==null) {
+			resultMap.put("result", true);
+		}else {
+			resultMap.put("result",	false);
+		}
+		return ResponseEntity.ok(resultMap);
+	}
+	
+	@GetMapping("/checkDuplicateNickname")
+	@ResponseBody
+	public ResponseEntity<?> checkDuplicateNickname(@RequestParam String nickname){
+		log.debug("check duplicate nickname = {} ",nickname);	
+		Member member = memberService.selectOneByNickname(nickname);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		if(member==null) {
+			resultMap.put("result", true);
+		}else {
+			resultMap.put("result",	false);
+		}	
+		return ResponseEntity.ok(resultMap);
+	}
+	
 	
 	@GetMapping("/memberLogin")
 	public void memberLogin() {

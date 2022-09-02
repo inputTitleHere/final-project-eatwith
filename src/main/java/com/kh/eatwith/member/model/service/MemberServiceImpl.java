@@ -33,4 +33,9 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneMember(String id) {
 		return memberDao.selectOneMember(id);
 	}
+	
+	@Override
+	public Member selectOneByNickname(String nickname) {
+		return memberDao.selectOneByNickname(nickname);
+	}
 }

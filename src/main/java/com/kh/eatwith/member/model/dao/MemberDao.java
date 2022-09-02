@@ -2,6 +2,7 @@ package com.kh.eatwith.member.model.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 
 import com.kh.eatwith.member.model.dto.Member;
@@ -21,4 +22,6 @@ public interface MemberDao {
 
 	Member selectOneMember(String id);
 
+	@Select("select * from member where name=#{nickname}")
+	Member selectOneByNickname(String nickname);
 }
