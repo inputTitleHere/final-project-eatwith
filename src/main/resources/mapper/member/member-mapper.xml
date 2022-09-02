@@ -16,22 +16,42 @@
 	<insert id="insertMember">
 		insert into member
 		values(
-		seq_member_no.nextval,
-		#{id},
-		#{name},
-		#{password},
-		#{email},
-		#{phone},
-		sysdate,
-		default,
-		default,
-		#{bornAt},
-		#{gender},
-		null,
-		#{fav_region},
-		#{fav_food_type}
+			seq_member_no.nextval,
+			#{id},
+			#{name},
+			#{password},
+			#{email},
+			#{phone},
+			sysdate,
+			default,
+			default,
+			#{bornAt},
+			#{gender},
+			null,
+			#{fav_region},
+			#{fav_food_type}
 		)
 	</insert>
 
+	<select id="findId" resultType="Member">
+		select
+			*
+		from
+			member
+		where
+			name = #{name}
+			and
+			phone = #{phone}
+	</select>
 
+	<select id="resetPassword" resultType="Member">
+		select
+			*
+		from
+			member
+		where
+			id = #{id} and
+			name = #{name} and
+			email = #{email}
+	</select>
 </mapper>
