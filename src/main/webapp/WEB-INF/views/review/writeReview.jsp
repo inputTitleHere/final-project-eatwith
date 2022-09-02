@@ -129,7 +129,7 @@ input[type=checkbox]{
             <h6>음식점 전화번호</h6>
         </aside>
         <section id="review">
-            <form:form method="post" action="${pageContext.request.contextPath}/gather/writeReview">
+            <form:form method="post" action="${pageContext.request.contextPath}/review/writeReview">
             <table>
                 <tbody>
                     <tr>

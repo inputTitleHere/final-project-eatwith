@@ -22,7 +22,7 @@
 form{
     background-color: white;
     margin: 20px;
-    padding: 10px;
+    padding: 30px;
 }
 th{
     padding-right: 50px;
@@ -33,7 +33,7 @@ td{
 }
 #gatherTitle{
     width: 700px;
-    height: 30px;
+    height: 20px;
 }
 #gatherContent{
     height: 200px;
@@ -41,7 +41,7 @@ td{
     font-size: 15px;
 }
 #counter{
-    margin-left: 660px;
+    margin-left: 620px;
 }
 .notice{
     text-align: center;
@@ -69,11 +69,69 @@ td{
 	padding-left:20px;
 	padding-right:20px;
 }
+#gatherMin,#gatherMax,#gatherTime{
+    height: 20px;
+}
+#findStore{
+    height: 20px;
+}
+.openBtn {
+    margin-left: 5px;
+    height: 27px;
+    border: 0;
+    background-color: #DC948A;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal .bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.modalBox {
+    position: absolute;
+    background-color: #F0EBEC;
+    width: 400px;
+    height: 300px;
+    padding: 15px;
+    overflow: auto;
+}
+.modalBox::-webkit-scrollbar{
+    display: none;
+}
+.modalBox button {
+    display: block;
+    width: 20px;
+    border: 0;
+    background-color: #F0EBEC;
+    margin: 0 auto;
+    margin-left: 375px;
+}
+.listBox{
+    font-size: 20px;
+}
+.hidden {
+  display: none;
+}
+.selectStore{
+    display:flexbox;
+}
 </style>
 </head>
 <body bgcolor="#F0EBEC">
     <div id="container">
-        <form name="gatherEnrollFrm"method="post" action="">
+        <form name="gatherEnrollFrm"method="post" action="${pageContext.request.contextPath}/gather/gatherEnroll">
             <table>
                 <tbody>
                     <tr>
@@ -89,14 +147,88 @@ td{
                             모임 장소
                         </th>
                         <td>
-                            검색창 만들기
+                            <input type="text" id="findStore" name="findStore" placeholder="검색 버튼을 클릭하세요" readonly><button class="openBtn">검색</button>
+                            <div class="modal hidden">
+                                <div class="bg"></div>
+                                <div class="modalBox">
+                                    <button class="closeBtn">✖</button>
+                                    <div class="searchBox">
+                                        <input type="text" id="search" onkeyup="filter()" placeholder="음식점 이름을 검색하세요." />
+                                  
+                                      </div>
+                                  
+                                      <div class="listBox">
+                                        <div class="listInner">
+                                            <span class="storeName">을지다락</span><strong> | </strong>
+                                            <span class="storeLoca">종로구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                            
+                                        </div>
+                                        <div class="listInner">
+                                            <span class="storeName">을지냉면</span><strong> | </strong>
+                                            <span class="storeLoca">강남구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                        </div>
+                                        <div class="listInner">
+                                            <span class="storeName">을지보쌈</span><strong> | </strong>
+                                            <span class="storeLoca">동작구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                        </div>
+                                        <div class="listInner">
+                                            <span class="storeName">을지김밥</span><strong> | </strong>
+                                            <span class="storeLoca">서대문구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                        </div>
+                                        <div class="listInner">
+                                            <span class="storeName">을지국수</span><strong> | </strong>
+                                            <span class="storeLoca">종로구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                        </div>
+                                        <div class="listInner">
+                                            <span class="storeName">을지국시</span><strong> | </strong>
+                                            <span class="storeLoca">동대문구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                        </div>
+                                        <div class="listInner">
+                                            <span class="storeName">을지국밥</span><strong> | </strong>
+                                            <span class="storeLoca">중랑구</span><span><input type="button" class="selectStore" value="선택"></span>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
+                    <script>
+                          const open = () => {
+                            document.querySelector(".modal").classList.remove("hidden");
+                        }
+
+                        const close = () => {
+                            document.querySelector(".modal").classList.add("hidden");
+                        }
+
+                        document.querySelector(".openBtn").addEventListener("click", open);
+                        document.querySelector(".closeBtn").addEventListener("click", close);
+                        document.querySelector(".bg").addEventListener("click", close);
+
+
+                        function filter() {
+                        let search = document.getElementById("search").value;
+                        let listInner = document.getElementsByClassName("listInner");
+
+                        for (let i = 0; i < listInner.length; i++) {
+                        city = listInner[i].getElementsByClassName("storeName");
+                        country = listInner[i].getElementsByClassName("storeLoca");
+                        if (city[0].innerHTML.toLowerCase().indexOf(search) != -1 ||
+                            country[0].innerHTML.toLowerCase().indexOf(search) != -1
+                        ) {
+                            listInner[i].style.display = "flex"
+                        } else {
+                            listInner[i].style.display = "none"
+                        }
+                        }
+
+                    }
+                    </script>
                     <tr>
                         <th> 
                         </th>
                         <td>
-                            음식점이름 <br> 음식카테고리 <br> ㅇㅇ구
+                            <span id="storeName">음식점이름</span> <br> <span id="storeCategory">음식카테고리</span> <br> <span id="storeLocation">ㅇㅇ구</span>
                         </td>
                     </tr>
                     <tr>
@@ -143,7 +275,7 @@ td{
                         </th>
                         <td>
                             <textarea name="gatherContent" id="gatherContent" cols="30" rows="10" placeholder="모임 출발 장소, 모임에서 찾는 사람 등 모임에 대한 설명을 적어주세요." required></textarea>
-                            <p><span id="counter"></span> / <span id="max-counter"></span></p>
+                            <p><span name="counter" id="counter"></span> / 1000</p>
                         </tr>
                     <tr>
                         <th></th>
@@ -175,7 +307,6 @@ td{
         </form>
     </div>
 <script>
-    
     //모임시간설정
     let dateElement = document.getElementById('gatherTime');
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
@@ -187,6 +318,20 @@ td{
             dateElement.value = date;
         }
     }
+
+    
+
+    //모임 설명 글자세기
+    $(document).ready(function() {
+    $('#gatherContent').on('keyup', function() {
+        $('#counter').html($(this).val().length);
+ 
+        if($(this).val().length > 1000) {
+            $(this).val($(this).val().substring(0, 1000));
+            $('#counter').html("1000");
+        }
+    });
+    });
 
     //+,-버튼 작동
     let countMem=document.querySelector('#countMem');
@@ -213,24 +358,6 @@ td{
         console.log(document.getElementById("count").value);
     });
     document.getElementById("count").value=number.textContent;
-
-    //모임 설명 글자세기
-    const MAX_COUNTER=1000;
-        $("#counter").html(0);
-        $("#max-counter").html(MAX_COUNTER);
-
-        $(gatherContent).keyup((e)=>{
-            const {target:{value}}=e;
-            console.log(value);
-            const len=value.length;
-            const $counter = $(counter);
-            $counter.html(len);
-            if(len<=MAX_COUNTER){
-                $counter.css('color',"initial");
-            }else{
-                $counter.css('color',"red");
-            }
-        })
   
     //유효성검사
     document.gatherEnrollFrm.onsubmit=(e)=>{
@@ -245,7 +372,13 @@ td{
             frm.gatherContent.focus();
             return false;
         }
-        //나이설정문제, 모임장소선택 확인
+        //나이설정문제
+        if(frm.gatherMin.value>frm.gatherMax.value){
+            alert("나이 제한을 올바르게 입력해주세요.");
+            frm.gatherMin.focus();
+            return false;
+        }
+        //모임 장소선택
     }
 
 
