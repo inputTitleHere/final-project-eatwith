@@ -22,6 +22,9 @@ public class GatherController {
 	@GetMapping("/gatherEnroll")
 	public void gatherEnroll() {}
 	
+	@GetMapping("/gatherList")
+	public void gatherList() {}
+	
 	@PostMapping("/gatherEnroll")
 	public String gatherEnroll(Gather gather) {
 		
