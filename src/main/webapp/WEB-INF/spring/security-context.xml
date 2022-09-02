@@ -63,6 +63,7 @@
 			- 특정 사용자의 권한 수정, 등록/수정/삭제 
 		-->
 		<csrf disabled="false"/> <!-- 기본이 false --> 
+
 		
 		<!-- rememberme -->
 		<remember-me data-source-ref="dataSource"	token-validity-seconds="1209600"/>

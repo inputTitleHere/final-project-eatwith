@@ -8,5 +8,5 @@ public interface MemberService {
 
 	Member selectOneMember(String id);
 
-	
+	Member selectOneByNickname(String id);
 }

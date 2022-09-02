@@ -32,7 +32,7 @@ public class Member {
 	protected Gender gender;
 	protected LocalDate deletedAt;
 	// ERD -> 지역
-	protected String[] favRegion;
+	protected String[] favDistrict;
 	// ERD -> 선호 음식
 	protected String[] favFoodType;
 	protected boolean enabled;

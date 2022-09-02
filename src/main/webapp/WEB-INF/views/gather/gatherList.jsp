@@ -37,17 +37,25 @@ aside{
     float: right;
 }
 td{
-    padding-left: 10px;
-    padding-right: 10px;
-}
-tr{
-    margin-top: 30px;
+    width: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    font-size: 18px;
+    text-align: center;
 }
 #seeSelect{
     height: 30px;
 }
 #makeGather{
-    margin-left: 90%;
+    margin-left: 610px;
+    color: white;
+    background-color: #DC948A;
+    border: 0;
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 #seeMore{
     background-color: #e3e3e3;
@@ -57,7 +65,20 @@ tr{
 }
 #moreGather{
     background-color: #e3e3e3;
+    height: 36px;
     border: 0px;
+    font-size: 20px;
+}
+.goGatherBtn{
+    border: 0;
+    width: 130px;
+    height: 30px;
+    margin-top: 3px;
+    margin-left: 28px;
+    color: white;
+    background-color: #DC948A;
+    display: flex;
+    justify-content: center;
 }
 </style>
 </head>
@@ -113,19 +134,19 @@ tr{
             <table>
                 <tbody>
                     <tr>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
                     </tr>
                     <tr>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
                     </tr>
                     <tr>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
-                        <td>모임제목 <br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
+                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
                     </tr>
                 </tbody>
             </table>

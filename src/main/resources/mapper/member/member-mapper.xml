@@ -13,6 +13,7 @@
 		id = #{id}
 	</select>
 
+<!-- 이 부분은 따로 @Insert 어노테이션으로 구분하였습니다.
 	<insert id="insertMember">
 		insert into member
 		values(
@@ -32,6 +33,7 @@
 			#{fav_food_type}
 		)
 	</insert>
+ -->
 
 	<select id="findId" resultType="Member">
 		select
@@ -54,4 +56,6 @@
 			name = #{name} and
 			email = #{email}
 	</select>
+
+
 </mapper>
