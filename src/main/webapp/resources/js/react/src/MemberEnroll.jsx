@@ -285,10 +285,15 @@ function MemberEnrollTable(props){
         </tr>
         <tr>
           <td>
-            <div className='region-wrapper'>
-              <ToggleAll target="region"/>
-              <DistrictCheckboxs/>
+            <div className='chec-wrapper'>
+              <ToggleAll target="district"/>
+              <Checkboxs mode='district'/>
             </div>
+          </td>
+          <td>
+            <div className=''></div>
+            <ToggleAll target="foodtype"/>
+            <Checkboxs mode='foodtype'/>
           </td>
         </tr>
       </tbody>
@@ -297,11 +302,18 @@ function MemberEnrollTable(props){
 }
 
 // name -> input의 name, id : 
-function DistrictCheckboxs(props){
+function Checkboxs(props){
   const [checkbox, setCheckbox] = useState(undefined);
-  console.log(checkbox);
+  const {mode} = props;
+  let searchMode;
+  if(mode==='district'){
+    searchMode="district/getAllDistrict"
+  }else if(mode==='foodtype'){
+    searchMode="foodtype/getAllFoodtype"
+  }
+
   checkbox||$.ajax({
-    url:`${API_BASE_URL}/district/getAllDistrict`,
+    url:`${API_BASE_URL}/${searchMode}`,
     method:"GET",
     success(response){
       console.log(response);
@@ -309,7 +321,7 @@ function DistrictCheckboxs(props){
         const {code, name} = district;
         return(
           <div className="individual-checkbox">
-            <input type="checkbox" name="district" id={name} value={code} />
+            <input type="checkbox" name={mode} id={name} value={code} />
             &nbsp;
             <span>{name}</span>
           </div>
@@ -326,14 +338,7 @@ function DistrictCheckboxs(props){
   );
   
 }
-function FoodTypeCheckbox(props){
-  return(
-    <div className="checkbox">
-      <input type="checkbox" name="foodType" id={props.children} value={props.value} /> 
-      <span>{props.children}</span>
-    </div>
-  );
-}
+
 
 function ToggleAll(props){
   const [toggleStatus, setToggleStatus] = useState(false);
@@ -351,7 +356,7 @@ function ToggleAll(props){
   }
   return(
     <div>
-      <button type='button' id='toggleAll' onClick={toggleAll}>전체 토글</button>
+      <button type='button' id='toggleAll' onClick={toggleAll}>전체 선택</button>
     </div>
   )
 }
