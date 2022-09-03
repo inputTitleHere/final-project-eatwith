@@ -25,6 +25,8 @@ CREATE TABLE MEMBER (
   CONSTRAINT pk_member_no PRIMARY KEY(no)
 );
 select * from member;
+delete from member where id ='tester';
+commit;
 select seq_member_no.currval from dual;
 select seq_member_no.nextval from dual;
 alter table member modify name varchar2(50);
