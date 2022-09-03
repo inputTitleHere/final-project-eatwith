@@ -16,7 +16,8 @@
 <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
  -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member-enroll.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member-enroll/member-enroll.css"/>
+<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 </head>
 <body>
 <div id="react-practice"></div>

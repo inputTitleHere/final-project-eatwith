@@ -3,4 +3,8 @@ div#content-wrapper {
   width: fit-content;
 }
 
+table#form-root td {
+  width: 90%;
+}
+
 /*# sourceMappingURL=member-enroll.css.map */
