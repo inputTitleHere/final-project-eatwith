@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.handler.annotation.reactive.MessageMappingMessageHandler;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +30,7 @@ public class EmailServiceImpl implements EmailService {
 		String content = String.format("안녕하세요, 같이먹을래에 회원가입에 필요한 인증 번호를 보내드립니다."
 				+ "<br><br>인증 번호는 아래와 같습니다.<br><h2>%s</h2><br>해당 인증 번호를 회원가입의 인증번호란에 입력하여주세요.", params.get("code"));
 		log.debug("content = {}",content);
-		mailSend(sendEmailFrom, params.get("sendEmaiTo"),title,content);
+		mailSend(sendEmailFrom, params.get("sendEmailTo"),title,content);
 	}
 	
 	public void mailSend(String sendEmailFrom,String sendEmailTo, String title, String content) {

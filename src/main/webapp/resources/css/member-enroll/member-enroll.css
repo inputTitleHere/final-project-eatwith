@@ -24,6 +24,7 @@ div#content-wrapper {
   border-radius: 10px;
   min-height: 800px;
   padding: 10px 0px 40px;
+  border: 5px solid #ECC7C5;
 }
 div#content-wrapper h1 {
   font-size: 38px;
@@ -94,6 +95,8 @@ div#content-wrapper #form-wrapper table tbody#first-form tr label {
   font-size: 20px;
 }
 div#content-wrapper #form-wrapper table tbody#first-form tr input {
+  border: 1px solid #81A6D3;
+  border-radius: 5px;
   margin: 0px 3px;
   width: 97%;
   height: 30px;
@@ -106,7 +109,9 @@ div#content-wrapper #form-wrapper table tbody#first-form tr input[name=gender] {
   accent-color: #EE4949;
 }
 div#content-wrapper #form-wrapper table tbody#first-form tr input:focus {
-  outline: 2px solid #3A3C68;
+  outline: none;
+  border: 1px solid #EE4949;
+  border-radius: 5px;
 }
 div#content-wrapper #form-wrapper table tbody#first-form tr input:focus[type=radio] {
   outline: none;
@@ -204,10 +209,6 @@ button.big-button {
   margin-bottom: 10px;
   border-radius: 10px;
 }
-button.big-button:disabled {
-  background-color: #b8b8b8;
-  cursor: default;
-}
 button#back {
   width: 100px;
   height: 60px;
@@ -218,6 +219,13 @@ button#submit-button {
   height: 60px;
   font-size: 32px;
   border-radius: 10px;
+}
+button#email-check-input {
+  width: 75px;
+}
+button:disabled {
+  background-color: #b8b8b8;
+  cursor: default;
 }
 
 .invisible {
@@ -235,6 +243,17 @@ button#submit-button {
 
 .button-div {
   margin: 20px auto;
+}
+
+.image-wrapper {
+  min-width: 1024px;
+  width: 100vw;
+  height: 800px;
+  position: absolute;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, #ECC7C5), url("../../image/background/member-enroll.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
 }
 
 /*# sourceMappingURL=member-enroll.css.map */

@@ -24,13 +24,14 @@
 <div class="header">
 	<img id="banner-image" src='${pageContext.request.contextPath}/resources/image/eatwith-banner.png' alt="MemberEnrollHeader.jsx확인 바람" height='100px' onclick='location.href="${pageContext.request.contextPath}/"'/>
 </div>
+<div class="image-wrapper">&nbsp;</div>
 <div id="content-wrapper">
   <h1>신규 회원 가입</h1>
+  
   <div id="form-wrapper"></div>
   
-  
-  <script type="text/javascript" src="/eatwith/resources/js/bundle/member-enroll.js"></script>
 </div>  
 
+<script type="text/javascript" src="/eatwith/resources/js/bundle/member-enroll.js"></script>
 </body>
 </html>

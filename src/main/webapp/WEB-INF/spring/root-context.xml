@@ -8,9 +8,9 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
-	<context:property-placeholder location="classpath:datasource.properties"/>
-	<context:property-placeholder location="classpath:email.properties" />
+
+	<!-- 이거 property-placeholder는 1개이상 선언하면 안된다. datasource하고 email을 동시에 로드할려면 와일드카드를 사용하거나 콤마로 구분. -->	
+	<context:property-placeholder location="classpath:*.properties"/>
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- #6.1 datasource bean등록 -->

@@ -44,7 +44,8 @@ public class EmailController {
 		String code = generateRNGNumber();
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("code", code);
-		params.put("emailToSend", emailToSend);
+		params.put("sendEmailTo", emailToSend);
+		// 이메일 전송은 Service에서 관리한다.
 		emailService.sendEmail(params);
 		
 		
