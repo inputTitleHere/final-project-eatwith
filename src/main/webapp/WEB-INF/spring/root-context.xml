@@ -8,8 +8,9 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
-	<context:property-placeholder location="classpath:datasource.properties"/>
+
+	<!-- 이거 property-placeholder는 1개이상 선언하면 안된다. datasource하고 email을 동시에 로드할려면 와일드카드를 사용하거나 콤마로 구분. -->	
+	<context:property-placeholder location="classpath:*.properties"/>
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- #6.1 datasource bean등록 -->
@@ -40,6 +41,28 @@
 	</bean>
 	<!-- @Transactional 어노테이션 Transaction Adivce를 적용 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/> <!-- 이미 다 만들어져있다. 뒤의 transaction-manager의 transactionManager으로 기본값 세팅이 되어있어서 써줄 필요는 없지만 bean이름이 다르면 적어주어야 한다.-->
+	<!-- 이메일 관련 -->
+	<!-- https://devofroad.tistory.com/43 -->
+	
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="${email.account}" />
+		<property name="password" value="${email.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<!-- gmail의 경우 보안문제 업데이트로 인해 SSLSocketFactory를 추가해야 smtp 사용 가능. -->
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
 	
 	
 	
