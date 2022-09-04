@@ -25,7 +25,7 @@ CREATE TABLE MEMBER (
   CONSTRAINT pk_member_no PRIMARY KEY(no)
 );
 select * from member;
-delete from member where id ='tester';
+delete from member where id ='naver';
 commit;
 select seq_member_no.currval from dual;
 select seq_member_no.nextval from dual;
