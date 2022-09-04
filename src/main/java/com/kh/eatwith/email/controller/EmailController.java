@@ -47,7 +47,7 @@ public class EmailController {
 		params.put("sendEmailTo", emailToSend);
 		// 이메일 전송은 Service에서 관리한다.
 		emailService.sendEmail(params);
-		
+//		code="123456";
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", code);

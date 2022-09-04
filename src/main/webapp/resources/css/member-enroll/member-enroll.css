@@ -221,11 +221,15 @@ button#submit-button {
   border-radius: 10px;
 }
 button#email-check-input {
-  width: 75px;
+  width: 55px;
 }
 button:disabled {
   background-color: #b8b8b8;
   cursor: default;
+}
+
+#email-button {
+  width: 120px;
 }
 
 .invisible {
