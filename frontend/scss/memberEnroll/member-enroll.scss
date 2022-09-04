@@ -265,12 +265,15 @@ button{
     border-radius: 10px;
   }
   &#email-check-input{
-    width: 75px;
+    width: 55px;
   }
   &:disabled{
     background-color: $Dark-Gray;
     cursor: default;
   }
+}
+#email-button{
+  width: 120px;
 }
 
 .invisible{

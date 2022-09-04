@@ -187,7 +187,7 @@ function MemberEnrollTable(props) {
   //* 이메일 관련
   function EmailComponent(props) {
     const [code, setCode] = useState("");
-    const authMode = <EmailCheck code={code} />;
+    const [sending, setSending] = useState(false);
     const sendAuthEmail = (e) => {
       // 이메일 자체의 무결성 확인
       const email = document.getElementById("email");
@@ -196,13 +196,14 @@ function MemberEnrollTable(props) {
       } else {
         // 이메일을 보낼 수 있는 경우
         const emailToSend = email.value;
+        setSending(true);
         $.ajax({
           url: `${API_BASE_URL}/email/sendEmail`,
           method: "GET",
           data: {
             emailToSend: emailToSend,
           },
-          async: false,
+          // async: false,
           success(response) {
             setCode(response.code);
           },
@@ -211,21 +212,45 @@ function MemberEnrollTable(props) {
       }
     };
     if (!code) {
+      // 인증코드가 없으면
       if (emailCheck) {
+        // 인증이 끝난 상태면
         return (
-          <button type="button" id="email-button" onClick={sendAuthEmail} disabled>
+          <button
+            type="button"
+            id="email-button"
+            onClick={sendAuthEmail}
+            disabled
+          >
             인증메일 전송
           </button>
         );
       } else {
-        return (
-          <button type="button" id="email-button" onClick={sendAuthEmail}>
-            인증메일 전송
-          </button>
-        );
+        if (!sending) {
+          return (
+            <button type="button" id="email-button" onClick={sendAuthEmail}>
+              인증메일 전송
+            </button>
+          );
+        } else {
+          return (
+            <button
+              type="button"
+              id="email-button"
+              onClick={sendAuthEmail}
+              disabled
+            >
+              전송중
+            </button>
+          );
+        }
       }
     } else {
-      return authMode;
+      console.log("code = ",code);
+      // 코드가 있으면
+      return (
+        <EmailCheck code={code} />
+      );
     }
   }
 
