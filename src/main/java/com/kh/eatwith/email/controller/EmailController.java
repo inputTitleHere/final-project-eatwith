@@ -48,12 +48,6 @@ public class EmailController {
 		// 이메일 전송은 Service에서 관리한다.
 		emailService.sendEmail(params);
 //		code="123456";
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", code);
