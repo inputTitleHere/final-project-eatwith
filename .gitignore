@@ -4,6 +4,7 @@
 ## db ##
 db_wallet/
 */target/*
+email.properties
 
 pom.properties
 

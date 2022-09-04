@@ -24,12 +24,14 @@ function MemberEnrollTable(props){
   // 매번 랜더링된다?
   useEffect(()=>{
     setRegisterable(idPass&&passwordPass&&passwordCheck&&nicknameCheck&&phoneCheck&&emailCheck&&genderCheck&&bornAtCheck);
-    console.log("updated registerable : value = ",registerable);
   },[idPass,passwordPass,passwordCheck,nicknameCheck,phoneCheck,emailCheck,genderCheck,bornAtCheck]);
-
+  
   useEffect(()=>{
+    console.log("Button Activate : ",registerable);
     if(registerable){
-      document.querySelector("#next-button").disabled=false;
+      const nextButton = document.querySelector("#next-button")
+      nextButton.disabled=false;
+      nextButton.addEventListener('onclick',handleSwitchTbody);
     }else{
       document.querySelector("#next-button").disabled=true;
     }
@@ -49,6 +51,7 @@ function MemberEnrollTable(props){
   const handleId=(e)=>{
     const passText = document.querySelector('#id-info-box');
     const id = e.target.value;
+    e.target.value=id.replaceAll(" ","");
     if(id.length < 4){
       setUnable(passText,"아이디는 4자리 이상이어야 합니다.");
       setIdPass(false);
@@ -164,15 +167,27 @@ function MemberEnrollTable(props){
   }
 //* 이메일 관련
   const sendAuthEmail=(e)=>{
+    // 이메일 자체의 무결성 확인
     const email = document.getElementById("email");
-    const passText = document.querySelector("#email-info-box");
     console.log("email = ",email.value);
     if(!/@.*\./.test(email.value)){
       setUnable(passText,"올바른 이메일 형식을 입력해주세요");
-    }else{
-      console.log("지금은 이메일 확인 없이 그냥 통과시킵니다.");
-      setAble(passText, "이메일이 확인되었습니다.");
-      setEmailPass(true);
+    }else{ // 이메일을 보낼 수 있는 경우
+      const emailToSend = email.value;
+      $.ajax({
+        url:`${API_BASE_URL}/email/sendEmail`,
+        method:"GET",
+        data:{
+          "emailToSend" : emailToSend
+        },
+        async:false,
+        success(response){
+          console.log("code = ",response);
+          const emailButton = document.querySelector("#email-button").parentElement;
+          emailButton.innerHTML=<EmailCheck code={response.code}/>;
+        },
+        error:console.log
+      });
     }
   }
   //* 성별 클릭시
@@ -182,125 +197,156 @@ function MemberEnrollTable(props){
   //* 생년 체크
   const handleBornAt=(e)=>{
     e.target.value = e.target.value.replaceAll(/[^0-9]/g,"");
-    setBornAtPass(true);
+    const passText = document.querySelector("#bornAt-info-box");
+    if(e.target.value<1900 || e.target.value > new Date().getFullYear() ){
+      setUnable(passText,"올바른 생년을 입력해주세요");
+      setBornAtPass(false);
+    }else{
+      setAble(passText,"");
+      setBornAtPass(true);
+    }
   }
 
   //* handleSwitchTbody
   const handleSwitchTbody=(e)=>{
+    console.log("Clicked HandleSwitchTbody");
     const firstTable = document.querySelector("#first-form");
-    const secondTable = docuemtn.querySelector("#second-form");
+    const secondTable = document.querySelector("#second-form");
     firstTable.classList.toggle("invisible");
     secondTable.classList.toggle("invisible");
-
-
   }
 
 
   return(
-    <table id="form-root">
-      <tbody id='first-form'>
-        <tr>
-          <td>아이디</td>
-          <td><input type="text" name="id" id="id" onChange={handleId} placeholder="사용할 아이디를 입력해주세요." required/></td>
-        </tr>
-        <tr>
-          <td className="info-text" id='id-info-box' colSpan={2}>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>비밀번호</td>
-          <td><input type="password" name="password" id="password" onChange={handlePassword} placeholder="영문, 숫자, 특수문자를 포함한 비밀번호를 입력해주세요." required/></td>
-        </tr>
-        <tr>
-          <td className='info-text' id="password-info-box" colSpan={2}>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>비밀번호 확인</td>
-          <td><input type="password" id="passwordCheck" onChange={handlePasswordCheck} placeholder='비밀번호를 다시 입력해주세요.' required/></td>
-        </tr>
-        <tr>
-          <td className='info-text' id="password-check-info-box" colSpan={2}>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>이름(닉네임)</td>
-          <td><input type="text" name='name' id='name' onChange={handleNickname} placeholder="닉네임을 입력해주세요." required /></td>
-        </tr>
-        <tr>
-          <td className='info-text' id="nickname-info-box" colSpan={2}>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>전화번호</td>
-          <td><input type="text" name='phone' id='phone' onChange={handlePhone} placeholder='(-)없이 휴대전화번호를 입력해주세요.' required /></td>
-        </tr>
-        <tr>
-          <td className='info-text' id="phone-info-box" colSpan={2}>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>이메일</td>
-          <td>
-            <div className="left-div">
-              <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요"/>
+    <div className="table-wrapper">
+      <table id="form-root">
+        <tbody id='first-form'>
+          <InputRow title="아이디">
+            <input type="text" name="id" id="id" onChange={handleId} placeholder="사용할 아이디를 입력해주세요." required/>
+          </InputRow>
+          <InfoRow title="id-info-box"/>
+          <InputRow title='비밀번호'>
+            <input type="password" name="password" id="password" onChange={handlePassword} placeholder="영문, 숫자, 특수문자를 포함한 비밀번호를 입력해주세요." required/>
+          </InputRow>
+          <InfoRow title="password-info-box"/>
+          <InputRow title="비밀번호 확인">
+            <input type="password" id="passwordCheck" onChange={handlePasswordCheck} placeholder='비밀번호를 다시 입력해주세요.' required/>
+          </InputRow>
+          <InfoRow title="password-check-info-box"/>
+          <InputRow title='이름(닉네임)'>
+            <input type="text" name='name' id='name' onChange={handleNickname} placeholder="닉네임을 입력해주세요." required />
+          </InputRow>
+          <InfoRow title="nickname-info-box"/>
+          <InputRow title="전화번호">
+            <input type="text" name='phone' id='phone' onChange={handlePhone} placeholder='(-)없이 휴대전화번호를 입력해주세요.' required />
+          </InputRow>
+          <InfoRow title="phone-info-box"/>
+          <InputRow title="이메일">
+              <div className="flex-box no-margin">
+                <input type="text" name="email" id="email" placeholder="이메일을 입력해주세요"/>
+                <button type='button' id="email-button" onClick={sendAuthEmail}>인증메일 전송(미완)</button>
+              </div>
+          </InputRow>
+          <InfoRow title="email-info-box"/>
+          <InputRow title="성별">
+            <div className='flex-box'>
+              <label htmlFor='gender-male'>&nbsp;남 : </label>
+              <input type="radio" name="gender" id="gender-male" value="M" onClick={handleGender} required/>
+              &nbsp;
+              <label htmlFor='gender-female'>여 : </label>
+              <input type="radio" name="gender" id="gender-female" value="F" onClick={handleGender} required/>
             </div>
-            <div className="right-div">
-              <button type='button' onClick={sendAuthEmail}>인증메일 전송(미완)</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td className='info-text' id="email-info-box" colSpan={2}>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>성별</td>
-          <td>
-            <label>남 : <input type="radio" name="gender" id="gender-male" value="M" onClick={handleGender} required/></label>
-            <label>여 : <input type="radio" name="gender" id="gender-female" value="F" onClick={handleGender} required/></label>
-          </td>
-        </tr>
-        <tr>
-          <td>출생년도</td>
-          <td><input type="text" name="bornAt" id="born-at" onChange={handleBornAt} placeholder="2000" /></td>
-        </tr>
-        <tr>
-          <td>포인트</td>
-          <td>포인트는 기본 1000p 적립됩니다.</td>
-        </tr>
-        <tr>
-          <td colSpan={2}><button type='button' className='big-button' id='next-button' onClick={handleSwitchTbody} disabled>다음</button></td>
-        </tr>
-      </tbody>
-      <tbody id='second-form' className='invisible'>
-        <tr>
-          <th>
-            <div className="th-wrapper">
-              선호 모임 지역 선택
-            </div> 
-          </th>
-          <th>
-            <div className="th-wrapper">
-              선호 음식 분야 선택
-            </div> 
-          </th>
-        </tr>
-        <tr>
-          <td>
-            <div className='fav-wrapper'>
-              <ToggleAll target="favDistrict"/>
-              <Checkboxs mode='favDistrict'/>
-            </div>
-          </td>
-          <td>
-            <div className='fav-wrapper'>
-              <ToggleAll target="favFoodType"/>
-              <Checkboxs mode='favFoodType'/>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={2}>
-            <button>가입하기</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </InputRow>
+          <InfoRow title="gender-info-box"/>
+          <InputRow title="출생년도">
+            <input type="text" name="bornAt" id="born-at" onChange={handleBornAt} placeholder="2000" />
+          </InputRow>
+          <InfoRow title="bornAt-info-box"/>
+          <InputRow title="포인트">
+            <div className='flex-box'>포인트는 기본 1000p 적립됩니다.</div>
+          </InputRow>
+          <InfoRow title="spacer"/>
+          <tr>
+            <td colSpan={2}>
+              <div className="flex-box centerize">
+                <button type='button' className='big-button' id='next-button' onClick={handleSwitchTbody}>다음</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody id='second-form' className='invisible'>
+          <tr>
+            <th>
+              <div className="th-wrapper">
+                선호 모임 지역 선택
+              </div> 
+            </th>
+            <th>
+              <div className="th-wrapper">
+                선호 음식 분야 선택
+              </div> 
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <div className='fav-wrapper' id='fav-district'>
+                <ToggleAll target="favDistrict"/>
+                <Checkboxs mode='favDistrict'/>
+              </div>
+            </td>
+            <td>
+              <div className='fav-wrapper' id='fav-food-type'>
+                <ToggleAll target="favFoodType"/>
+                <Checkboxs mode='favFoodType'/>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2}>
+              <div className='flex-box-row button-div'>
+                <button type='button' id='back' onClick={handleSwitchTbody}>뒤로 가기</button>
+                <button id='submit-button'>가입하기</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+function InputRow(props){
+  return(
+    <tr>
+      <td className='input-title-td'><div>{props.title}</div></td>
+      <td className='input-section'>{props.children}</td>
+    </tr>
+  );
+}
+function InfoRow(props){
+  return(
+    <tr>
+      <td colSpan={2} className="info-text" id={props.title}></td>
+    </tr>
+  );
+}
+
+function EmailCheck(props){
+  const code = props.code
+  const checkEmail=(e)=>{
+    const input = e.target.value;
+    const passText = document.querySelector('#email-info-box');
+    if(code===input){
+      setAble(passText, "인증번호가 확인되었습니다.");
+      setEmailPass(true);
+    }else{
+      setUnable(passText, "인증번호가 틀렸습니다.");
+      setEmailPass(false);
+    }
+  }
+  return(
+    <input type="text" id="email-check-input" onChange={checkEmail} />
   );
 }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -29,7 +30,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<context:component-scan base-package="com.kh.eatwith" />
+	<context:component-scan
+		base-package="com.kh.eatwith" />
 
 	<!-- #8 interceptor 등록 -->
 	<!-- <interceptors> <interceptor> <mapping path="/**"/> <beans:bean id="logInterceptor" 
@@ -44,7 +46,7 @@
 
 	<!-- #9.1 AOP관련 Annotation 등록처리 -->
 	<!-- #11.2 root-context의 트랜젝션 관련 처리를 가져와 servlet-context에 적용 -->
-	<aop:aspectj-autoproxy/>
+	<aop:aspectj-autoproxy />
 
 	<!-- #10.1 multipartResolver -->
 	<beans:bean id="multipartResolver"
@@ -57,32 +59,32 @@
 	</beans:bean>
 
 	<!-- #12.1 jsonView 빈 등록 -->
-	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
-		<beans:property name="contentType" value="application/json; charset=utf-8"/>
+	<beans:bean id="jsonView"
+		class="net.sf.json.spring.web.servlet.view.JsonView">
+		<beans:property name="contentType"
+			value="application/json; charset=utf-8" />
 	</beans:bean>
-	
+
 	<!-- #12.2 BeanNameViewResolver viewName에 해당하는 빈을 view로 연결하는 resolver -->
-	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<beans:property name="order" value="1"/> <!--  -->
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="1" /> <!-- -->
 	</beans:bean>
-	
+
 	<!-- #13.1 jackson message converter bean등록 -->
-	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-		<!-- #14.1 echoHandler등록 -->
-		<!-- 
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/echo"/>
-		<websocket:sockjs/>
-	</websocket:handlers>
-	 	-->
-	<!--  #14.2 stomp -->
-	<websocket:message-broker application-destination-prefix="/app">
+	<beans:bean id="jacksonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	<!-- #14.1 echoHandler등록 -->
+	<!-- <websocket:handlers> <websocket:mapping handler="echoHandler" path="/echo"/> 
+		<websocket:sockjs/> </websocket:handlers> -->
+	<!-- #14.2 stomp -->
+	<websocket:message-broker
+		application-destination-prefix="/app">
 		<websocket:stomp-endpoint path="/stomp">
-			<websocket:sockjs/>
+			<websocket:sockjs />
 		</websocket:stomp-endpoint>
-		<websocket:simple-broker prefix="/topic, /app"/>
+		<websocket:simple-broker prefix="/topic, /app" />
 	</websocket:message-broker>
+
 	
-
-
 </beans:beans>
