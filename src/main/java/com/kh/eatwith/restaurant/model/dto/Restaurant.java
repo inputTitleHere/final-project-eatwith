@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Restaurant {
 	private String no;
-	private String district_code;
-	private String food_code;
+	private String districtCode;
+	private String foodCode;
 	private String name;
 	private String dong;
 	private String address;
-	private String work_hours;
+	private String workHours;
 	private String menu;
 	private String phone;
-	private String naver_food_type;
+	private String naverFoodType;
 }
