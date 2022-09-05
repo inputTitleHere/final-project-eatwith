@@ -246,7 +246,6 @@ function MemberEnrollTable(props) {
         }
       }
     } else {
-      console.log("code = ",code);
       // 코드가 있으면
       return (
         <EmailCheck code={code} />
