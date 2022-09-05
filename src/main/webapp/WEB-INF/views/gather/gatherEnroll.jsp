@@ -11,13 +11,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>    
+    <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>        
     <title>모임 작성하기</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css"/>
+<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+
+   
 <style>
 #container{
     display: flex;
     justify-content: center;
     width: 1000px;
+    font:--our-font;
+    
 }
 form{
     background-color: white;
@@ -47,7 +54,7 @@ td{
     text-align: center;
 }
 #gatherSubmit{
-    background-color: #DC948A;
+    background-color: var(--jjin-pink);
     border: 0;
     color: white;
     margin-top: 10px;
@@ -58,7 +65,7 @@ td{
     font-size: 20px;
 }
 #plus,#minus{
-	background-color:#ECC7C5;
+	background-color: var(--yeon-pink);
     height: 30px;
     width: 30px;
 	border:0px;
@@ -110,13 +117,18 @@ td{
 .modalBox::-webkit-scrollbar{
     display: none;
 }
-.modalBox button {
+.modalBox .closeBtn {
     display: block;
     width: 20px;
     border: 0;
     background-color: #F0EBEC;
     margin: 0 auto;
     margin-left: 375px;
+}
+.modalBox div{
+	display:flex;
+	align-item:center;
+	justify-content:space-between;
 }
 .listBox{
     font-size: 20px;
@@ -127,6 +139,9 @@ td{
 .selectStore{
     display:flexbox;
 }
+#pilsu{
+	color:#EE4949;
+}
 </style>
 </head>
 <body bgcolor="#F0EBEC">
@@ -136,7 +151,7 @@ td{
                 <tbody>
                     <tr>
                         <th>
-                            모임 제목
+                            모임 제목<span id="pilsu">*</span>
                         </th>
                         <td>
                             <input type="text" name="gatherTitle" id="gatherTitle" placeholder="모임 제목을 입력해 주세요.">
@@ -144,21 +159,43 @@ td{
                     </tr>
                     <tr>
                         <th>
-                            모임 장소
+                            모임 장소<span id="pilsu">*</span>
                         </th>
                         <td>
+                        	<input type="hidden" id="restaurantNo" name="restaurantNo"/>
                             <input type="text" id="findStore" name="findStore" placeholder="가게 이름을 입력해주세요."><button type="button" class="openBtn">검색</button>
                             <div class="modal hidden">
                                 <div class="bg"></div>
                                 <div class="modalBox">
                                     <!-- 모달창 내부 -->
                                     <button type="button" class="closeBtn">✖</button>
-										
+										<div class="modalContent"></div>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <script>
+                    	let chkRestaurant = 0;
+                    	const setRestaurant=(e)=>{
+                    		const no=e.target.value;
+                    		const name=e.target.dataset.name;
+                    		const districtName=e.target.dataset.districtName;
+                    		const type = e.target.dataset.type;
+                    		const inputRestaurantNo=document.querySelector('#restaurantNo');
+                    		const restaurantName=document.querySelector('#storeName');        
+                    		const restaurantDistrict=document.querySelector('#storeLocation');
+                    		const restaurantType=document.querySelector('#storeCategory');
+                    		
+                    		restaurantName.innerHTML=name;
+                    		restaurantDistrict.innerHTML=districtName;
+                    		restaurantType.innerHTML=type;
+                    		                    		
+                    		inputRestaurantNo.value=no;
+                    		chkRestaurant=1;
+                    		console.log(inputRestaurantNo);
+                    		
+                    		document.querySelector(".modal").classList.add("hidden");
+                    	}
                           const open = () => {
                             document.querySelector(".modal").classList.remove("hidden");
                             const searchString = document.querySelector('#findStore').value;
@@ -170,7 +207,26 @@ td{
                             		"searchString":searchString
                             	},
                             	success(response){
-                            		console.log(response);
+                               		console.log(response);
+                               		const modalContent=document.querySelector('.modalContent');
+                               		const html=response.reduce((merge,item)=>{
+                               			const {no,name,districtName,type}=item;
+                               			return `
+                               			<li>
+                               				<div class="modal-restaurant">
+                               					<span class="modal-restaurant-title">\${name}</span>
+                               					<span class="modal-restaurant-district">\${districtName}</span>
+                               					<span class="modal-restaurant-type">\${type}</span>
+                               					<button type="button" class="selectRestaurant" data-name=\${name} data-district-name=\${districtName} data-type=\${type} onclick="setRestaurant(event)" value=\${no}>선택</button>
+                               				
+                               				</div>
+      
+                               			</li>
+                               			`
+                               		},'')
+                               		const ulHtml=`<ul>\${html}</ul>`
+                               		modalContent.innerHTML=ulHtml;
+                               		console.log('무언가 일어남',modalContent);
                             	},
                             	error:console.log
                             })
@@ -189,12 +245,12 @@ td{
                         <th> 
                         </th>
                         <td>
-                            <span id="storeName">음식점이름</span> <br> <span id="storeCategory">음식카테고리</span> <br> <span id="storeLocation">ㅇㅇ구</span>
+                            <span id="storeName"></span> <br> <span id="storeCategory"></span> <br> <span id="storeLocation"></span>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            모임인원
+                            모임인원<span id="pilsu">*</span>
                         </th>
                         <td>
                             <div id="countMem">
@@ -224,7 +280,7 @@ td{
                     </tr>
                     <tr>
                         <th>
-                            모임 시간
+                            모임시간<span id="pilsu">*</span>
                         </th>
                         <td>
                             <input type="datetime-local" name="gatherTime" id="gatherTime" onchange="setMinValue()" required>
@@ -232,7 +288,7 @@ td{
                     </tr>
                     <tr>
                         <th>
-                            모임 설명
+                            모임설명<span id="pilsu">*</span>
                         </th>
                         <td>
                             <textarea name="gatherContent" id="gatherContent" cols="30" rows="10" placeholder="모임 출발 장소, 모임에서 찾는 사람 등 모임에 대한 설명을 적어주세요." required></textarea>
@@ -340,6 +396,10 @@ td{
             return false;
         }
         //모임 장소선택
+        if(chkRestaurant==0){
+        	alert("모임 음식점 장소를 정해주세요.");
+        	return false;
+        }
     }
 
 
