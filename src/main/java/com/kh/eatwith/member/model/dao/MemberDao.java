@@ -13,7 +13,7 @@ import com.kh.eatwith.member.model.dto.Member;
 public interface MemberDao {
 
 	// mapper.xml에 배치
-	@Insert("insert into member values( seq_member_no.nextval,#{id},#{name},#{password},#{email},#{phone},sysdate,default,default,#{bornAt},#{gender},null,#{favRegion},#{favFoodType})")
+	@Insert("insert into member values( seq_member_no.nextval,#{id},#{name},#{password},#{email},#{phone},sysdate,default,default,#{bornAt},#{gender},null,#{favDistrict},#{favFoodType})")
 	@SelectKey(
 		statement = "select seq_member_no.currval from dual", 
 		before = false, 

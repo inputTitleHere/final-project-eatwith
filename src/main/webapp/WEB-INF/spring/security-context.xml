@@ -62,7 +62,7 @@
 			- 사용자의 특정권한을 이용하여 공격자의 의도된 행동을 실행하게 만드는 공격방법
 			- 특정 사용자의 권한 수정, 등록/수정/삭제 
 		-->
-		<csrf disabled="false"/> <!-- 기본이 false --> 
+		<csrf disabled="true"/> <!-- 기본이 false --> 
 
 		
 		<!-- rememberme -->

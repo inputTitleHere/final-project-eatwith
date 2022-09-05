@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 //@Controller
 @Slf4j
-@RequestMapping("/member")
-@SessionAttributes({"loginMember"}) // model에 저장하고 여기에 저장된 이름을 사용하면, 세션에 저장됨.
+//@RequestMapping("/member")
+//@SessionAttributes({"loginMember"}) // model에 저장하고 여기에 저장된 이름을 사용하면, 세션에 저장됨.
 public class MemberController {
 
 	@Autowired
