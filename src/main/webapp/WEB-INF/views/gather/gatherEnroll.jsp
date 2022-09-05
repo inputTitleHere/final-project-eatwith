@@ -19,12 +19,12 @@
 
    
 <style>
+*{
+    font:var(--our-font);
+}
 #container{
-    display: flex;
     justify-content: center;
     width: 1000px;
-    font:--our-font;
-    
 }
 form{
     background-color: white;
@@ -34,9 +34,11 @@ form{
 th{
     padding-right: 50px;
     padding-bottom: 20px;
+    font-weight:bold;
+    font-size:18px;   
 }
 td{
-    padding-bottom: 20px;
+    padding-bottom: 20px;    
 }
 #gatherTitle{
     width: 700px;
@@ -81,6 +83,7 @@ td{
 }
 #findStore{
     height: 20px;
+    width:200px;
 }
 .openBtn {
     margin-left: 5px;
@@ -109,7 +112,7 @@ td{
 .modalBox {
     position: absolute;
     background-color: #F0EBEC;
-    width: 400px;
+    width: 500px;
     height: 300px;
     padding: 15px;
     overflow: auto;
@@ -123,7 +126,7 @@ td{
     border: 0;
     background-color: #F0EBEC;
     margin: 0 auto;
-    margin-left: 375px;
+    margin-left: 475px;
 }
 .modalBox div{
 	display:flex;
@@ -141,6 +144,34 @@ td{
 }
 #pilsu{
 	color:#EE4949;
+}
+.modal-restaurant-title{
+	position:relative;
+	width:160px;
+	font-size:18px;
+	font-weight:bold;
+	overflow:hidden;
+}
+.modal-restaurant-district{
+	width:80px;
+}
+.modal-restaurant-type{
+	margin-left:10px;
+	width:100px;
+}
+.selectRestaurant{
+	width:50px;
+	height:30px;
+	background-color:var(--jjin-pink);
+	color:white;
+	border:0;
+}
+#storeName{
+	font-size:18px;
+	font-weight:strong;	
+}
+li{
+	list-style:none;
 }
 </style>
 </head>
@@ -163,6 +194,8 @@ td{
                         </th>
                         <td>
                         	<input type="hidden" id="restaurantNo" name="restaurantNo"/>
+                        	<input type="hidden" id="foodCode" name="foodCode" />
+                        	<input type="hidden" id="districtCode" name="districtCode"/>
                             <input type="text" id="findStore" name="findStore" placeholder="가게 이름을 입력해주세요."><button type="button" class="openBtn">검색</button>
                             <div class="modal hidden">
                                 <div class="bg"></div>
@@ -185,6 +218,8 @@ td{
                     		const restaurantName=document.querySelector('#storeName');        
                     		const restaurantDistrict=document.querySelector('#storeLocation');
                     		const restaurantType=document.querySelector('#storeCategory');
+                    		const foodCode=document.querySelector('#foodCode');
+                    		const districtCode=document.querySelector('#districtCode');
                     		
                     		restaurantName.innerHTML=name;
                     		restaurantDistrict.innerHTML=districtName;
@@ -194,12 +229,19 @@ td{
                     		chkRestaurant=1;
                     		console.log(inputRestaurantNo);
                     		
+                    		foodCode.value=e.target.dataset.foodCode;
+                    		districtCode.value=e.target.dataset.districtCode;
+                    		
                     		document.querySelector(".modal").classList.add("hidden");
                     	}
                           const open = () => {
                             document.querySelector(".modal").classList.remove("hidden");
                             const searchString = document.querySelector('#findStore').value;
-                            
+                            if(searchString==""){
+                            	alert('검색어를 입력 후 검색해주세요.');
+                            	document.querySelector(".modal").classList.add("hidden");
+                            }
+                            else{
                             $.ajax({
                             	url:"${pageContext.request.contextPath}/restaurant/findRestaurantByName",
                             	method:"GET",
@@ -210,17 +252,16 @@ td{
                                		console.log(response);
                                		const modalContent=document.querySelector('.modalContent');
                                		const html=response.reduce((merge,item)=>{
-                               			const {no,name,districtName,type}=item;
-                               			return `
+                               			const {no,name,districtName,type,foodCode,districtCode}=item;
+                               			return merge+`
                                			<li>
                                				<div class="modal-restaurant">
                                					<span class="modal-restaurant-title">\${name}</span>
                                					<span class="modal-restaurant-district">\${districtName}</span>
-                               					<span class="modal-restaurant-type">\${type}</span>
-                               					<button type="button" class="selectRestaurant" data-name=\${name} data-district-name=\${districtName} data-type=\${type} onclick="setRestaurant(event)" value=\${no}>선택</button>
-                               				
+                            					| <span class="modal-restaurant-type">\${type}</span>
+                               					<button type="button" class="selectRestaurant" data-name=\${name} data-district-name=\${districtName} data-type=\${type} data-food-code=\${foodCode} data-district-code=\${districtCode} onclick="setRestaurant(event)" value=\${no}>선택</button>
                                				</div>
-      
+                           					<hr />
                                			</li>
                                			`
                                		},'')
@@ -230,6 +271,8 @@ td{
                             	},
                             	error:console.log
                             })
+                            	
+                            }
                         }
 
                         const close = () => {
@@ -265,19 +308,37 @@ td{
                             나이제한
                         </th>
                         <td>
+                        	<input type="checkbox" id="ageChk" onchange="toggleAge(event)"/>나이제한X &nbsp;&nbsp;
                             <input type="number" name="gatherMin" id="gatherMin" placeholder="최소나이"> ~ <input type="number" name="gatherMax" id="gatherMax" placeholder="최대나이">
                         </td>
                     </tr>
+                    <script>
+                    	const toggleAge=(e)=>{
+                    		const minInput=document.querySelector('#gatherMin');
+                    		const maxInput=document.querySelector('#gatherMax');
+                    		minInput.disabled=e.target.checked;
+                    		maxInput.disabled=e.target.checked;
+                    	}
+                    	
+                    </script>
                     <tr>
                         <th>
                             성별제한
                         </th>
                         <td>
-                            <input type="radio" name="gatherGender" id="gatherGender" value="all" checked>제한 없음
-                            <input type="radio" name="gatherGender" id="gatherGender" value="M">남
-                            <input type="radio" name="gatherGender" id="gatherGender" value="F">여
+                        	<input type="checkbox" id="genderChk" onchange="toggleGender(event)" />성별제한X &nbsp;&nbsp;
+                            <input type="radio" name="gatherGender" id="gatherGenM" value="M">남
+                            <input type="radio" name="gatherGender" id="gatherGenF" value="F">여
                         </td>
                     </tr>
+                    <script>
+                    	const toggleGender=(e)=>{
+                    		const genderM=document.querySelector('#gatherGenM');
+                    		const genderF=document.querySelector('#gatherGenF');
+                    		genderM.disabled=e.target.checked;
+                    		genderF.disabled=e.target.checked;
+                    	}
+                    </script>
                     <tr>
                         <th>
                             모임시간<span id="pilsu">*</span>
@@ -309,7 +370,7 @@ td{
                     <tr>
                         <th></th>
                         <td>
-                            <input type="submit" id="gatherSubmit" value="등록">
+                            <input type="submit" id="gatherSubmit" onclick="chkAge" value="등록">
                         </td>
                     </tr>
                 </tbody>
@@ -317,6 +378,7 @@ td{
                     <tr>
                         <th>
                             <input type="hidden" name="count" id="count"/>
+                            <input type="hidden" name="userNo" id="userNo" value="102" />
                         </th>
                     </tr>
                 </tfoot>
@@ -395,6 +457,7 @@ td{
             frm.gatherMin.focus();
             return false;
         }
+
         //모임 장소선택
         if(chkRestaurant==0){
         	alert("모임 음식점 장소를 정해주세요.");
