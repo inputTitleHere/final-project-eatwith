@@ -1,5 +1,7 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,5 +39,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member selectOneByNickname(String nickname) {
 		return memberDao.selectOneByNickname(nickname);
+	}
+	
+	@Override
+	public Member findIdByInfo(String name) {
+		return memberDao.findIdByInfo(name);
 	}
 }

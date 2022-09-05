@@ -81,14 +81,18 @@ public class MemberSecurityController {
 		return "redirect:" + location;
 	}
 	
-	@GetMapping("/memberFind")
-	public void memberFind(
-			@RequestParam String name,
-			@RequestParam String phone,
-			@RequestParam String email,
-			@RequestParam String id,
-			Model model) {
+	@GetMapping("/memberFindId")
+	public String memberFind(
+			String name) {
 
+		Member member = memberService.findIdByInfo(name);
+		return "member/memberFind";
+	}
+	
+	@PostMapping("/memberFindId")
+	public String memberFindId(@RequestParam String name, @RequestParam String phone) {
 		
+		Member member = memberService.findIdByInfo(name);
+		return "member/memberFind";
 	}
 }
