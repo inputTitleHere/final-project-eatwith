@@ -12,7 +12,8 @@ public interface MemberService {
 
 	Member selectOneByNickname(String id);
 
-	Member findIdByInfo(String name);
+	Member findIdByInfo(Map<String, Object> map);
 
+	Member resetPasswordByInfo(Map<String, Object> map);
 	
 }

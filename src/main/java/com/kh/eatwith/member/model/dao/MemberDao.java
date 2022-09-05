@@ -27,8 +27,10 @@ public interface MemberDao {
 	@Select("select * from member where name=#{nickname}")
 	Member selectOneByNickname(String nickname);
 
-	@Select("select * from member where name = #{name}")
-	Member findIdByInfo(String name);
+	@Select("select * from member where name = #{name} and phone = #{phone}")
+	Member findIdByInfo(Map<String, Object> map);
 
+	@Select("select * from member where id = #{id} and name = #{name} and email = #{email}")
+	Member resetPasswordByInfo(Map<String, Object> map);
 
 }

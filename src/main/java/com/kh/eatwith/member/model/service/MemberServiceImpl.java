@@ -42,7 +42,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Member findIdByInfo(String name) {
-		return memberDao.findIdByInfo(name);
+	public Member findIdByInfo(Map<String, Object> map) {
+		return memberDao.findIdByInfo(map);
 	}
+	
+	@Override
+	public Member resetPasswordByInfo(Map<String, Object> map) {
+		return memberDao.resetPasswordByInfo(map);
+	}
+	
 }
