@@ -23,4 +23,5 @@ public class Gather {
 	private int gatherMin;//최소나이
 	private int gatherMax;//최대나이
 	private Gender gatherGender;//모임 성별제한
+	private String restaurantNo;//모임위치(가게)
 }
