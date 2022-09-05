@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.eatwith.gather.model.dto.Gather;
 import com.kh.eatwith.gather.model.service.GatherService;
@@ -26,8 +27,11 @@ public class GatherController {
 	public void gatherList() {}
 	
 	@PostMapping("/gatherEnroll")
-	public String gatherEnroll(Gather gather) {
+	public String gatherEnroll(Gather gather, RedirectAttributes redirectAttr) {
+		log.debug("gather = {}",gather);
+		int result=gatherService.gatherEnroll(gather);
+		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
 		
-		return "redirect:/";
+		return "redirect:/gather/gatherList";
 	}
 }

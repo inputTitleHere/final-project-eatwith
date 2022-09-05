@@ -11,11 +11,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>    
+    <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>        
     <title>모임 작성하기</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css"/>
+<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+
+   
 <style>
+*{
+    font:var(--our-font);
+}
 #container{
-    display: flex;
     justify-content: center;
     width: 1000px;
 }
@@ -27,9 +34,11 @@ form{
 th{
     padding-right: 50px;
     padding-bottom: 20px;
+    font-weight:bold;
+    font-size:18px;   
 }
 td{
-    padding-bottom: 20px;
+    padding-bottom: 20px;    
 }
 #gatherTitle{
     width: 700px;
@@ -47,7 +56,7 @@ td{
     text-align: center;
 }
 #gatherSubmit{
-    background-color: #DC948A;
+    background-color: var(--jjin-pink);
     border: 0;
     color: white;
     margin-top: 10px;
@@ -58,7 +67,7 @@ td{
     font-size: 20px;
 }
 #plus,#minus{
-	background-color:#ECC7C5;
+	background-color: var(--yeon-pink);
     height: 30px;
     width: 30px;
 	border:0px;
@@ -74,6 +83,7 @@ td{
 }
 #findStore{
     height: 20px;
+    width:200px;
 }
 .openBtn {
     margin-left: 5px;
@@ -102,7 +112,7 @@ td{
 .modalBox {
     position: absolute;
     background-color: #F0EBEC;
-    width: 400px;
+    width: 500px;
     height: 300px;
     padding: 15px;
     overflow: auto;
@@ -110,13 +120,18 @@ td{
 .modalBox::-webkit-scrollbar{
     display: none;
 }
-.modalBox button {
+.modalBox .closeBtn {
     display: block;
     width: 20px;
     border: 0;
     background-color: #F0EBEC;
     margin: 0 auto;
-    margin-left: 375px;
+    margin-left: 475px;
+}
+.modalBox div{
+	display:flex;
+	align-item:center;
+	justify-content:space-between;
 }
 .listBox{
     font-size: 20px;
@@ -127,6 +142,37 @@ td{
 .selectStore{
     display:flexbox;
 }
+#pilsu{
+	color:#EE4949;
+}
+.modal-restaurant-title{
+	position:relative;
+	width:160px;
+	font-size:18px;
+	font-weight:bold;
+	overflow:hidden;
+}
+.modal-restaurant-district{
+	width:80px;
+}
+.modal-restaurant-type{
+	margin-left:10px;
+	width:100px;
+}
+.selectRestaurant{
+	width:50px;
+	height:30px;
+	background-color:var(--jjin-pink);
+	color:white;
+	border:0;
+}
+#storeName{
+	font-size:18px;
+	font-weight:strong;	
+}
+li{
+	list-style:none;
+}
 </style>
 </head>
 <body bgcolor="#F0EBEC">
@@ -136,7 +182,7 @@ td{
                 <tbody>
                     <tr>
                         <th>
-                            모임 제목
+                            모임 제목<span id="pilsu">*</span>
                         </th>
                         <td>
                             <input type="text" name="gatherTitle" id="gatherTitle" placeholder="모임 제목을 입력해 주세요.">
@@ -144,25 +190,58 @@ td{
                     </tr>
                     <tr>
                         <th>
-                            모임 장소
+                            모임 장소<span id="pilsu">*</span>
                         </th>
                         <td>
+                        	<input type="hidden" id="restaurantNo" name="restaurantNo"/>
+                        	<input type="hidden" id="foodCode" name="foodCode" />
+                        	<input type="hidden" id="districtCode" name="districtCode"/>
                             <input type="text" id="findStore" name="findStore" placeholder="가게 이름을 입력해주세요."><button type="button" class="openBtn">검색</button>
                             <div class="modal hidden">
                                 <div class="bg"></div>
                                 <div class="modalBox">
                                     <!-- 모달창 내부 -->
                                     <button type="button" class="closeBtn">✖</button>
-										
+										<div class="modalContent"></div>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <script>
+                    	let chkRestaurant = 0;
+                    	const setRestaurant=(e)=>{
+                    		const no=e.target.value;
+                    		const name=e.target.dataset.name;
+                    		const districtName=e.target.dataset.districtName;
+                    		const type = e.target.dataset.type;
+                    		const inputRestaurantNo=document.querySelector('#restaurantNo');
+                    		const restaurantName=document.querySelector('#storeName');        
+                    		const restaurantDistrict=document.querySelector('#storeLocation');
+                    		const restaurantType=document.querySelector('#storeCategory');
+                    		const foodCode=document.querySelector('#foodCode');
+                    		const districtCode=document.querySelector('#districtCode');
+                    		
+                    		restaurantName.innerHTML=name;
+                    		restaurantDistrict.innerHTML=districtName;
+                    		restaurantType.innerHTML=type;
+                    		                    		
+                    		inputRestaurantNo.value=no;
+                    		chkRestaurant=1;
+                    		console.log(inputRestaurantNo);
+                    		
+                    		foodCode.value=e.target.dataset.foodCode;
+                    		districtCode.value=e.target.dataset.districtCode;
+                    		
+                    		document.querySelector(".modal").classList.add("hidden");
+                    	}
                           const open = () => {
                             document.querySelector(".modal").classList.remove("hidden");
                             const searchString = document.querySelector('#findStore').value;
-                            
+                            if(searchString==""){
+                            	alert('검색어를 입력 후 검색해주세요.');
+                            	document.querySelector(".modal").classList.add("hidden");
+                            }
+                            else{
                             $.ajax({
                             	url:"${pageContext.request.contextPath}/restaurant/findRestaurantByName",
                             	method:"GET",
@@ -170,10 +249,30 @@ td{
                             		"searchString":searchString
                             	},
                             	success(response){
-                            		console.log(response);
+                               		console.log(response);
+                               		const modalContent=document.querySelector('.modalContent');
+                               		const html=response.reduce((merge,item)=>{
+                               			const {no,name,districtName,type,foodCode,districtCode}=item;
+                               			return merge+`
+                               			<li>
+                               				<div class="modal-restaurant">
+                               					<span class="modal-restaurant-title">\${name}</span>
+                               					<span class="modal-restaurant-district">\${districtName}</span>
+                            					| <span class="modal-restaurant-type">\${type}</span>
+                               					<button type="button" class="selectRestaurant" data-name=\${name} data-district-name=\${districtName} data-type=\${type} data-food-code=\${foodCode} data-district-code=\${districtCode} onclick="setRestaurant(event)" value=\${no}>선택</button>
+                               				</div>
+                           					<hr />
+                               			</li>
+                               			`
+                               		},'')
+                               		const ulHtml=`<ul>\${html}</ul>`
+                               		modalContent.innerHTML=ulHtml;
+                               		console.log('무언가 일어남',modalContent);
                             	},
                             	error:console.log
                             })
+                            	
+                            }
                         }
 
                         const close = () => {
@@ -189,12 +288,12 @@ td{
                         <th> 
                         </th>
                         <td>
-                            <span id="storeName">음식점이름</span> <br> <span id="storeCategory">음식카테고리</span> <br> <span id="storeLocation">ㅇㅇ구</span>
+                            <span id="storeName"></span> <br> <span id="storeCategory"></span> <br> <span id="storeLocation"></span>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            모임인원
+                            모임인원<span id="pilsu">*</span>
                         </th>
                         <td>
                             <div id="countMem">
@@ -209,22 +308,40 @@ td{
                             나이제한
                         </th>
                         <td>
+                        	<input type="checkbox" id="ageChk" onchange="toggleAge(event)"/>나이제한X &nbsp;&nbsp;
                             <input type="number" name="gatherMin" id="gatherMin" placeholder="최소나이"> ~ <input type="number" name="gatherMax" id="gatherMax" placeholder="최대나이">
                         </td>
                     </tr>
+                    <script>
+                    	const toggleAge=(e)=>{
+                    		const minInput=document.querySelector('#gatherMin');
+                    		const maxInput=document.querySelector('#gatherMax');
+                    		minInput.disabled=e.target.checked;
+                    		maxInput.disabled=e.target.checked;
+                    	}
+                    	
+                    </script>
                     <tr>
                         <th>
                             성별제한
                         </th>
                         <td>
-                            <input type="radio" name="gatherGender" id="gatherGender" value="all" checked>제한 없음
-                            <input type="radio" name="gatherGender" id="gatherGender" value="M">남
-                            <input type="radio" name="gatherGender" id="gatherGender" value="F">여
+                        	<input type="checkbox" id="genderChk" onchange="toggleGender(event)" />성별제한X &nbsp;&nbsp;
+                            <input type="radio" name="gatherGender" id="gatherGenM" value="M">남
+                            <input type="radio" name="gatherGender" id="gatherGenF" value="F">여
                         </td>
                     </tr>
+                    <script>
+                    	const toggleGender=(e)=>{
+                    		const genderM=document.querySelector('#gatherGenM');
+                    		const genderF=document.querySelector('#gatherGenF');
+                    		genderM.disabled=e.target.checked;
+                    		genderF.disabled=e.target.checked;
+                    	}
+                    </script>
                     <tr>
                         <th>
-                            모임 시간
+                            모임시간<span id="pilsu">*</span>
                         </th>
                         <td>
                             <input type="datetime-local" name="gatherTime" id="gatherTime" onchange="setMinValue()" required>
@@ -232,7 +349,7 @@ td{
                     </tr>
                     <tr>
                         <th>
-                            모임 설명
+                            모임설명<span id="pilsu">*</span>
                         </th>
                         <td>
                             <textarea name="gatherContent" id="gatherContent" cols="30" rows="10" placeholder="모임 출발 장소, 모임에서 찾는 사람 등 모임에 대한 설명을 적어주세요." required></textarea>
@@ -253,7 +370,7 @@ td{
                     <tr>
                         <th></th>
                         <td>
-                            <input type="submit" id="gatherSubmit" value="등록">
+                            <input type="submit" id="gatherSubmit" onclick="chkAge" value="등록">
                         </td>
                     </tr>
                 </tbody>
@@ -261,6 +378,7 @@ td{
                     <tr>
                         <th>
                             <input type="hidden" name="count" id="count"/>
+                            <input type="hidden" name="userNo" id="userNo" value="102" />
                         </th>
                     </tr>
                 </tfoot>
@@ -339,7 +457,12 @@ td{
             frm.gatherMin.focus();
             return false;
         }
+
         //모임 장소선택
+        if(chkRestaurant==0){
+        	alert("모임 음식점 장소를 정해주세요.");
+        	return false;
+        }
     }
 
 

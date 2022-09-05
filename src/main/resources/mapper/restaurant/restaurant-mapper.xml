@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kh.eatwith.restaurant.model.dao.RestaurantDao">
+	<select id="findRestaurantByName" resultType="RestaurantExt">
+		select
+		r.*,
+		d.name as "district_name",
+		f.type
+		from
+		restaurant r join district d on d.code=r.district_code join food_type f on
+		r.food_code = f.code
+		where
+		r.name like '%'||#{searchString}||'%'
+	</select>
+
+</mapper>

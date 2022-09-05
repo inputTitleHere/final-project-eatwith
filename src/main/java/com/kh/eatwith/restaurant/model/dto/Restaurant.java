@@ -6,23 +6,21 @@ import com.kh.eatwith.gather.model.dto.Gather;
 import com.kh.eatwith.member.model.dto.Gender;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Restaurant {
-	private String no;
-	private String district_code;
-	private String food_code;
-	private String name;
-	private String dong;
-	private String address;
-	private String work_hours;
-	private String menu;
-	private String phone;
-	private String naver_food_type;
+	protected String no;
+	protected String districtCode;
+	protected String foodCode;
+	protected String name;
+	protected String dong;
+	protected String address;
+	protected String workHours;
+	protected String menu;
+	protected String phone;
+	protected String naverFoodType;
 }

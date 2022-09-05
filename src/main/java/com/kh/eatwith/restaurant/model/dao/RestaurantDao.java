@@ -10,7 +10,7 @@ import com.kh.eatwith.restaurant.model.dto.Restaurant;
 @Mapper
 public interface RestaurantDao {
 
-	@Select("select * from restaurant where name like '%'||#{searchString}||'%'")
+	//@Select("select * from restaurant where name like '%'||#{searchString}||'%'")
 	List<Restaurant> findRestaurantByName(String searchString);
 	
 }
