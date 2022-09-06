@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.Update;
 
 import com.kh.eatwith.member.model.dto.Member;
 
@@ -31,6 +32,10 @@ public interface MemberDao {
 	Member findIdByInfo(Map<String, Object> map);
 
 	@Select("select * from member where id = #{id} and name = #{name} and email = #{email}")
-	Member resetPasswordByInfo(Map<String, Object> map);
+	Member findPasswordByInfo(Map<String, Object> map);
+
+
+	@Update("update member set password = #{code} where id = #{id} and name = #{name} and email = #{email}")
+	int updatePasswordByReset(Map<String, Object> map);
 
 }

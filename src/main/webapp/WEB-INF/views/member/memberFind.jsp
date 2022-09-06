@@ -81,7 +81,7 @@
 		                    </tr>
 		                </thead>
 		            </table>
-					<input type="submit" value="비밀번호 변경하기">
+					<input type="submit" value="임시 비밀번호 발급받기">
 	            	<div id="resetPw"></div>		                    
 				</form>
         </section>
@@ -89,7 +89,7 @@
 	
 	<script>
 	document.querySelector("#resetPwFrm").addEventListener('submit', (e) => {
-		e.prevnetDefault();
+		e.preventDefault();
 		console.log("비밀번호 초기화버튼!!!");
 		const id = document.querySelector("#id").value;
 		const name2 = document.querySelector("#name2").value;

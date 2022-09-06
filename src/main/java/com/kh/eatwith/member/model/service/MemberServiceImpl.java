@@ -47,8 +47,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Member resetPasswordByInfo(Map<String, Object> map) {
-		return memberDao.resetPasswordByInfo(map);
+	public Member findPasswordByInfo(Map<String, Object> map) {
+		return memberDao.findPasswordByInfo(map);
 	}
 	
+	@Override
+	public int updatePasswordByReset(Map<String, Object> map) {
+		return memberDao.updatePasswordByReset(map);
+	}
 }

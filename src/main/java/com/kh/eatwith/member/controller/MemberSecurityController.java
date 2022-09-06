@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -150,7 +151,7 @@ public class MemberSecurityController {
 		map.put("name", name);
 		map.put("email", email);
 		
-		Member member = memberService.resetPasswordByInfo(map);
+		Member member = memberService.findPasswordByInfo(map);
 		return "member/memberFind";
 	}
 
@@ -158,17 +159,25 @@ public class MemberSecurityController {
 	@ResponseBody
 	public ResponseEntity<?> memberResetPassword(@RequestParam String id, @RequestParam String name, @RequestParam String email) {
 		log.debug("비밀번호 초기화 실행");
-		String code = randomPassword(8);
+		String code = randomPassword(8); // 난수처리된 비밀번호
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
-		map.put("name2", name);
+		map.put("name", name);
 		map.put("email", email);
-		map.put("password", code);
+		map.put("code", code);
 		
-		Member member = memberService.resetPasswordByInfo(map);
+		Member member = memberService.findPasswordByInfo(map);
 		log.debug("password = {}", code);
 		log.debug("member = {}", member);
+
+		// 비번 암호화
+		String encodePwd = bcpe.encode(code);
+		member.setPassword(code);
 		
+		map.put("code", encodePwd);
+		int result = memberService.updatePasswordByReset(map);
+		log.debug("password = {}", encodePwd);
+
 		return ResponseEntity.ok(member);
 	}
 
@@ -188,6 +197,7 @@ public class MemberSecurityController {
 			index = (int) (charset.length * Math.random());
 			sb.append(charset[index]);
 		}
+		System.out.println("sb = " + sb);
 		return sb.toString();
 	}
 
