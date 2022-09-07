@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page import="com.kh.eatwith.gather.model.dto.Gather"%>
 <%@page import="java.util.List"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,15 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
+#container{
+    align-items: center;
+    font-size:16px;
+	width: 1200px;	
+	left:0;
+	right:0;
+	margin:auto;
+	padding:100px;
+}
 aside {
 	float: left;
 	width: 260px;
@@ -197,5 +207,6 @@ td {
         	});     	
         });
     </script>
+        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
