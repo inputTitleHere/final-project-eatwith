@@ -6,8 +6,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page import="com.kh.eatwith.gather.model.dto.Gather"%>
 <%@page import="java.util.List"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +19,7 @@
 	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
 #container{
-    align-items: center;
+	display:flex;
     font-size:16px;
 	width: 1200px;	
 	left:0;
@@ -30,7 +28,6 @@
 	padding:100px;
 }
 aside {
-	float: left;
 	width: 260px;
 	margin-left: 10px;
 	padding-left: 20px;
@@ -41,7 +38,6 @@ aside {
 }
 
 #content {
-	float: left;
 	width: 700px;
 	background-color: white;
 	padding-bottom: 20px;
@@ -112,6 +108,7 @@ td {
 </style>
 </head>
 <body bgcolor="#F0EBEC">
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div id="container">
 		<aside>
 			<h3>모임 지역 선택</h3>
@@ -186,8 +183,8 @@ td {
 			
 			</table>
 		</section>
-
 	</div>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>
         function selectAll(selectAll){
             const checkboxes = document.getElementsByName('location');
@@ -207,6 +204,5 @@ td {
         	});     	
         });
     </script>
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
