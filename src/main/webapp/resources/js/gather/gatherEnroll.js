@@ -26,8 +26,6 @@
         }
     }
 
-    
-
     //모임 설명 글자세기
     $(document).ready(function() {
     $('#gatherContent').on('keyup', function() {
@@ -64,8 +62,7 @@
         document.getElementById("count").value=count;
         console.log(document.getElementById("count").value);
     });
-    document.getElementById("count").value=number.textContent;
-  
+
     //유효성검사
     document.gatherEnrollFrm.onsubmit=(e)=>{
         const frm=e.target;

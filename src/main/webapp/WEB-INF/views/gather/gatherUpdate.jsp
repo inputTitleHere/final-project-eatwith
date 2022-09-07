@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script
 	src="<%=request.getContextPath()%>/resources/js/jquery-3.6.0.js"></script>
-<title>모임 작성하기</title>
+<title>모임 수정하기</title>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/root.css" />
@@ -26,13 +26,13 @@
 <body bgcolor="#F0EBEC">
 	<div id="container">
 		<form name="gatherEnrollFrm" method="post"
-			action="${pageContext.request.contextPath}/gather/gatherEnroll">
+			action="${pageContext.request.contextPath}/gather/gatherUpdate">
 			<table>
 				<tbody>
 					<tr>
 						<th>모임 제목<span id="pilsu">*</span>
 						</th>
-						<td><input type="text" name="title" id="title"
+						<td><input type="text" name="gatherTitle" id="gatherTitle"
 							placeholder="모임 제목을 입력해 주세요."></td>
 					</tr>
 					<tr>
@@ -151,28 +151,28 @@
 						<th>나이제한</th>
 						<td><input type="checkbox" id="ageChk"
 							onchange="toggleAge(event)" />나이제한X &nbsp;&nbsp; <input
-							type="number" name="ageRestrictionBottom" id="gatherMin" placeholder="최소나이">
-							~ <input type="number" name="ageRestrictionTop" id="gatherMax"
+							type="number" name="gatherMin" id="gatherMin" placeholder="최소나이">
+							~ <input type="number" name="gatherMax" id="gatherMax"
 							placeholder="최대나이"></td>
 					</tr>
 					<tr>
 						<th>성별제한</th>
 						<td><input type="checkbox" id="genderChk"
 							onchange="toggleGender(event)" />성별제한X &nbsp;&nbsp; <input
-							type="radio" name="genderRestriction" id="gatherGenM" value="M">남
-							<input type="radio" name="genderRestriction" id="gatherGenF" value="F">여
+							type="radio" name="gatherGender" id="gatherGenM" value="M">남
+							<input type="radio" name="gatherGender" id="gatherGenF" value="F">여
 						</td>
 					</tr>
 					<tr>
 						<th>모임시간<span id="pilsu">*</span>
 						</th>
-						<td><input type="datetime-local" name="meetDate"
+						<td><input type="datetime-local" name="gatherTime"
 							id="gatherTime" onchange="setMinValue()" required></td>
 					</tr>
 					<tr>
 						<th>모임설명<span id="pilsu">*</span>
 						</th>
-						<td><textarea name="content" id="gatherContent"
+						<td><textarea name="gatherContent" id="gatherContent"
 								cols="30" rows="10"
 								placeholder="모임 출발 장소, 모임에서 찾는 사람 등 모임에 대한 설명을 적어주세요." required></textarea>
 							<p>
@@ -202,13 +202,8 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>
-						<input	type="hidden" name="userNo" id="userNo" value="102" />
-						<input type="hidden" name="count" id="count" />
-						<script>
-							
-						</script>
-						</th>
+						<th><input type="hidden" name="count" id="count" /> <input
+							type="hidden" name="userNo" id="userNo" value="102" /></th>
 					</tr>
 				</tfoot>
 			</table>
