@@ -18,20 +18,22 @@
 	<http security="none" pattern="/resources/**"/> <!-- 해당 주소로는 security적용 안함 -->
 	<!-- intercept url은 구체적인 것 => 일반적인 설정 순으로 작동한다. -->
 	<http auto-config="true">
+	
 		<!-- permitAll ,hasAnyRole(A,B,C), isAnonymous(), isAuthenticated(), hasRole(A) -->
 		
-		<!-- <intercept-url pattern="/**" access="permitAll"/> -->
+		<!-- 09/05 권한 구분 작성 시작 _ 임규완 -->
+			<intercept-url pattern="/" access="permitAll"/> <!-- index 접근가능 목적 -->
+			<intercept-url pattern="/index.jsp" access="permitAll"/> <!-- 위와 동일 -->
+			<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> <!-- 위와 동일 -->
+			<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> <!-- 위와 동일 -->
+			<intercept-url pattern="/**" access="permitAll"/> <!-- 마미페이지 / 관리자페이지 등 지정 페이지 isAuthenticated() 추가 -->
+		<!-- 09/05 권한 구분 작성 끝 _ 임규완 -->
 		
-		<!-- <intercept-url pattern="/" access="permitAll"/>
-		<intercept-url pattern="/index.jsp" access="permitAll"/> -->
+		
 		<!-- 승윤님께서 만드신 회원가입 jsp 연결하시면될 것 같아요 -->
 		<!-- <intercept-url pattern="/member/memberEnroll" access="isAnonymous()"/> -->
-		
 		<intercept-url pattern="/member/memberLogin" access="isAnonymous()"/>
 		<intercept-url pattern="/member/memberLogout" access="permitAll"/>
-
-
-		<intercept-url pattern="/**" access="permitAll"/>
 		
 		<!-- 
 			login-page : 로그인 폼을 요청. 작성필요
