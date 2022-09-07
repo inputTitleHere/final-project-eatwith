@@ -339,6 +339,10 @@ insert into gather values(1,'3110000-101-2022-00001','2인3메뉴 조질사람',
 commit;
 
 alter table gather modify(title varchar2(4000));
+alter table gather modify meet_date timestamp;
+
+select * from cols;
+select * from gather order by no desc;
 -- 신유경 END
 
 -- 임규완 START
