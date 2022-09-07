@@ -18,6 +18,9 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
+h3{
+	margin:0.5em 0;
+}
 #container{
 	display:flex;
     font-size:16px;
@@ -36,7 +39,17 @@ aside {
 	padding-bottom: 20px;
 	background-color: white;
 }
-
+.district-wrapper,.food-wrapper{
+	width:240px;
+	height:fit-content;
+	margin:0;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+}
+.district-wrapper label, .food-wrapper label{
+	width:40%;
+}
 #content {
 	width: 700px;
 	background-color: white;
@@ -111,39 +124,53 @@ td {
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div id="container">
 		<aside>
-			<h3>모임 지역 선택</h3>
-			<input type="checkbox" name="location" onclick="selectAll(this)">서울
-			전체<br> <input type="checkbox" name="location">강남구 <input
-				type="checkbox" name="location">강동구<br> <input
-				type="checkbox" name="location">강북구 <input type="checkbox"
-				name="location">강서구<br> <input type="checkbox"
-				name="location">관악구 <input type="checkbox" name="location">광진구<br>
-			<input type="checkbox" name="location">구로구 <input
-				type="checkbox" name="location">금천구<br> <input
-				type="checkbox" name="location">노원구 <input type="checkbox"
-				name="location">도봉구<br> <input type="checkbox"
-				name="location">동대문구 <input type="checkbox" name="location">동작구<br>
-			<input type="checkbox" name="location">마포구 <input
-				type="checkbox" name="location">서초구<br> <input
-				type="checkbox" name="location">서대문구 <input type="checkbox"
-				name="location">성동구<br> <input type="checkbox"
-				name="location">성북구 <input type="checkbox" name="location">송파구<br>
-			<input type="checkbox" name="location">양천구 <input
-				type="checkbox" name="location">용산구<br> <input
-				type="checkbox" name="location">영등포구 <input type="checkbox"
-				name="location">은평구<br> <input type="checkbox"
-				name="location">종로구 <input type="checkbox" name="location">중구<br>
-			<input type="checkbox" name="location">중랑구
+            <h3>모임 지역 선택</h3>
+            <input type="checkbox" name="location" id="selectAll" onclick="selectAll(this)">서울 전체<br>
+            <div class="district-wrapper">
+            <label><input type="checkbox" name="location" value="3220000" id="3220000">강남구</label>
+            <label><input type="checkbox" name="location" value="3240000" id="3240000">강동구</label>
+            <label><input type="checkbox" name="location" value="3080000" id="3080000">강북구</label>
+            <label><input type="checkbox" name="location" value="3150000" id="3150000">강서구</label>
+            <label><input type="checkbox" name="location" value="3200000" id="3200000">관악구</label>
+            <label><input type="checkbox" name="location" value="3040000" id="3040000">광진구</label>
+            <label><input type="checkbox" name="location" value="3160000" id="3160000">구로구</label>
+            <label><input type="checkbox" name="location" value="3170000" id="3170000">금천구</label>
+            <label><input type="checkbox" name="location" value="3100000" id="3100000">노원구</label>
+            <label><input type="checkbox" name="location" value="3090000" id="3090000">도봉구</label>
+            <label><input type="checkbox" name="location" value="3050000" id="3050000">동대문구</label>
+            <label><input type="checkbox" name="location" value="3190000" id="3190000">동작구</label>
+            <label><input type="checkbox" name="location" value="3130000" id="3130000">마포구</label>
+            <label><input type="checkbox" name="location" value="3210000" id="3210000">서초구</label>
+            <label><input type="checkbox" name="location" value="3120000" id="3120000">서대문구</label>
+            <label><input type="checkbox" name="location" value="3030000" id="3030000">성동구</label>
+            <label><input type="checkbox" name="location" value="3070000" id="3070000">성북구</label>
+            <label><input type="checkbox" name="location" value="3230000" id="3230000">송파구</label>
+            <label><input type="checkbox" name="location" value="3140000" id="3140000">양천구</label>
+            <label><input type="checkbox" name="location" value="3020000" id="3020000">용산구</label>
+            <label><input type="checkbox" name="location" value="3180000" id="3180000">영등포구</label>
+            <label><input type="checkbox" name="location" value="3110000" id="3110000">은평구</label>
+            <label><input type="checkbox" name="location" value="3000000" id="3000000">종로구</label>
+            <label><input type="checkbox" name="location" value="3010000" id="3010000">중구</label>
+            <label><input type="checkbox" name="location" value="3060000" id="3060000">중랑구</label>
+            </div>
+            <hr>
+			
+            <h3>모임 음식 분야 선택</h3>
+            <div class="food-wrapper">
+            <label><input type="radio" name="food" value="001" id="001">한식</label>
+            <label><input type="radio" name="food" value="002" id="002">일식</label>
+            <label><input type="radio" name="food" value="003" id="003">양식</label>
+            <label><input type="radio" name="food" value="004" id="004">회/해산물</label>
+            <label><input type="radio" name="food" value="005" id="005">중식</label>
+            <label><input type="radio" name="food" value="006" id="006">분식/면류</label>
+            <label><input type="radio" name="food" value="007" id="007">고기/구이</label>
+            <label><input type="radio" name="food" value="008" id="008">치킨/닭요리</label>
+            <label><input type="radio" name="food" value="009" id="009">아시아음식</label>
+            <label><input type="radio" name="food" value="010" id="010">카페/디저트</label>
+            <label><input type="radio" name="food" value="011" id="011">기타</label>            
+            </div>
 			<hr>
-			<h3>모임 음식 분야 선택</h3>
-			<input type="radio" name="food" />한식 <input type="radio" name="food" />일식<br>
-			<input type="radio" name="food" />양식 <input type="radio" name="food" />회/해산물<br>
-			<input type="radio" name="food" />중식 <input type="radio" name="food" />분식/면류<br>
-			<input type="radio" name="food" />고기/구이 <input type="radio"
-				name="food" />치킨/닭요리<br> <input type="radio" name="food" />아시아음식
-			<input type="radio" name="food" />카페/디저트<br> <input
-				type="radio" name="food" />기타 <input type="radio" name="food" />테스트음식타입
-			<hr>
+			
 			<h3>모임 정렬</h3>
 			<select name="see" id="seeSelect">
 				<option value="">보기 설정</option>
