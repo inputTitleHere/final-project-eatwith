@@ -1,5 +1,7 @@
 package com.kh.eatwith.review.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import javax.xml.ws.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +86,9 @@ public class ReviewController extends HttpServlet {
 	public ResponseEntity<?> getBestReviews(){
 		List<Map<String, Object>> reviews=reviewService.getBestReviews();
 		log.debug("reviews = {}",reviews);
+	
+		
+		
 		
 		return ResponseEntity.ok(reviews);
 	}
