@@ -17,4 +17,6 @@ public interface GatherService {
 
 	Map<String, Object> getOneGather(int no);
 
+	Map<String, Object> gatherUpdate();
+
 }

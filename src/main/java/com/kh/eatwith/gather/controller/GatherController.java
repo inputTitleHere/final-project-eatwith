@@ -72,4 +72,18 @@ public class GatherController {
 		
 		return "redirect:/gather/gatherList";
 	}
+	@GetMapping("/gatherUpdate")
+	public String gatherUpdate(@RequestParam int no, Model model) {
+		Gather gather = gatherService.selectOneGather(no);
+		model.addAttribute("gather",gather);
+		return "gather/gatherUpdate";
+	}
+	
+	
+	@PostMapping("/gatherUpdate")
+	public String gatherUpdate(Gather gather,RedirectAttributes redirectAttr) {
+		Map<String,Object> gatherUpdate=gatherService.gatherUpdate();
+		log.debug("gatherUpdate={}",gatherUpdate);
+		return "redirect:/gather/gatherDetail?no="+gather.getNo();
+	}
 }

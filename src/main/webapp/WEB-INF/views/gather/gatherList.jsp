@@ -202,7 +202,7 @@ td {
 							<td>${gather.type}</td>
 							<td>${gather.locaName}</td>
 							<td>${gather.meetDate}</td>
-							<td><span id="nowCount"></span>/<span id="totalCount">${gather.count}</span></td>
+							<td><span id="nowCount"></span>/<span id="totalCount">${gather.count+1}</span></td>
 						</tr>
 					</c:forEach>
 				</c:if>

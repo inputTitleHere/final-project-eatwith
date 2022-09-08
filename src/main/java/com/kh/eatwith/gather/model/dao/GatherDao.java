@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.eatwith.gather.model.dto.Gather;
@@ -27,6 +28,7 @@ public interface GatherDao {
 	List<Map<String, Object>> getGatherList();
 
 	Map<String, Object> getOneGather(int no);
-	
 
+	@Update("update gather set title=#{title},count=#{count},meet_date=sysdate,content=#{content},age_restriction_top=#{ageRestrictionTop},age_restriction_bottom=#{ageRestrictionBottom},gender_restriction=#{genderRestriction} where no=#{no}")
+	Map<String, Object> gatherUpdate();
 }

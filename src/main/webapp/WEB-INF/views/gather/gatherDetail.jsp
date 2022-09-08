@@ -120,8 +120,9 @@ td{
                 </tr>
                 <tr>
                     <th>모임 인원</th>
+                    <!-- 모임 인원 불러올때 +1해주기-->
                     <td>
-                        <span id="countNow">0</span>/<span id="">${gather.count}</span> 
+                        <span id="countNow">0</span>/<span id="">${gather.count+1}</span> 
                         <button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
                         <button type="button" id=gatherOut onclick="gatherOut()">참여취소</button>
                         <!-- applyGather form작성하기 -->
@@ -147,7 +148,8 @@ td{
                     <th></th>
                     <td>
                         <br>
-                        <button type="button" id="gatherUpdate">수정</button> <button type="button" id="gatherDelete">삭제</button>
+                        <button type="button" id="gatherUpdate" 
+                        onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button> <button type="button" id="gatherDelete">삭제</button>
                     </td>
                 </tr>
             </tbody>
@@ -164,6 +166,7 @@ td{
             document.getElementById("gatherOut").style.display="inline";
             document.getElementById("inChat").style.display="inline";
             document.getElementById("writeReview").style.display="inline";
+            document.getElementById("countNow").value+=1;
         }
         const gatherOut=()=>{
             document.getElementById("gatherIn").style.display="inline";

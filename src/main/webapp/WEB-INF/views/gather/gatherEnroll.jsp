@@ -150,18 +150,18 @@
 					</tr>
 					<tr>
 						<th>나이제한</th>
-						<td><input type="checkbox" id="ageChk"
-							onchange="toggleAge(event)" />나이제한X &nbsp;&nbsp; <input
-							type="number" name="ageRestrictionBottom" id="gatherMin" placeholder="최소나이">
-							~ <input type="number" name="ageRestrictionTop" id="gatherMax"
-							placeholder="최대나이"></td>
+						<td>
+							<input type="checkbox" id="ageChk" onchange="toggleAge(event)" checked /> 나이제한O &nbsp;&nbsp;
+							<input type="number" name="ageRestrictionBottom" id="gatherMin" placeholder="최소나이" disabled> ~ 
+							<input type="number" name="ageRestrictionTop" id="gatherMax" placeholder="최대나이" disabled>
+						</td>
 					</tr>
 					<tr>
 						<th>성별제한</th>
-						<td><input type="checkbox" id="genderChk"
-							onchange="toggleGender(event)" />성별제한X &nbsp;&nbsp; <input
-							type="radio" name="genderRestriction" id="gatherGenM" value="M">남
-							<input type="radio" name="genderRestriction" id="gatherGenF" value="F">여
+						<td>
+							<input type="checkbox" id="genderChk" onchange="toggleGender(event)" checked/> 성별제한O &nbsp;&nbsp; 
+							<input type="radio" name="genderRestriction" value="M" id="gatherGenM" disabled>남
+							<input type="radio" name="genderRestriction" value="F" id="gatherGenF" disabled>여
 						</td>
 					</tr>
 					<tr>
@@ -171,7 +171,7 @@
 							id="gatherTime" onchange="setMinValue()" required></td>
 					</tr>
 					<tr>
-						<th>모임설명<span id="pilsu">*</span>
+						<th>모임설명<span id="pilsu">*</span><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 						</th>
 						<td><textarea name="content" id="gatherContent"
 								cols="30" rows="10"

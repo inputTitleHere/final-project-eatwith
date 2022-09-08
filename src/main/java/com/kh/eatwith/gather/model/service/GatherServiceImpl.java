@@ -29,12 +29,18 @@ public class GatherServiceImpl implements GatherService{
 	public Gather selectOneGather(int no) {
 		return gatherDao.selectOneGather(no);
 	}
+	
 	@Override
 	public List<Map<String, Object>> getGatherList() {
 		return gatherDao.getGatherList();
 	}
+	
 	@Override
 	public Map<String, Object> getOneGather(int no) {
 		return gatherDao.getOneGather(no);
+	}
+	@Override
+	public Map<String, Object> gatherUpdate() {
+		return gatherDao.gatherUpdate();
 	}
 }
