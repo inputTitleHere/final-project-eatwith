@@ -46,7 +46,7 @@ public class MemberSecurityController {
 		
 	}
 	
-	@PostMapping("/memberEnroll")
+	@PostMapping("/memberEnroll") 
 	public String memberEnroll(Member member, @RequestParam(required = false) List<String> favDistrict, @RequestParam(required = false) List<String> favFoodType) {
 		try {
 			log.debug("member = {} ",member);

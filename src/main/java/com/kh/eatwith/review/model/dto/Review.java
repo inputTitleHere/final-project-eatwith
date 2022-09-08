@@ -18,7 +18,7 @@ public class Review {
 	protected int no;
 	protected int gather_no;
 	protected String restaurant_no;
-	protected int rateStars;
+	protected int overallScore;
 	protected int tasteStars;
 	protected int priceStars;
 	protected int serviceStars;

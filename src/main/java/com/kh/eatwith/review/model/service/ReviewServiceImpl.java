@@ -1,5 +1,8 @@
 package com.kh.eatwith.review.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,10 @@ public class ReviewServiceImpl implements ReviewService{
 	public int insertReview(Review review) {
 		int result = reviewDao.insertReview(review);
 		return result;
+	}
+	@Override
+	public List<Map<String, Object>> getBestReviews() {
+		return reviewDao.getBestReviews();
 	}
 
 
