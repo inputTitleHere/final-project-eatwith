@@ -7,15 +7,22 @@ body {
 
 /********** header **********/
 header{
+	font-family:var(--short-font);
 	border-bottom : solid;
 	border-bottom-width : 4px;
 	border-color: #F2F2F2;
+	height: 120px;
+	background-color: #fff;
+	padding: 10px 10px;
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
 .header-container{
 	height: 110px;
-    margin: 0px 10% 10px 10%;
-    width: 80%;
+    margin: 0px auto;
+    width: fit-content;
 	overflow: hidden;
 }
 
@@ -32,8 +39,8 @@ header{
 }
 
 .header-container div.common-container img{
-	height: 110px;
-    margin: 0px 100px 0px 0px;
+	height: 100px;
+    margin: 0px 50px 0px 0px;
 }
 
 .header-container div.common-container form{
@@ -131,58 +138,3 @@ header{
     -ms-transform: scale(1.1,1.1);
     transform: scale(1.1,1.1);
 }
-
-/********** footer **********/
-.footer-container{
-	height: 210px;
-    width: 80%;
-    background-color: #F2F2F2;
-    margin: 10px 10% 0px 10%;
-    position : absolute;
-	bottom : 0;
-	overflow: hidden;
-}
-
-.footer-container ul{
-	display: inline-block;
-	list-style: none;
-	height : 170px;
-	width: 800px;
-	margin: 38px 20px 20px 20px;
-	float : right;
-}
-
-.footer-container li{
-	height : 40px;
-	vertical-align : middle;
-}
-
-.footer-container img{
-	height : 180px;
-	width: 600px;
-	display: inline-block;
-	margin : 15px 15px 15px 100px;
-}
-
-.footer-container li.service-info{
-	font-size : 20px;
-	float : left;
-	padding-right : 15px;
-	padding-button : 5px;
-	cursor: pointer;
-}
-
-.footer-container li.company-info{
-	display: block;
-}
-
-footer div#footer-container ul li{
-	margin: 5px;
-	text-align: center;
-}
-
-footer div#footer-container span{
-	margin : 5px auto;
-	text-align: center;
-}
-
