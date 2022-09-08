@@ -123,6 +123,19 @@ CREATE TABLE FOOD_TYPE (
 );
 select * from food_type;
 insert into food_type values('999','테스트음식타입');
+insert into food_type values('001','한식');
+insert into food_type values('002','일식');
+insert into food_type values('003','양식');
+insert into food_type values('004','회/해산물');
+insert into food_type values('005','중식');
+insert into food_type values('006','분식/면류');
+insert into food_type values('007','고기/구이');
+insert into food_type values('008','치킨/닭요리');
+insert into food_type values('009','아시아음식');
+insert into food_type values('010','카페/디저트');
+insert into food_type values('011','기타');
+
+delete from food_type where code in ('001','002','003','004','005','006','007','008','009','010');
 commit;
 
 CREATE TABLE RESTAURANT (
@@ -133,7 +146,7 @@ CREATE TABLE RESTAURANT (
 	dong 	varchar2(50)		NOT NULL,
 	address	 varchar2(256)		NOT NULL,
 	work_hours	varchar2(1024)		NULL,
-	menu	varchar2(1024)		NULL,
+	menu	CLOB		NULL,
 	phone	varchar2(45)		NULL,
 	naver_food_type	varchar2(60)		NULL,
   CONSTRAINT pk_restaurant_no PRIMARY KEY(no),
@@ -141,6 +154,28 @@ CREATE TABLE RESTAURANT (
   CONSTRAINT fk_restaurant_food_code FOREIGN KEY(food_code) references FOOD_TYPE(code) on delete set null
 );
 select * from restaurant;
+
+alter table restaurant modify naver_food_type visible;
+alter table restaurant modify phone visible;
+
+alter table restaurant modify dong varchar2(1000);
+alter table restaurant add menu_clob clob;
+alter table restaurant drop column menu;
+alter table restaurant rename column menu_clob to menu;
+alter table restaurant modify menu clob;
+delete from restaurant where name='김밥천국';
+
+select 
+        r.*,
+        d.name as "district_name",
+        f.type
+from 
+        restaurant r join district d on d.code=r.district_code join food_type f on r.food_code = f.code
+where 
+        r.name like '%'||'김'||'%';
+
+commit;
+
 
 COMMENT ON COLUMN RESTAURANT.no IS '공공데이터의 사업자등록번호를 고유키로 사용';
 
@@ -158,6 +193,12 @@ CREATE TABLE REVIEW (
   CONSTRAINT fk_review_restaurant_no FOREIGN KEY(restaurant_no) references RESTAURANT(no) on delete set null
 );
 
+alter table review add user_no number;
+alter table review add constraint fk_review_user_no foreign key(user_no) references Member(no) on delete cascade;
+
+delete from review where no=1;
+commit;
+select * from review;
 COMMENT ON COLUMN REVIEW.no IS 'seq_review_no';
 COMMENT ON COLUMN REVIEW.gather_no IS 'seq_gather_no.nextval';
 
@@ -337,12 +378,6 @@ insert into restaurant values('3110000-101-2022-00001','9876543','999','김밥�
 insert into review values(1,1,'3110000-101-2022-00001',4,3,3,3,'그냥무난무난한 맛이었어요');
 insert into gather values(1,'3110000-101-2022-00001','2인3메뉴 조질사람',1,to_date('2022-09-11','YYYY-MM-DD'),'999','9876543','여의도에서 일하는 30대 남성입니다.편하게 먹고가요',5,35,30,'M');
 commit;
-
-alter table gather modify(title varchar2(4000));
-alter table gather modify meet_date timestamp;
-
-select * from cols;
-select * from gather order by no desc;
 -- 신유경 END
 
 -- 임규완 START
