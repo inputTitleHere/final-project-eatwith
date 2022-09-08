@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -216,5 +217,7 @@
 	</div>
 	<script type="text/javascript"
 		src="/eatwith/resources/js/gather/gatherEnroll.js"></script>
+		    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		
 </body>
 </html>

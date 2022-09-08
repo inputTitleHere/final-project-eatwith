@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +25,10 @@
     justify-content: center;
     width: 1000px;
     font-size: 18px;
+	left:0;
+	right:0;
+	margin:auto;
+	padding:100px;
 }
 table{
     background-color: white;
@@ -156,5 +160,6 @@ td{
             document.getElementById("writeReview").style.display="none";
         }
     </script>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
