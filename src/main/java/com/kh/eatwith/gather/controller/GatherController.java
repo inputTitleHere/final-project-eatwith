@@ -38,6 +38,10 @@ public class GatherController {
 		Gather gather=gatherService.selectOneGather(no);
 		log.debug("gather = {}",gather);
 		model.addAttribute("gather",gather);
+		
+		Map<String,Object> gatherD=gatherService.getOneGather(no);
+		log.debug("gatherDetail = {}",gatherD);
+		model.addAttribute("gatherD",gatherD);
 	}
 	
 	@GetMapping("/gatherList")
@@ -47,9 +51,9 @@ public class GatherController {
 		int limit = 10;
 		param.put("cPage", cPage);
 		param.put("limit", limit);
-		List<Gather> list = gatherService.selectGatherList(param);
-		log.debug("list = {}", list);
-		model.addAttribute("list", list);
+		List<Map<String,Object>> lists=gatherService.getGatherList();
+		log.debug("lists = {}",lists);
+		model.addAttribute("lists",lists);
 		
 		// 2. pagebar영역
 		int totalContent = gatherService.getTotalContent();

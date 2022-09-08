@@ -1,6 +1,7 @@
 package com.kh.eatwith.gather.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,11 +21,12 @@ public interface GatherDao {
 	@Select("select count(*) from gather")
 	int getTotalContent();
 
-	@Select("select * from gather order by no desc")
-	List<Gather> selectGatherList(RowBounds rowBounds);
-
 	@Select("select * from gather where no = #{no}")
 	Gather selectOneGather(int no);
+
+	List<Map<String, Object>> getGatherList();
+
+	Map<String, Object> getOneGather(int no);
 	
 
 }

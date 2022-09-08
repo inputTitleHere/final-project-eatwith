@@ -26,14 +26,15 @@ public class GatherServiceImpl implements GatherService{
 	}
 	
 	@Override
-	public List<Gather> selectGatherList(Map<String, Integer> param) {
-		int limit = param.get("limit");
-		int offset = (param.get("cPage") - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return gatherDao.selectGatherList(rowBounds);
-	}
-	@Override
 	public Gather selectOneGather(int no) {
 		return gatherDao.selectOneGather(no);
+	}
+	@Override
+	public List<Map<String, Object>> getGatherList() {
+		return gatherDao.getGatherList();
+	}
+	@Override
+	public Map<String, Object> getOneGather(int no) {
+		return gatherDao.getOneGather(no);
 	}
 }

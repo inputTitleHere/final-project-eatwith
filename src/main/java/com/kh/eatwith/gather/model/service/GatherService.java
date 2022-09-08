@@ -9,10 +9,12 @@ public interface GatherService {
 
 	int gatherEnroll(Gather gather);
 
-	List<Gather> selectGatherList(Map<String, Integer> param);
-
 	int getTotalContent();
 
 	Gather selectOneGather(int no);
+
+	List<Map<String, Object>> getGatherList();
+
+	Map<String, Object> getOneGather(int no);
 
 }

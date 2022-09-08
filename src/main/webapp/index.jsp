@@ -15,5 +15,6 @@
 			<h2 class="div-header">BEST리뷰 TOP4</h2>
 		</div>
 	</div>
+	
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

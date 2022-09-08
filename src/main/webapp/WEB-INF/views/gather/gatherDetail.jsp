@@ -39,10 +39,13 @@ th{
     padding-right: 50px;
     padding-bottom: 20px;
     width: 100px;
+    font-size:18px;
 }
 td{
     padding-bottom: 20px;
     width: 745px;
+    font-size:18px;
+    
 }
 #gatherTitle{
     width: 900px;
@@ -89,13 +92,20 @@ td{
     height: 40px;
     font-size: 16px;
 }
+#title{
+	font-size:24px;
+	font-weight:bold;
+}
+.gatherRes{
+	padding: 5px 0px 5px 0px;
+}
 </style>
 </head>
 <body bgcolor="#F0EBEC">
     <div id="container">
         <table>
             <thead>
-                <td colspan="2" name="title" id="title" ><p>${gather.title}</p><hr></td>
+                <td colspan="2" name="title" id="title" >${gatherD.title}<hr></td>
             </thead>
             <tbody>
                 <tr>
@@ -103,7 +113,9 @@ td{
                         모임 장소<br><br><br>
                     </th>
                     <td>
-                        ${gather.restaurantNo}<br>${gather.foodCode}<br>${gather.districtCode}
+                        <span class="gatherRes"><strong>${gatherD.name}</strong></span><br>
+                        <span class="gatherRes">${gatherD.type}</span><br>
+                        <span class="gatherRes">${gatherD.locaName}</span>
                     </td>
                 </tr>
                 <tr>
