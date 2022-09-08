@@ -79,11 +79,10 @@ public class ReviewController extends HttpServlet {
 	
 	@GetMapping("/getBestReviews")
 	@ResponseBody
-	@CrossOrigin("*")
+	@CrossOrigin(origins="*")
 	public ResponseEntity<?> getBestReviews(){
-		List<Review> reviews=reviewService.getBestReviews();
-		
-		
+		List<Map<String, Object>> reviews=reviewService.getBestReviews();
+		log.debug("reviews = {}",reviews);
 		
 		return ResponseEntity.ok(reviews);
 	}
