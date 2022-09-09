@@ -19,4 +19,14 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public List<Restaurant> findRestaurantByName(String searchString) {
 		return restaurantDao.findRestaurantByName(searchString);
 	}
+	
+//	@Override
+//	public List<Restaurant> selectOneRestaurant(String no) {
+//		return restaurantDao.selectOneRestaurant(no);
+//	}
+	
+	@Override
+	public Restaurant selectOneRestaurant(String no) {
+		return restaurantDao.selectOneRestaurant(no);
+	}
 }

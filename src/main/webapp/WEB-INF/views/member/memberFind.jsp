@@ -10,13 +10,73 @@
 <meta charset="UTF-8">
 <title>아이디/비밀번호 찾기</title>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<style>
+body {
+	background-color: #F0EBEC;
+	text-align: center;
+}
+h2 {
+	border-bottom: 1px gray solid;
+	padding-bottom: 10px;
+	width: 500px;
+	display: flex;
+	position: relative;
+	justify-content: space-around;
+	margin-inline: auto;
+	margin-bottom: 20px;
+	font-size: 30px;
+}
+th{
+	text-align: left;
+	width: 125px;
+	font-weight: bold;
+}
+table{
+	border-spacing: 10px;
+	margin: 10px auto;
+}
+#findIdFrm {
+	margin: 0 auto;
+}
+#btn1 {
+	width: 400px;
+	height: 40px;
+	background-color: #3A3C68;
+	color: white;
+	font-weight: bold;
+	padding: 1px 0;
+}
+#findId span {
+	color: red;
+	margin: 15px auto;
+	font-weight: bold;
+}
+#findId {
+	margin-top: 30px;
+}
+#resetPw span {
+	color: red;
+	margin: 15px auto;
+	font-weight: bold;
+}
+#resetPw {
+	margin-top: 30px;
+}
+input {
+	width: 250px;
+	height: 25px;
+	font-size: 12px;
+}
+</style>
 </head>
 <body>
+<br />
+<br />
+<br />
 	<div>
         <section>
         <h2>아이디 찾기</h2>
 	        <form id="findIdFrm">
-	            <hr>
 	            <table id="tbl-findId">
 	                <thead>
 	                    <tr>
@@ -31,11 +91,10 @@
 	            </table>
 	            <input type="submit" value="아이디 찾기" id="btn1">
 	            <div id="findId"></div>
-	            <!-- <button>아이디찾기1</button> -->
 	        </form>
         </section>
     </div>
-    
+    <br /><br />
 	<script>
 	document.querySelector("#findIdFrm").addEventListener('submit', (e) => {
 		e.preventDefault();
@@ -64,7 +123,6 @@
         <section>
             <h2>비밀번호 찾기</h2>
 				<form id="resetPwFrm">
-		            <hr>
 		            <table>
 		                <thead>
 		                    <tr>
@@ -81,7 +139,7 @@
 		                    </tr>
 		                </thead>
 		            </table>
-					<input type="submit" value="임시 비밀번호 발급받기">
+					<input type="submit" value="임시 비밀번호 발급받기" id="btn1">
 	            	<div id="resetPw"></div>		                    
 				</form>
         </section>

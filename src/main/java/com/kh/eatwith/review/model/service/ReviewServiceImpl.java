@@ -1,5 +1,7 @@
 package com.kh.eatwith.review.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 
+	@Override
+	public List<Review> selectOneReview(String no) {
+		return reviewDao.selectOneReview(no);
+	}
 
 }
