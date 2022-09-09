@@ -39,8 +39,18 @@ public class GatherServiceImpl implements GatherService{
 	public Map<String, Object> getOneGather(int no) {
 		return gatherDao.getOneGather(no);
 	}
+	
 	@Override
-	public Map<String, Object> gatherUpdate() {
-		return gatherDao.gatherUpdate();
+	public Map<String, Object> selectOneGatherInfo(int no) {
+		return gatherDao.selectOneGatherInfo(no);
+	}
+	
+	@Override
+	public int gatherUpdate(Gather gather) {
+		return gatherDao.gatherUpdate(gather);
+	}
+	@Override
+	public int gatherDelete(int no) {
+		return gatherDao.gatherDelete(no);
 	}
 }

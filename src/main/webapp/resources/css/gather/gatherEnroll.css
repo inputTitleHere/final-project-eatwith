@@ -153,7 +153,7 @@ input#findStore{
 }
 #storeName{
 	font-size:18px;
-	font-weight:strong;	
+	font-weight:bold;	
 }
 li{
 	list-style:none;

@@ -332,7 +332,7 @@ select*from restaurant;
 select*from food_type;
 select*from district;
 select*from gather;
-select*from member;
+select*from member where no=141;
 insert into restaurant values('3110000-101-2022-00001','9876543','999','김밥천국','대방동','서울시 동작구 여의대방로21길 유경건물 1층','매일 08:00-20:00','야채김밥:3000원, 참치김밥:5000원','02-822-1234','분식');
 insert into restaurant values('3110000-101-2022-00001','9876543','999','김밥천국','대방동','서울시 동작구 여의대방로21길 유경건물 1층','매일 08:00-20:00','야채김밥:3000원, 참치김밥:5000원','02-822-1234','분식');
 insert into review values(1,1,'3110000-101-2022-00001',4,3,3,3,'그냥무난무난한 맛이었어요');
@@ -340,7 +340,7 @@ insert into gather values(1,'3110000-101-2022-00001','2인3메뉴 조질사람',
 commit;
 
 alter table gather modify(title varchar2(4000));
-alter table gather modify meet_date timestamp;
+alter table gather modify meet_date date;
 
 select * from cols;
 select * from gather order by no desc;
@@ -351,6 +351,7 @@ from
         gather g join district d on g.district_code=d.code
         left join food_type f on g.food_code=f.code
         left join (select no,name from restaurant) r on g.restaurant_no=r.no
+where g.no=27
 order by g.no desc;
 -- 신유경 END
 

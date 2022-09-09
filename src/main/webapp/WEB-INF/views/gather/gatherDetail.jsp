@@ -129,6 +129,33 @@ td{
                     </td>
                 </tr>
                 <tr>
+                	<th>나이제한</th>
+                	<td>
+                		<c:if test="${gather.ageRestrictionTop eq '0'}">
+                		나이 제한이 없습니다.
+                		</c:if>
+                		<c:if test="${gather.ageRestrictionTop ne '0'}">
+                		<span>${gather.ageRestrictionBottom}</span> ~ <span>${gather.ageRestrictionTop}</span>
+                		</c:if>
+                	</td>
+                </tr>
+                <tr>
+                	<th>성별제한</th>
+                	<td>
+                		<c:if test="${empty gather.genderRestriction}">
+                			성별 제한이 없습니다.
+                		</c:if>
+                		<c:if test="${not empty gather.genderRestriction}">
+                			<c:if test="${gather.genderRestriction eq 'F'}">
+                				<strong>여자</strong>만 참여 가능합니다.
+                			</c:if>
+    						<c:if test="${gather.genderRestriction eq 'M'}">
+    							<strong>남자</strong>만 참여 가능합니다.
+    						</c:if>
+                		</c:if>
+                	</td>
+                </tr>
+                <tr>
                     <th>모임 시간</th>
                     <td>${gather.meetDate}</td>
                 </tr>
@@ -149,11 +176,14 @@ td{
                     <td>
                         <br>
                         <button type="button" id="gatherUpdate" 
-                        onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button> <button type="button" id="gatherDelete">삭제</button>
+                        onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button>
+                         <button type="button" id="gatherDelete" onclick="deleteGather()">삭제</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <form action="<%=request.getContextPath() %>/gather/gatherDelete?no=${gather.no}" method="post" name="gatherDeleteFrm">
+        </form>
     </div>
     <script>
         document.getElementById("gatherOut").style.display="none";
@@ -174,6 +204,12 @@ td{
             document.getElementById("inChat").style.display="none";
             document.getElementById("writeReview").style.display="none";
         }
+        const deleteGather=()=>{
+        	if(confirm("정말 모임을 삭제하시겠습니까?")){
+        		document.gatherDeleteFrm.submit();
+        	}
+        }
+        
     </script>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>

@@ -151,7 +151,7 @@
 					<tr>
 						<th>나이제한</th>
 						<td>
-							<input type="checkbox" id="ageChk" onchange="toggleAge(event)" checked /> 나이제한O &nbsp;&nbsp;
+							<input type="checkbox" id="ageChk" onchange="toggleAge(event)" checked/> 나이제한없음 &nbsp;&nbsp;
 							<input type="number" name="ageRestrictionBottom" id="gatherMin" placeholder="최소나이" disabled> ~ 
 							<input type="number" name="ageRestrictionTop" id="gatherMax" placeholder="최대나이" disabled>
 						</td>
@@ -159,7 +159,7 @@
 					<tr>
 						<th>성별제한</th>
 						<td>
-							<input type="checkbox" id="genderChk" onchange="toggleGender(event)" checked/> 성별제한O &nbsp;&nbsp; 
+							<input type="checkbox" id="genderChk" onchange="toggleGender(event)" checked/> 성별제한없음 &nbsp;&nbsp; 
 							<input type="radio" name="genderRestriction" value="M" id="gatherGenM" disabled>남
 							<input type="radio" name="genderRestriction" value="F" id="gatherGenF" disabled>여
 						</td>

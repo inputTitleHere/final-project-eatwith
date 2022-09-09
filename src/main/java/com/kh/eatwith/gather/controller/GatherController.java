@@ -74,16 +74,28 @@ public class GatherController {
 	}
 	@GetMapping("/gatherUpdate")
 	public String gatherUpdate(@RequestParam int no, Model model) {
-		Gather gather = gatherService.selectOneGather(no);
+		Gather gatherO=gatherService.selectOneGather(no);
+		Map<String,Object> gather = gatherService.selectOneGatherInfo(no);
+		model.addAttribute("gatherO",gatherO);
 		model.addAttribute("gather",gather);
+		log.debug("gatherO = {}",gatherO);
+		log.debug("gather = {}",gather);
 		return "gather/gatherUpdate";
 	}
 	
 	
 	@PostMapping("/gatherUpdate")
 	public String gatherUpdate(Gather gather,RedirectAttributes redirectAttr) {
-		Map<String,Object> gatherUpdate=gatherService.gatherUpdate();
-		log.debug("gatherUpdate={}",gatherUpdate);
+		int result=gatherService.gatherUpdate(gather);
+		log.debug("gatherUpdate={}",result);
+		redirectAttr.addFlashAttribute("msg","모임을 성공적으로 수정했습니다.");
 		return "redirect:/gather/gatherDetail?no="+gather.getNo();
+	}
+	
+	@PostMapping("/gatherDelete")
+	public String gatherDelete(@RequestParam int no,RedirectAttributes redirectAttr) {
+		int result=gatherService.gatherDelete(no);
+		log.debug("gatherDelete = {}",result);
+		return "redirect:/gather/gatherList";
 	}
 }
