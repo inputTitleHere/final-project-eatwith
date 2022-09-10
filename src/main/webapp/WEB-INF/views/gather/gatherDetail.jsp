@@ -39,10 +39,13 @@ th{
     padding-right: 50px;
     padding-bottom: 20px;
     width: 100px;
+    font-size:18px;
 }
 td{
     padding-bottom: 20px;
     width: 745px;
+    font-size:18px;
+    
 }
 #gatherTitle{
     width: 900px;
@@ -89,13 +92,20 @@ td{
     height: 40px;
     font-size: 16px;
 }
+#title{
+	font-size:24px;
+	font-weight:bold;
+}
+.gatherRes{
+	padding: 5px 0px 5px 0px;
+}
 </style>
 </head>
 <body bgcolor="#F0EBEC">
     <div id="container">
         <table>
             <thead>
-                <td colspan="2" name="title" id="title" ><p>${gather.title}</p><hr></td>
+                <td colspan="2" name="title" id="title" >${gatherD.title}<hr></td>
             </thead>
             <tbody>
                 <tr>
@@ -103,17 +113,47 @@ td{
                         모임 장소<br><br><br>
                     </th>
                     <td>
-                        ${gather.restaurantNo}<br>${gather.foodCode}<br>${gather.districtCode}
+                        <span class="gatherRes"><strong>${gatherD.name}</strong></span><br>
+                        <span class="gatherRes">${gatherD.type}</span><br>
+                        <span class="gatherRes">${gatherD.locaName}</span>
                     </td>
                 </tr>
                 <tr>
                     <th>모임 인원</th>
+                    <!-- 모임 인원 불러올때 +1해주기-->
                     <td>
-                        <span id="countNow">0</span>/<span id="">${gather.count}</span> 
+                        <span id="countNow">0</span>/<span id="">${gather.count+1}</span> 
                         <button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
                         <button type="button" id=gatherOut onclick="gatherOut()">참여취소</button>
                         <!-- applyGather form작성하기 -->
                     </td>
+                </tr>
+                <tr>
+                	<th>나이제한</th>
+                	<td>
+                		<c:if test="${gather.ageRestrictionTop eq '0'}">
+                		나이 제한이 없습니다.
+                		</c:if>
+                		<c:if test="${gather.ageRestrictionTop ne '0'}">
+                		<span>${gather.ageRestrictionBottom}</span> ~ <span>${gather.ageRestrictionTop}</span>
+                		</c:if>
+                	</td>
+                </tr>
+                <tr>
+                	<th>성별제한</th>
+                	<td>
+                		<c:if test="${empty gather.genderRestriction}">
+                			성별 제한이 없습니다.
+                		</c:if>
+                		<c:if test="${not empty gather.genderRestriction}">
+                			<c:if test="${gather.genderRestriction eq 'F'}">
+                				<strong>여자</strong>만 참여 가능합니다.
+                			</c:if>
+    						<c:if test="${gather.genderRestriction eq 'M'}">
+    							<strong>남자</strong>만 참여 가능합니다.
+    						</c:if>
+                		</c:if>
+                	</td>
                 </tr>
                 <tr>
                     <th>모임 시간</th>
@@ -135,11 +175,15 @@ td{
                     <th></th>
                     <td>
                         <br>
-                        <button type="button" id="gatherUpdate">수정</button> <button type="button" id="gatherDelete">삭제</button>
+                        <button type="button" id="gatherUpdate" 
+                        onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button>
+                         <button type="button" id="gatherDelete" onclick="deleteGather()">삭제</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <form action="<%=request.getContextPath() %>/gather/gatherDelete?no=${gather.no}" method="post" name="gatherDeleteFrm">
+        </form>
     </div>
     <script>
         document.getElementById("gatherOut").style.display="none";
@@ -152,6 +196,7 @@ td{
             document.getElementById("gatherOut").style.display="inline";
             document.getElementById("inChat").style.display="inline";
             document.getElementById("writeReview").style.display="inline";
+            document.getElementById("countNow").value+=1;
         }
         const gatherOut=()=>{
             document.getElementById("gatherIn").style.display="inline";
@@ -159,6 +204,12 @@ td{
             document.getElementById("inChat").style.display="none";
             document.getElementById("writeReview").style.display="none";
         }
+        const deleteGather=()=>{
+        	if(confirm("정말 모임을 삭제하시겠습니까?")){
+        		document.gatherDeleteFrm.submit();
+        	}
+        }
+        
     </script>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
