@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.kh.eatwith.common.typehandler.EatWithUtils;
 import com.kh.eatwith.gather.model.dto.Gather;
 import com.kh.eatwith.gather.model.dto.MemberGather;
 import com.kh.eatwith.gather.model.service.GatherService;
+import com.kh.eatwith.member.model.dto.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +34,16 @@ public class GatherController {
 	
 	@GetMapping("/gatherEnroll")
 	public void gatherEnroll() {}
+	
+	@PostMapping("/gatherEnroll")
+	public String gatherEnroll(Gather gather, MemberGather memberGather, RedirectAttributes redirectAttr) {
+		log.debug("gather = {}",gather);
+		log.debug("memberGather ={}",memberGather);
+		int result=gatherService.gatherEnroll(gather);
+		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
+		
+		return "redirect:/gather/gatherList";
+	}
 	
 	@GetMapping("/gatherDetail")
 	public void gatherDetail(@RequestParam int no, Model model) {
@@ -62,16 +74,7 @@ public class GatherController {
 		String pagebar = EatWithUtils.getPagebar(cPage, limit, totalContent, url);
 		model.addAttribute("pagebar", pagebar);
 	}
-	
-	@PostMapping("/gatherEnroll")
-	public String gatherEnroll(Gather gather, MemberGather memberGather, RedirectAttributes redirectAttr) {
-		log.debug("gather = {}",gather);
-		log.debug("memberGather ={}",memberGather);
-		int result=gatherService.gatherEnroll(gather);
-		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
-		
-		return "redirect:/gather/gatherList";
-	}
+
 	@GetMapping("/gatherUpdate")
 	public String gatherUpdate(@RequestParam int no, Model model) {
 		Gather gatherO=gatherService.selectOneGather(no);
@@ -97,5 +100,13 @@ public class GatherController {
 		int result=gatherService.gatherDelete(no);
 		log.debug("gatherDelete = {}",result);
 		return "redirect:/gather/gatherList";
+	}
+	
+	@PostMapping("/applyGather")
+	public String applyGather(@RequestParam int no,Member member,Gather gather,MemberGather memberGather, RedirectAttributes redirectAttr) {
+		int result=gatherService.applyGather(no,memberGather,member);
+		log.debug("memberGather = {}",memberGather);
+		
+		return "redirect:/gather/gatherDetail?no="+gather.getNo();
 	}
 }

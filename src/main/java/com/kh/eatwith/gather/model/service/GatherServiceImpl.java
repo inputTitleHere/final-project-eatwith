@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.eatwith.gather.model.dao.GatherDao;
 import com.kh.eatwith.gather.model.dto.Gather;
+import com.kh.eatwith.gather.model.dto.MemberGather;
+import com.kh.eatwith.member.model.dto.Member;
 
 @Service
 public class GatherServiceImpl implements GatherService{
@@ -52,5 +54,9 @@ public class GatherServiceImpl implements GatherService{
 	@Override
 	public int gatherDelete(int no) {
 		return gatherDao.gatherDelete(no);
+	}
+	@Override
+	public int applyGather(int no, MemberGather memberGather, Member member) {
+		return gatherDao.applyGather(no,memberGather,member);
 	}
 }

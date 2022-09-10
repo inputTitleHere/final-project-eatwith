@@ -14,3 +14,7 @@ insert into review values(SEQ_REVIEW_NO.nextval,26, '3030000-101-2022-00228', 5,
 insert into review values(SEQ_REVIEW_NO.nextval,26, '3030000-101-2022-00228', 4, 5, 1, 5, '성수여서 가격이쫌...', 145);
 insert into review values(SEQ_REVIEW_NO.nextval,32, '3220000-101-2022-00526', 5, 5, 5, 5, '족발 맛집 맞네요!! 존맛탱구리..', 142);
 insert into review values(SEQ_REVIEW_NO.nextval,27, '3130000-101-2022-00717', 5, 5, 5, 5, '사장님이 너무 인싸시구 좋아요 ㅋㅋㅋㅋ', 141);
+
+update gather set age_restriction_bottom=20 where no=32;
+update gather set count=3 where no=34;
+delete gather where no=86;

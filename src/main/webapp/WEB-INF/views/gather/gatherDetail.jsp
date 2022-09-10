@@ -5,6 +5,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="com.kh.eatwith.member.model.dto.Member" %>
+<%--
+	Authentication auth=SecurityContextHolder.getContext().getAuthentication();
+	Object principal=auth.getPrincipal();
+	int no=0;
+	if(principal!=null && principal instanceof Member){
+		no=((Member)principal).getNo();
+	}
+--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,6 +137,14 @@ td{
                         <button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
                         <button type="button" id=gatherOut onclick="gatherOut()">참여취소</button>
                         <!-- applyGather form작성하기 -->
+                        <form action="<%=request.getContextPath() %>/gather/applyGather?no=${gather.no}" 
+                        method="post" name="applyGatherFrm">
+                        	<input type="hidden" name="gatherNo" value="${gather.no}" />
+                        	<sec:authorize access="isAuthenticated()">
+                        	<sec:authentication property="principal.no" var="loginMember"/>
+                        	<input type="hidden" name="userNo" id="login" value="${loginMember}"/>
+                        	</sec:authorize>
+        				</form>
                     </td>
                 </tr>
                 <tr>
@@ -174,15 +193,20 @@ td{
                 <tr>
                     <th></th>
                     <td>
-                        <br>
-                        <button type="button" id="gatherUpdate" 
-                        onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button>
+                    <sec:authorize access="isAuthenticated()">
+                    <sec:authentication property="principal" var="loginMember"/>
+                    <c:if test="${gather.userNo eq loginMember.no}">
+                    <br>
+                        <button type="button" id="gatherUpdate" onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button>
                          <button type="button" id="gatherDelete" onclick="deleteGather()">삭제</button>
+                    </c:if>
+                    </sec:authorize>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <form action="<%=request.getContextPath() %>/gather/gatherDelete?no=${gather.no}" method="post" name="gatherDeleteFrm">
+        <form action="<%=request.getContextPath() %>/gather/gatherDelete?no=${gather.no}" 
+        method="post" name="gatherDeleteFrm">
         </form>
     </div>
     <script>
@@ -191,12 +215,14 @@ td{
         document.getElementById("writeReview").style.display="none";
 
         const gatherIn=()=>{
-        	confirm("모임 참여시 200포인트가 차감됩니다.")
-            document.getElementById("gatherIn").style.display="none";
-            document.getElementById("gatherOut").style.display="inline";
-            document.getElementById("inChat").style.display="inline";
-            document.getElementById("writeReview").style.display="inline";
-            document.getElementById("countNow").value+=1;
+        	if(confirm("모임 참여시 200포인트가 차감됩니다.")){
+        		document.applyGatherFrm.submit();
+                document.getElementById("gatherIn").style.display="none";
+                document.getElementById("gatherOut").style.display="inline";
+                document.getElementById("inChat").style.display="inline";
+                document.getElementById("writeReview").style.display="inline";
+                document.getElementById("countNow").value+=1;
+        	}
         }
         const gatherOut=()=>{
             document.getElementById("gatherIn").style.display="inline";

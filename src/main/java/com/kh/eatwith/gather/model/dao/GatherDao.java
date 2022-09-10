@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.eatwith.gather.model.dto.Gather;
+import com.kh.eatwith.gather.model.dto.MemberGather;
+import com.kh.eatwith.member.model.dto.Member;
 
 @Mapper
 public interface GatherDao {
@@ -44,4 +46,7 @@ public interface GatherDao {
 
 	@Delete("delete gather where no=#{no}")
 	int gatherDelete(int no);
+
+	@Insert("insert into member_gather values (#{member},#{no},sysdate)")
+	int applyGather(int no, MemberGather memberGather, Member member);
 }
