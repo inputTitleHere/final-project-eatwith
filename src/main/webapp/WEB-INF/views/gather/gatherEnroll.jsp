@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -32,7 +33,7 @@
 					<tr>
 						<th>모임 제목<span id="pilsu">*</span>
 						</th>
-						<td><input type="text" name="gatherTitle" id="gatherTitle"
+						<td><input type="text" name="title" id="title"
 							placeholder="모임 제목을 입력해 주세요."></td>
 					</tr>
 					<tr>
@@ -151,28 +152,28 @@
 						<th>나이제한</th>
 						<td><input type="checkbox" id="ageChk"
 							onchange="toggleAge(event)" />나이제한X &nbsp;&nbsp; <input
-							type="number" name="gatherMin" id="gatherMin" placeholder="최소나이">
-							~ <input type="number" name="gatherMax" id="gatherMax"
+							type="number" name="ageRestrictionBottom" id="gatherMin" placeholder="최소나이">
+							~ <input type="number" name="ageRestrictionTop" id="gatherMax"
 							placeholder="최대나이"></td>
 					</tr>
 					<tr>
 						<th>성별제한</th>
 						<td><input type="checkbox" id="genderChk"
 							onchange="toggleGender(event)" />성별제한X &nbsp;&nbsp; <input
-							type="radio" name="gatherGender" id="gatherGenM" value="M">남
-							<input type="radio" name="gatherGender" id="gatherGenF" value="F">여
+							type="radio" name="genderRestriction" id="gatherGenM" value="M">남
+							<input type="radio" name="genderRestriction" id="gatherGenF" value="F">여
 						</td>
 					</tr>
 					<tr>
 						<th>모임시간<span id="pilsu">*</span>
 						</th>
-						<td><input type="datetime-local" name="gatherTime"
+						<td><input type="datetime-local" name="meetDate"
 							id="gatherTime" onchange="setMinValue()" required></td>
 					</tr>
 					<tr>
 						<th>모임설명<span id="pilsu">*</span>
 						</th>
-						<td><textarea name="gatherContent" id="gatherContent"
+						<td><textarea name="content" id="gatherContent"
 								cols="30" rows="10"
 								placeholder="모임 출발 장소, 모임에서 찾는 사람 등 모임에 대한 설명을 적어주세요." required></textarea>
 							<p>
@@ -202,8 +203,13 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<th><input type="hidden" name="count" id="count" /> <input
-							type="hidden" name="userNo" id="userNo" value="102" /></th>
+						<th>
+						<input	type="hidden" name="userNo" id="userNo" value="102" />
+						<input type="hidden" name="count" id="count" />
+						<script>
+							
+						</script>
+						</th>
 					</tr>
 				</tfoot>
 			</table>
@@ -211,5 +217,7 @@
 	</div>
 	<script type="text/javascript"
 		src="/eatwith/resources/js/gather/gatherEnroll.js"></script>
+		    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		
 </body>
 </html>

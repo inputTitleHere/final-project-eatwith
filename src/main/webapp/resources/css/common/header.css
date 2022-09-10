@@ -1,0 +1,140 @@
+/* sass -w .\scss\memberEnroll\member-enroll.scss  ..\src\main\webapp\resources\css\member-enroll\member-enroll.css */
+
+body {
+	margin : 0%;
+	white-space: nowrap;
+}
+
+/********** header **********/
+header{
+	font-family:var(--short-font);
+	border-bottom : solid;
+	border-bottom-width : 4px;
+	border-color: #F2F2F2;
+	height: 120px;
+	background-color: #fff;
+	padding: 10px 10px;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+.header-container{
+	height: 110px;
+    margin: 0px auto;
+    width: fit-content;
+	overflow: hidden;
+}
+
+.header-container *{
+	display: inline-block;
+	text-decoration : none;
+	color: inherit;
+	font-weight: bolder;
+}
+
+.header-container div.common-container *{
+	display: inline-block;
+	vertical-align : middle;
+}
+
+.header-container div.common-container img{
+	height: 100px;
+    margin: 0px 50px 0px 0px;
+}
+
+.header-container div.common-container form{
+	margin : 30px 30px 30px 0px;
+}
+
+.header-container div.common-container form input{
+	width : 400px;
+	height: 35px;
+    margin: 0px 0px 0px 0px;
+    border-radius: 7px;
+}
+
+.header-container div.common-container form button{
+	height: 35px;
+    border-radius: 7px;
+}
+
+.nonlogin-container ul{
+}
+
+.nonlogin-container ul li{
+	display: inline-block;
+	padding-right : 20px;
+	margin-right : 20px;
+	font-size : 20px;
+	cursor: pointer;
+	text-decoration : none;
+}
+
+.nonlogin-container ul li:hover {
+    -webkit-transform: scale(1.1,1.1);
+    -moz-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1);
+}
+
+.login-container{
+	display: inline-block;
+	vertical-align : middle;
+	height: 120px;
+    width: 500px;
+}
+
+.login-container *{
+	display: inline-block;
+	vertical-align : middle;
+}
+
+.login-container img{
+    margin-top : 30px;
+	height: 35px;
+    width: 35px;
+    margin-left : 10px;
+    margin-right : 0px;
+}
+
+.login-container span{
+    margin-top : 30px;
+}
+
+.login-container ul{
+	margin-right : 0px;
+}
+
+.login-container ul li{
+    margin-top : 30px;
+	margin-right : 10px;
+	font-size : 20px;
+	cursor: pointer;
+	text-decoration : none;
+}
+
+.login-container button{
+    margin-top : 30px;
+    border: 0;
+    outline: 0;
+	font-size : 20px;
+	background-color:transparent;
+}
+
+.login-container ul li a:hover {
+    -webkit-transform: scale(1.1,1.1);
+    -moz-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1);
+}
+
+.login-container button:hover {
+    -webkit-transform: scale(1.1,1.1);
+    -moz-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1);
+}

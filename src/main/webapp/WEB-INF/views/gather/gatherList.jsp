@@ -1,166 +1,235 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@page import="com.kh.eatwith.gather.model.dto.Gather"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>모임 리스트</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모임 리스트</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/root.css" />
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
+h3{
+	margin:0.5em 0;
+}
+#container{
+	display:flex;
+    font-size:16px;
+	width: 1200px;	
+	left:0;
+	right:0;
+	margin:auto;
+	padding:100px;
+}
+aside {
+	width: 260px;
+	margin-left: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-right: 10px;
+	padding-bottom: 20px;
+	background-color: white;
+}
+.district-wrapper,.food-wrapper{
+	width:240px;
+	height:fit-content;
+	margin:0;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+}
+.district-wrapper label, .food-wrapper label{
+	width:40%;
+}
+#content {
+	width: 700px;
+	background-color: white;
+	padding-bottom: 20px;
+	margin-left: 10px;
+	padding-right: 20px;
+	margin-right: 10px;
+}
 
-aside{
-    float: left;
-    width:260px;
-    margin-left: 10px;
-    padding-left: 20px;
-    padding-right:20px;
-    margin-right: 10px;
-    padding-bottom: 20px;
-    background-color: white;
+#makegather {
+	float: right;
 }
-#content{
-    float: left;
-    width: 700px;
-    background-color: white;
-    padding-bottom: 20px;
-    margin-left: 10px;
-    padding-right:20px;
-    margin-right: 10px;
+
+td {
+	width: 200px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	font-size: 18px;
+	text-align: center;
 }
-#makegather{
-    float: right;
+
+#seeSelect {
+	height: 30px;
 }
-td{
-    width: 200px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    font-size: 18px;
-    text-align: center;
+
+#makeGather {
+	margin-left: 610px;
+	color: white;
+	background-color: #DC948A;
+	border: 0;
+	width: 100px;
+	height: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
-#seeSelect{
-    height: 30px;
+
+#seeMore {
+	background-color: #e3e3e3;
+	margin-left: 20px;
+	margin-right: 5px;
+	text-align: center;
 }
-#makeGather{
-    margin-left: 610px;
-    color: white;
-    background-color: #DC948A;
-    border: 0;
-    width: 100px;
-    height: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+
+#moreGather {
+	background-color: #e3e3e3;
+	height: 36px;
+	border: 0px;
+	font-size: 20px;
 }
-#seeMore{
-    background-color: #e3e3e3;
-    margin-left: 20px;
-    margin-right: 5px;
-    text-align: center;
+
+.goGatherBtn {
+	border: 0;
+	width: 130px;
+	height: 30px;
+	margin-top: 3px;
+	margin-left: 28px;
+	color: white;
+	background-color: #DC948A;
+	display: flex;
+	justify-content: center;
 }
-#moreGather{
-    background-color: #e3e3e3;
-    height: 36px;
-    border: 0px;
-    font-size: 20px;
-}
-.goGatherBtn{
-    border: 0;
-    width: 130px;
-    height: 30px;
-    margin-top: 3px;
-    margin-left: 28px;
-    color: white;
-    background-color: #DC948A;
-    display: flex;
-    justify-content: center;
+
+#noGather{
+	text-align:center;
+	width:720px;
+	font-size:24px;
 }
 </style>
 </head>
 <body bgcolor="#F0EBEC">
-    <div id="container">
-        <aside>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<div id="container">
+		<aside>
             <h3>모임 지역 선택</h3>
-            <input type="checkbox" name="location" onclick="selectAll(this)">서울 전체<br>
-            <input type="checkbox" name="location">강남구
-            <input type="checkbox" name="location">강동구<br>
-            <input type="checkbox" name="location">강북구
-            <input type="checkbox" name="location">강서구<br>
-            <input type="checkbox" name="location">관악구
-            <input type="checkbox" name="location">광진구<br>
-            <input type="checkbox" name="location">구로구
-            <input type="checkbox" name="location">금천구<br>
-            <input type="checkbox" name="location">노원구
-            <input type="checkbox" name="location">도봉구<br>
-            <input type="checkbox" name="location">동대문구
-            <input type="checkbox" name="location">동작구<br>
-            <input type="checkbox" name="location">마포구
-            <input type="checkbox" name="location">서초구<br>
-            <input type="checkbox" name="location">서대문구
-            <input type="checkbox" name="location">성동구<br>
-            <input type="checkbox" name="location">성북구
-            <input type="checkbox" name="location">송파구<br>
-            <input type="checkbox" name="location">양천구
-            <input type="checkbox" name="location">용산구<br>
-            <input type="checkbox" name="location">영등포구
-            <input type="checkbox" name="location">은평구<br>
-            <input type="checkbox" name="location">종로구
-            <input type="checkbox" name="location">중구<br>
-            <input type="checkbox" name="location">중랑구
+            <input type="checkbox" name="location" id="selectAll" onclick="selectAll(this)">서울 전체<br>
+            <div class="district-wrapper">
+            <label><input type="checkbox" name="location" value="3220000" id="3220000">강남구</label>
+            <label><input type="checkbox" name="location" value="3240000" id="3240000">강동구</label>
+            <label><input type="checkbox" name="location" value="3080000" id="3080000">강북구</label>
+            <label><input type="checkbox" name="location" value="3150000" id="3150000">강서구</label>
+            <label><input type="checkbox" name="location" value="3200000" id="3200000">관악구</label>
+            <label><input type="checkbox" name="location" value="3040000" id="3040000">광진구</label>
+            <label><input type="checkbox" name="location" value="3160000" id="3160000">구로구</label>
+            <label><input type="checkbox" name="location" value="3170000" id="3170000">금천구</label>
+            <label><input type="checkbox" name="location" value="3100000" id="3100000">노원구</label>
+            <label><input type="checkbox" name="location" value="3090000" id="3090000">도봉구</label>
+            <label><input type="checkbox" name="location" value="3050000" id="3050000">동대문구</label>
+            <label><input type="checkbox" name="location" value="3190000" id="3190000">동작구</label>
+            <label><input type="checkbox" name="location" value="3130000" id="3130000">마포구</label>
+            <label><input type="checkbox" name="location" value="3210000" id="3210000">서초구</label>
+            <label><input type="checkbox" name="location" value="3120000" id="3120000">서대문구</label>
+            <label><input type="checkbox" name="location" value="3030000" id="3030000">성동구</label>
+            <label><input type="checkbox" name="location" value="3070000" id="3070000">성북구</label>
+            <label><input type="checkbox" name="location" value="3230000" id="3230000">송파구</label>
+            <label><input type="checkbox" name="location" value="3140000" id="3140000">양천구</label>
+            <label><input type="checkbox" name="location" value="3020000" id="3020000">용산구</label>
+            <label><input type="checkbox" name="location" value="3180000" id="3180000">영등포구</label>
+            <label><input type="checkbox" name="location" value="3110000" id="3110000">은평구</label>
+            <label><input type="checkbox" name="location" value="3000000" id="3000000">종로구</label>
+            <label><input type="checkbox" name="location" value="3010000" id="3010000">중구</label>
+            <label><input type="checkbox" name="location" value="3060000" id="3060000">중랑구</label>
+            </div>
             <hr>
+			
             <h3>모임 음식 분야 선택</h3>
-            <input type="radio" name="food">양식
-            <input type="radio" name="food">한식<br>
-            <input type="radio" name="food">중식
-            <input type="radio" name="food">일식<br>
-            <input type="radio" name="food">카페&디저트
-            <input type="radio" name="food">기타
-            <hr>
-            <h3>모임 정렬</h3>
-            <select name="see" id="seeSelect">
-                <option value="">보기 설정</option>
-                <option value="최신순">최신순 보기</option>
-                <option value="마감임박순">마감임박순 보기</option>
-            </select>
-        </aside>
-        <section id="content">
-            <input type="button" id="makeGather" value="모임 만들기">
-            <br><br>
-            <table>
-                <tbody>
-                    <tr>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                        <td><strong>모임제목</strong><br>모임 음식점 장소 <br>음식점카테고리<br>모임 시간<br> 모임 인원(0/2)<br><input type="button" class="goGatherBtn" value="모임 참여하기"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div id="seeMore"><input type="button" id="moreGather" value="더보기"></div>
-        </section>
-
-    </div>
-    <script>
+            <div class="food-wrapper">
+            <label><input type="radio" name="food" value="001" id="001">한식</label>
+            <label><input type="radio" name="food" value="002" id="002">일식</label>
+            <label><input type="radio" name="food" value="003" id="003">양식</label>
+            <label><input type="radio" name="food" value="004" id="004">회/해산물</label>
+            <label><input type="radio" name="food" value="005" id="005">중식</label>
+            <label><input type="radio" name="food" value="006" id="006">분식/면류</label>
+            <label><input type="radio" name="food" value="007" id="007">고기/구이</label>
+            <label><input type="radio" name="food" value="008" id="008">치킨/닭요리</label>
+            <label><input type="radio" name="food" value="009" id="009">아시아음식</label>
+            <label><input type="radio" name="food" value="010" id="010">카페/디저트</label>
+            <label><input type="radio" name="food" value="011" id="011">기타</label>            
+            </div>
+			<hr>
+			
+			<h3>모임 정렬</h3>
+			<select name="see" id="seeSelect">
+				<option value="">보기 설정</option>
+				<option value="최신순">최신순 보기</option>
+				<option value="마감임박순">마감임박순 보기</option>
+			</select>
+		</aside>
+		<section id="content">
+			<input type="button" id="makeGather" value="모임 만들기"
+				onclick="gatherEnroll();">
+			<script>
+            const gatherEnroll=()=>{
+            	//loginMember==null일때 조건 추가
+            	location.href='<%=request.getContextPath()%>/gather/gatherEnroll';
+            }
+            </script>
+			<br> <br>
+			<table id="tbl-gather" class="table table-striped table-hover">
+				<c:if test="${empty list}">
+					<tr>
+						<td colspan="3" id="noGather">모임이 아직 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${not empty list}">
+					<c:forEach items="${list}" var="gather">
+						<tr data-no="${gather.no}">
+							<td>${gather.title}</td>
+							<td>${gather.restaurantNo}</td>
+							<td>${gather.foodCode}</td>
+							<td>${gather.districtCode}</td>
+							<td>${gather.meetDate}</td>
+							<td><span id="nowCount"></span>/<span id="totalCount">${gather.count}</span></td>
+							<td><button type="button" id="gatherDetail" onclick="gatherDetail()" value="모임 참여하기"/></td>
+						</tr>
+					</c:forEach>
+				</c:if>
+			
+			</table>
+		</section>
+	</div>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	<script>
         function selectAll(selectAll){
             const checkboxes = document.getElementsByName('location');
             checkboxes.forEach((checkbox)=>{
                 checkbox.checked=selectAll.checked;
             })
         }
+        const gatherDetail=document.querySelectorAll("tr[data-no]").forEach((tr) => {
+        	tr.addEventListener('click', (e) => {
+        		// console.log(e.target); // td
+        		const tr = e.target.parentElement;
+        		const no = tr.dataset.no;
+        		// console.log(no);
+        		if(no){
+        			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+        		}
+        	});     	
+        });
     </script>
 </body>
 </html>

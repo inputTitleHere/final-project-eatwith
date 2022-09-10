@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.eatwith.review.model.dao.ReviewDao">
+  
+  <select id="getBestReviews" resultType="CustomMap">
+  	select 
+	    rev.*,
+	    rest.name,
+	    rest.dong,
+	    (select name from member where no = rev.user_no) as writer,
+	    (select type from food_type t where t.code = rest.food_code) as food_type,
+	    (select count(*) as avg_score from review where restaurant_no = rev.restaurant_no) as review_count,
+	    (select avg(overall_score) from review where  restaurant_no = rev.restaurant_no) as avg_score
+		from 
+			(select * from review where overall_score = 5 order by no desc) rev join restaurant rest on rev.restaurant_no = rest.no
+		where 
+			rownum &lt;=5
+  </select>
+  
+  
+</mapper>
