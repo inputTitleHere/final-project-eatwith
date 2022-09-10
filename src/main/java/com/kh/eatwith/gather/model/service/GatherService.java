@@ -3,6 +3,7 @@ package com.kh.eatwith.gather.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.gather.model.dto.Gather;
 
 public interface GatherService {
@@ -14,5 +15,7 @@ public interface GatherService {
 	int getTotalContent();
 
 	Gather selectOneGather(int no);
+
+	List<CustomMap> getNearClosure();
 
 }

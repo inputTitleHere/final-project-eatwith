@@ -87,9 +87,6 @@ public class ReviewController extends HttpServlet {
 		List<Map<String, Object>> reviews=reviewService.getBestReviews();
 		log.debug("reviews = {}",reviews);
 	
-		
-		
-		
 		return ResponseEntity.ok(reviews);
 	}
 	

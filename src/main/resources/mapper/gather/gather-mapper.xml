@@ -4,5 +4,32 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.eatwith.gather.model.dao.GatherDao">
 
+	<select id="getNearClosure" resultType="CustomMap">
+		select
+		    r.*,
+		    rest.name,
+		    rest.dong,
+		    (select image_name from review_image ri where ri.restaurant_no = r.restaurant_no and rownum=1) as image_source,
+		    (select count(*) from member_gather where gather_no = r.no) as enrolled_count,
+		    (select type from food_type where rest.food_code = code) as food_type,
+		    (select count(*) as avg_score from review where restaurant_no = r.restaurant_no) as review_count,
+	    	(select avg(overall_score) from review where  restaurant_no = r.restaurant_no) as avg_score
+		from(
+		    select
+		        r.*
+		    from(
+		        select
+		            g.*,
+		            (meet_date-current_date) as remaining_time
+		        from
+		            gather g
+		        where
+		            (meet_date-current_date)>0 
+		    order by g.meet_date
+		    ) r
+		    where rownum &lt;= 8
+		) r join restaurant rest on r.restaurant_no = rest.no
+	</select>
+
 
 </mapper>
