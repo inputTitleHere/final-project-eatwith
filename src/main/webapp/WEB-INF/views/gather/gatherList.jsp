@@ -62,12 +62,11 @@ aside {
 #makegather {
 	float: right;
 }
-
+tr{
+	width:200px;
+}
 td {
-	width: 200px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 20px;
+	padding : 0px 10px 10px 10px;
 	font-size: 18px;
 	text-align: center;
 }
@@ -188,26 +187,26 @@ td {
             }
             </script>
 			<br> <br>
-			<table id="tbl-gather" class="table table-striped table-hover">
-				<c:if test="${empty list}">
+			<table id="tbl-gather">
+				<tbody>
+				<c:if test="${empty lists}">
 					<tr>
-						<td colspan="3" id="noGather">모임이 아직 없습니다.</td>
+						<td colspan="8" id="noGather">모임이 아직 없습니다.</td>
 					</tr>
 				</c:if>
-				<c:if test="${not empty list}">
-					<c:forEach items="${list}" var="gather">
+				<c:if test="${not empty lists}">
+					<c:forEach items="${lists}" var="gather">
 						<tr data-no="${gather.no}">
-							<td>${gather.title}</td>
-							<td>${gather.restaurantNo}</td>
-							<td>${gather.foodCode}</td>
-							<td>${gather.districtCode}</td>
+							<td>${gather.title}<br></td>
+							<td>${gather.name}</td>
+							<td>${gather.type}</td>
+							<td>${gather.locaName}</td>
 							<td>${gather.meetDate}</td>
-							<td><span id="nowCount"></span>/<span id="totalCount">${gather.count}</span></td>
-							<td><button type="button" id="gatherDetail" onclick="gatherDetail()" value="모임 참여하기"/></td>
+							<td><span id="nowCount"></span>/<span id="totalCount">${gather.count+1}</span></td>
 						</tr>
 					</c:forEach>
 				</c:if>
-			
+				</tbody>
 			</table>
 		</section>
 	</div>

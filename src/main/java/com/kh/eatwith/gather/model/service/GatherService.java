@@ -10,12 +10,20 @@ public interface GatherService {
 
 	int gatherEnroll(Gather gather);
 
-	List<Gather> selectGatherList(Map<String, Integer> param);
-
 	int getTotalContent();
 
 	Gather selectOneGather(int no);
 
 	List<CustomMap> getNearClosure();
+	
+	List<Map<String, Object>> getGatherList();
+
+	Map<String, Object> getOneGather(int no);
+
+	Map<String, Object> selectOneGatherInfo(int no);
+
+	int gatherUpdate(Gather gather);
+
+	int gatherDelete(int no);
 
 }

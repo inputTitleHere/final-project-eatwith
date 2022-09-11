@@ -42,6 +42,10 @@ public class GatherController {
 		Gather gather=gatherService.selectOneGather(no);
 		log.debug("gather = {}",gather);
 		model.addAttribute("gather",gather);
+		
+		Map<String,Object> gatherD=gatherService.getOneGather(no);
+		log.debug("gatherDetail = {}",gatherD);
+		model.addAttribute("gatherD",gatherD);
 	}
 	
 	@GetMapping("/gatherList")
@@ -51,9 +55,9 @@ public class GatherController {
 		int limit = 10;
 		param.put("cPage", cPage);
 		param.put("limit", limit);
-		List<Gather> list = gatherService.selectGatherList(param);
-		log.debug("list = {}", list);
-		model.addAttribute("list", list);
+		List<Map<String,Object>> lists=gatherService.getGatherList();
+		log.debug("lists = {}",lists);
+		model.addAttribute("lists",lists);
 		
 		// 2. pagebar영역
 		int totalContent = gatherService.getTotalContent();
@@ -84,4 +88,30 @@ public class GatherController {
 	}
 	
 	
+	@GetMapping("/gatherUpdate")
+	public String gatherUpdate(@RequestParam int no, Model model) {
+		Gather gatherO=gatherService.selectOneGather(no);
+		Map<String,Object> gather = gatherService.selectOneGatherInfo(no);
+		model.addAttribute("gatherO",gatherO);
+		model.addAttribute("gather",gather);
+		log.debug("gatherO = {}",gatherO);
+		log.debug("gather = {}",gather);
+		return "gather/gatherUpdate";
+	}
+	
+	
+	@PostMapping("/gatherUpdate")
+	public String gatherUpdate(Gather gather,RedirectAttributes redirectAttr) {
+		int result=gatherService.gatherUpdate(gather);
+		log.debug("gatherUpdate={}",result);
+		redirectAttr.addFlashAttribute("msg","모임을 성공적으로 수정했습니다.");
+		return "redirect:/gather/gatherDetail?no="+gather.getNo();
+	}
+	
+	@PostMapping("/gatherDelete")
+	public String gatherDelete(@RequestParam int no,RedirectAttributes redirectAttr) {
+		int result=gatherService.gatherDelete(no);
+		log.debug("gatherDelete = {}",result);
+		return "redirect:/gather/gatherList";
+	}
 }
