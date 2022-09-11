@@ -1,5 +1,5 @@
 select * from member;
-select * from restaurant where no='3010000-101-2017-00400';
+select * from restaurant where no='3150000-101-2001-09860';
 select * from district;
 select * from food_type;
 select * from review where restaurant_no ='3010000-101-2017-00400';

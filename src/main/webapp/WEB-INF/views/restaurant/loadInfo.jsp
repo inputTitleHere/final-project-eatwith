@@ -18,7 +18,7 @@ body {
 #info1 {
 	background-color: white;
 	margin: 10px 100px;
-	height: 500px;
+	height: auto;
 }
 #info2 {
 	background-color: white;
@@ -59,9 +59,17 @@ body {
 			<section>
 				<div>
 					<p>영업시간</p>
-					${restaurant.workHours}
+					<ul>
+						<c:forEach var="whlist" items="${whlist}">
+							<li><c:out value="${whlist}" /></li>
+						</c:forEach>
+					</ul>
 					<p>메뉴정보</p>
-					${restaurant.menu}
+					<ul>
+						<c:forEach var="menuList" items="${menuList}">
+							<li><c:out value="${menuList}" /></li>
+						</c:forEach>
+					</ul>
 				</div>
 			</section>
 			<section>
@@ -72,7 +80,9 @@ body {
 			<section>
 				<div>
 					<p>가게리뷰</p>
-					${review}
+					<c:forEach var="reviews" items="${reviews}">
+						<p><c:out value="${reviews}" /></p>
+					</c:forEach>
 				</div>
 			</section>
 		</form>
