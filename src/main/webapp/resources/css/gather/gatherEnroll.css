@@ -25,9 +25,9 @@ th{
 td{
     padding-bottom: 20px;    
 }
-#gatherTitle{
+input#title{
     width: 700px;
-    height: 20px;
+    height: 30px;
 }
 #gatherContent{
     height: 200px;
@@ -64,10 +64,10 @@ td{
 	padding-right:20px;
 }
 #gatherMin,#gatherMax,#gatherTime{
-    height: 20px;
+    height: 30px;
 }
-#findStore{
-    height: 20px;
+input#findStore{
+    height: 30px;
     width:200px;
 }
 .openBtn {
@@ -153,8 +153,12 @@ td{
 }
 #storeName{
 	font-size:18px;
-	font-weight:strong;	
+	font-weight:bold;	
 }
 li{
 	list-style:none;
+}
+#ageChk,#genderChk{
+	accent-color:var(--jjin-pink);
+	transform:scale(1.5);
 }

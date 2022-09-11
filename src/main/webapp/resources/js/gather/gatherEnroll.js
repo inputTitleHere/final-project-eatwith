@@ -1,17 +1,18 @@
-
-    	const toggleAge=(e)=>{
 		const minInput=document.querySelector('#gatherMin');
 		const maxInput=document.querySelector('#gatherMax');
+		
+    	const toggleAge=(e)=>{
 		minInput.disabled=e.target.checked;
 		maxInput.disabled=e.target.checked;
-	}
+		}
     
-    	const toggleGender=(e)=>{
-		const genderM=document.querySelector('#gatherGenM');
+    	const genderM=document.querySelector('#gatherGenM');
 		const genderF=document.querySelector('#gatherGenF');
-		genderM.disabled=e.target.checked;
-		genderF.disabled=e.target.checked;
-	}
+		
+    	const toggleGender=(e)=>{
+    		genderM.disabled=e.target.checked;
+    		genderF.disabled=e.target.checked;
+		}
 
     
     //모임시간설정

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.gather.model.dao.GatherDao;
 import com.kh.eatwith.gather.model.dto.Gather;
 
@@ -26,14 +27,35 @@ public class GatherServiceImpl implements GatherService{
 	}
 	
 	@Override
-	public List<Gather> selectGatherList(Map<String, Integer> param) {
-		int limit = param.get("limit");
-		int offset = (param.get("cPage") - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return gatherDao.selectGatherList(rowBounds);
-	}
-	@Override
 	public Gather selectOneGather(int no) {
 		return gatherDao.selectOneGather(no);
+	}
+	
+	@Override
+	public List<CustomMap> getNearClosure() {
+		return gatherDao.getNearClosure();
+	}
+	
+	public List<Map<String, Object>> getGatherList() {
+		return gatherDao.getGatherList();
+	}
+	
+	@Override
+	public Map<String, Object> getOneGather(int no) {
+		return gatherDao.getOneGather(no);
+	}
+	
+	@Override
+	public Map<String, Object> selectOneGatherInfo(int no) {
+		return gatherDao.selectOneGatherInfo(no);
+	}
+	
+	@Override
+	public int gatherUpdate(Gather gather) {
+		return gatherDao.gatherUpdate(gather);
+	}
+	@Override
+	public int gatherDelete(int no) {
+		return gatherDao.gatherDelete(no);
 	}
 }

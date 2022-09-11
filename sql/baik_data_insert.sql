@@ -1,3 +1,6 @@
+-- 시간대 변경하기
+alter session set time_zone = '09:00';
+
 
 select * from member;
 select * from gather order by no desc;
@@ -44,33 +47,48 @@ select
     rev.*,
     rest.name,
     rest.dong,
+    (select image_name from review_image where restaurant_no = rev.restaurant_no and rownum=1) as image_source,
     (select name from member where no = rev.user_no) as writer,
     (select type from food_type t where t.code = rest.food_code) as food_type,
-    (select count(*) as avg_score from review where restaurant_no = rev.restaurant_no) as review_count,
+    (select count(*) from review where restaurant_no = rev.restaurant_no) as review_count,
     (select avg(overall_score) from review where  restaurant_no = rev.restaurant_no) as avg_score
 from (select * from review where overall_score = 5 order by no desc) rev join restaurant rest on rev.restaurant_no = rest.no
 where rownum <=5;
 
+-- 마감임박 모임
+select 
+    (meet_date - current_date)
+from gather
+where 
+   (meet_date - current_date) >0
+order by meet_date
+;
 
-  	select 
-	    rev.*,
-	    rest.name,
-	    rest.dong,
-	    (select name from member where no = rev.user_no) as writer,
-	    (select type from food_type t where t.code = rest.food_code) as food_type,
-	    (select count(*) as avg_score from review where restaurant_no = rev.restaurant_no) as review_count,
-	    (select avg(overall_score) from review where  restaurant_no = rev.restaurant_no) as avg_score
-		from 
-			(select * from review where overall_score = 5 order by no desc) rev join restaurant rest on rev.restaurant_no = rest.no
-		where 
-			rownum <=5;
+select
+    r.*,
+    rest.name,
+    rest.dong,
+    (select count(*) from member_gather where gather_no = r.no) as enrolled_count,
+    (select type from food_type where rest.food_code = code) as food_type
+from(
+    select
+        r.*
+    from(
+        select
+            g.*,
+            (meet_date-current_date) as remaining_time
+        from
+            gather g
+        where
+            (meet_date-current_date)>0 
+    order by g.meet_date
+    ) r
+    where rownum <= 8
+) r join restaurant rest on r.restaurant_no = rest.no;
 
 
-
-
-
-
-
-
+select sysdate from dual;
+select to_char(sysdate, 'yyyy-MM-dd HH24:mi:ss') from dual;
+select to_char(current_date, 'yyyy-MM-dd HH24:mi:ss') from dual;
 
 
