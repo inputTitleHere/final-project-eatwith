@@ -188,6 +188,9 @@ CREATE TABLE REVIEW_IMAGE (
   CONSTRAINT fk_review_image_review_no FOREIGN KEY(review_no) references REVIEW(no) on delete cascade
 );
 
+alter table review_image modify image_name varchar2(256);
+
+
 COMMENT ON COLUMN REVIEW_IMAGE.no IS 'seq_review_image_no';
 COMMENT ON COLUMN REVIEW_IMAGE.review_no IS 'seq_review_no';
 
@@ -198,6 +201,8 @@ CREATE TABLE MEMBER_GATHER (
   constraint fk_member_gather_user_no FOREIGN KEY(user_no) references MEMBER(no) on delete cascade,
   constraint fk_member_gather_gather_no FOREIGN KEY(gather_no) references GATHER(no) on delete cascade
 );
+
+
 
 COMMENT ON COLUMN MEMBER_GATHER.user_no IS 'seq_member_no.nextval';
 COMMENT ON COLUMN MEMBER_GATHER.gather_no IS 'seq_gather_no.nextval';
