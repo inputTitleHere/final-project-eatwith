@@ -90,6 +90,15 @@ public class ReviewController extends HttpServlet {
 		return ResponseEntity.ok(reviews);
 	}
 	
+	@GetMapping("/getNewestReviews")
+	@ResponseBody
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<?> getNewestReviews(){
+		
+		
+		return ResponseEntity.ok(null);
+	}
+	
 }
 
 

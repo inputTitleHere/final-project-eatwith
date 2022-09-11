@@ -78,7 +78,8 @@ public class GatherController {
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<?> getNearClosure(){
 		List<CustomMap> result = gatherService.getNearClosure();
-		
+		log.debug("시간타입 = {}",result.get(0).get("meetDate").getClass().getName());
+		log.debug("==마감임박 = {} ",result);
 		return ResponseEntity.ok(result);
 	}
 	
