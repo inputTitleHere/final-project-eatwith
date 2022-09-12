@@ -42,12 +42,14 @@ body {
 			<section style="border-spacing: 5px">
 				<div>
 					<p>${restaurant.name} </p>
+					${district.name}
 					[${restaurant.districtCode}][${restaurant.dong}]<br/>
 					[${restaurant.foodCode}][${restaurant.naverFoodType}]<br/><br/>
 					
 					n명의 평가 : (평균) 
 				</div>
 			</section>
+			<hr />
 			<section>
 				<div>
 					<p>가게 정보</p>
@@ -56,8 +58,9 @@ body {
 					찜
 				</div>
 			</section>
+			<hr />
 			<section>
-				<div>
+				<div class="">
 					<p>영업시간</p>
 					<ul>
 						<c:forEach var="whlist" items="${whlist}">
@@ -65,10 +68,20 @@ body {
 						</c:forEach>
 					</ul>
 					<p>메뉴정보</p>
-					<ul>
-						<c:forEach var="menuList" items="${menuList}">
+					<ul id="ul1">
+						<c:forEach var="menuList" items="${menuList}" begin="0" end="9">
 							<li><c:out value="${menuList}" /></li>
 						</c:forEach>
+						<c:if test="${menuList.size() > 10}">
+							<p>더보기</p>
+							<input type="submit" value="더보기" id="btn-more" onclick="add_ul()"/>
+							<%-- <c:forEach var="menuList" items="${menuList}" begin="10">
+								<li><c:out value="${menuList}" /></li>
+							</c:forEach> --%>
+						</c:if>
+						<%-- <c:set var="menuList" value="${menuList}"/> --%>
+						<%-- <c:set></c:set> 이용해 분기 / 10개 넘어가면 접어서 높이값 고정 후 누르면 fit-content로 확장 --%>
+						
 					</ul>
 				</div>
 			</section>
@@ -112,6 +125,15 @@ body {
 			error:console.log
 		});
 	})
+	const add_ul = () => {
+		const ul1 = document.getElementById("btn-more");
+		const btnId = document.createElement('li');
+		btnId.innerHTML = `<c:forEach var="menuList" items="\${menuList}" begin="10">
+			<li><c:out value="\${menuList}" /></li>
+			</c:forEach>`;
+	}
+	
 	</script>
+	
 </body>
 </html>

@@ -13,7 +13,7 @@ public interface RestaurantDao {
 	//@Select("select * from restaurant where name like '%'||#{searchString}||'%'")
 	List<Restaurant> findRestaurantByName(String searchString);
 
-	@Select("select * from restaurant where no = #{no}")
+	//@Select("select * from restaurant where no = #{no}")
 	Restaurant selectOneRestaurant(String no);
 
 	

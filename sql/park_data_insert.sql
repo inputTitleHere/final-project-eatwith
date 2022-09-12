@@ -5,7 +5,8 @@ select * from food_type;
 select * from review where restaurant_no ='3010000-101-2017-00400';
 select * from review_image;
 select * from food_type;
-select * from restaurant r left join food_type f on r.food_code = f.code where r.no='3020000-101-2018-00337';
+select * from favorite_restaurant;
+select f.type from restaurant r left join food_type f on r.food_code = f.code where r.no='3020000-101-2018-00337';
 --insert into gather values(seq_gather_no.nextval,'3110000-101-2022-00001','2인3메뉴 조질사람',1,to_date('2022-09-11 12:30','YYYY-MM-DD hh24:mi'),'999','9876543','여의도에서 일하는 30대 남성입니다.편하게 먹고가요',149,null,null,'M');
 -- abcd : 143 (1975)/ qwerty:151(1984) / park :148(1993)
 insert into gather 

@@ -46,7 +46,9 @@ public class RestaurantController {
 	 */
 	@GetMapping("/loadInfo")
 	public String loadInfo(String no ,Model model) {
-		no="3010000-101-2017-00400";
+//		no="3010000-101-2017-00400"; 
+//		no="3150000-101-2001-09860"; 빈대떡집 메뉴 5개
+		no="3010000-101-2014-00196"; //카페
 		Restaurant restaurant = restaurantService.selectOneRestaurant(no);
 		StringTokenizer stk1 = new StringTokenizer(restaurant.getWorkHours(), "\n");
 		String result1 = "";

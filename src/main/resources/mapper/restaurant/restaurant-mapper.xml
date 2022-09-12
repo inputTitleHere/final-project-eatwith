@@ -6,14 +6,25 @@
 	namespace="com.kh.eatwith.restaurant.model.dao.RestaurantDao">
 	<select id="findRestaurantByName" resultType="RestaurantExt">
 		select
-		r.*,
-		d.name as "district_name",
-		f.type
+			r.*,
+			d.name as "district_name",
+			f.type
 		from
-		restaurant r join district d on d.code=r.district_code join food_type f on
-		r.food_code = f.code
+			restaurant r join district d 
+				on d.code=r.district_code 
+					join food_type f 
+						on r.food_code = f.code
 		where
-		r.name like '%'||#{searchString}||'%'
+			r.name like '%'||#{searchString}||'%'
 	</select>
 
+	<select id="selectOneRestaurant" resultType="Restaurant">
+		select
+			rest.*,
+			d.name
+		from
+			restaurant rest join district d on rest.district_code = d.code
+		where
+			rest.no = #{no}
+	</select>
 </mapper>
