@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -204,11 +203,10 @@
 				<tfoot>
 					<tr>
 						<th>
-						<input	type="hidden" name="userNo" id="userNo" value="102" />
+						<sec:authentication property="principal.no" var="loginMember"/>
+						<input type="hidden" name="userNo" id="userNo" value="${loginMember}" />
 						<input type="hidden" name="count" id="count" />
-						<script>
-							
-						</script>
+						
 						</th>
 					</tr>
 				</tfoot>

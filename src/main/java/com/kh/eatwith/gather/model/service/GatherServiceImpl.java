@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.gather.model.dao.GatherDao;
 import com.kh.eatwith.gather.model.dto.Gather;
+import com.kh.eatwith.gather.model.dto.MemberGather;
+import com.kh.eatwith.member.model.dto.Member;
 
 @Service
 public class GatherServiceImpl implements GatherService{
@@ -57,5 +59,30 @@ public class GatherServiceImpl implements GatherService{
 	@Override
 	public int gatherDelete(int no) {
 		return gatherDao.gatherDelete(no);
+	}
+	
+	@Override
+	public int applyGather(Map<String,Object> param) {
+		return gatherDao.applyGather(param);
+	}
+	
+	@Override
+	public int countGatherMem(int no) {
+		return gatherDao.countGatherMem(no);
+	}
+	
+	@Override
+	public int cancelGather(Map<String, Object> param) {
+		return gatherDao.cancelGather(param);
+	}
+	
+	@Override
+	public Integer chkGatherIn(Map<String, Object> param) {
+		return gatherDao.chkGatherIn(param);
+	}
+	
+	@Override
+	public Member getMemberNo(String loginId) {
+		return gatherDao.getMemberNo(loginId);
 	}
 }
