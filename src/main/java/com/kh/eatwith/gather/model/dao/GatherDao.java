@@ -47,6 +47,23 @@ public interface GatherDao {
 	@Delete("delete gather where no=#{no}")
 	int gatherDelete(int no);
 
-	@Insert("insert into member_gather values (#{member},#{no},sysdate)")
-	int applyGather(int no, MemberGather memberGather, Member member);
+	@Insert("insert into member_gather (user_no,gather_no,enroll_at) "
+			+ "select #{loginMember},#{gatherNo},sysdate from dual "
+			+ "where not exists(select user_no,gather_no from member_gather where user_no=#{loginMember} and gather_no=#{gatherNo})")
+	int applyGather(Map<String,Object> param);
+
+	@Select("select count(*) as count from member_gather where gather_no=#{gatherNo}")
+	int countGatherMem(int no);
+
+	@Delete("delete from member_gather where user_no=#{loginMember} and gather_no=#{gatherNo}")
+	int cancelGather(Map<String, Object> param);
+
+	@Select("select * from member_gather where user_no=#{loginMember} and gather_no=#{gatherNo}")
+	Integer chkGatherIn(Map<String, Object> param);
+
+	@Select("select * from member where no=#{no}")
+	Member getMemberNo(String loginId);
+
+	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
+
 }

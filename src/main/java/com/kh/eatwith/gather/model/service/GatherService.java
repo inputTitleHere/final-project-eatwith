@@ -25,6 +25,14 @@ public interface GatherService {
 
 	int gatherDelete(int no);
 
-	int applyGather(int no, MemberGather memberGather, Member member);
+	int applyGather(Map<String,Object> param);
+
+	int countGatherMem(int no);
+
+	int cancelGather(Map<String, Object> param);
+
+	Integer chkGatherIn(Map<String, Object> param);
+
+	Member getMemberNo(String loginId);
 
 }

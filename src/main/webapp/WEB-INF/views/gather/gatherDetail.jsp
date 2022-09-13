@@ -72,6 +72,7 @@ td{
     width: 80px;
     height: 30px;
     font-size: 16px;
+    cursor : pointer;
 }
 #gatherOut{
     background-color: #ECC7C5;
@@ -82,6 +83,7 @@ td{
     width: 80px;
     height: 30px;
     font-size: 16px;
+    cursor : pointer;
 }
 #inChat, #writeReview{
     background-color: #DC948A;
@@ -130,24 +132,6 @@ td{
                     </td>
                 </tr>
                 <tr>
-                    <th>모임 인원</th>
-                    <!-- 모임 인원 불러올때 +1해주기-->
-                    <td>
-                        <span id="countNow">0</span>/<span id="">${gather.count+1}</span> 
-                        <button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
-                        <button type="button" id=gatherOut onclick="gatherOut()">참여취소</button>
-                        <!-- applyGather form작성하기 -->
-                        <form action="<%=request.getContextPath() %>/gather/applyGather?no=${gather.no}" 
-                        method="post" name="applyGatherFrm">
-                        	<input type="hidden" name="gatherNo" value="${gather.no}" />
-                        	<sec:authorize access="isAuthenticated()">
-                        	<sec:authentication property="principal.no" var="loginMember"/>
-                        	<input type="hidden" name="userNo" id="login" value="${loginMember}"/>
-                        	</sec:authorize>
-        				</form>
-                    </td>
-                </tr>
-                <tr>
                 	<th>나이제한</th>
                 	<td>
                 		<c:if test="${gather.ageRestrictionTop eq '0'}">
@@ -162,17 +146,56 @@ td{
                 	<th>성별제한</th>
                 	<td>
                 		<c:if test="${empty gather.genderRestriction}">
-                			성별 제한이 없습니다.
+                			성별 제한이 없습니다.<input type="hidden" id="genderRestriction" value="A">
                 		</c:if>
                 		<c:if test="${not empty gather.genderRestriction}">
                 			<c:if test="${gather.genderRestriction eq 'F'}">
+                				<input type="hidden" id="genderRestriction" value="F">
                 				<strong>여자</strong>만 참여 가능합니다.
                 			</c:if>
     						<c:if test="${gather.genderRestriction eq 'M'}">
+    							<input type="hidden" id="genderRestriction" value="M">
     							<strong>남자</strong>만 참여 가능합니다.
     						</c:if>
                 		</c:if>
                 	</td>
+                </tr>
+                <tr>
+                    <th>모임 인원</th>
+                    <!-- 모임 인원 불러올때 +1해주기-->
+                    <td>
+                        <sec:authorize access="isAnonymous()">
+                        <input type="hidden" name="gatherNo" id="gatherNo" value="${gather.no}" />
+                        <span id="countNow">${count+n}</span>/<span id="">${gather.count+1}</span>
+                        <button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
+                        <script>
+                        	var n=0;
+                        	const gatherIn=()=>{
+                        		alert("로그인을 하고 이용해주세요.");
+                        	}
+                        </script>
+                        </sec:authorize>
+                       	<sec:authorize access="isAuthenticated()">
+                       	<sec:authentication property="principal.no" var="loginMember"/>
+                  		<input type="hidden" name="loginMember" id="loginMember" value="${loginMember}"/>
+                       	<input type="hidden" name="gatherNo" id="gatherNo" value="${gather.no}" />
+                        <span id="countNow">${count+n}</span>/<span id="">${gather.count+1}</span>
+						<button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
+                        <button type="button" id=gatherOut onclick="gatherOut()">참여취소</button>
+                       	
+                       	</sec:authorize>
+                        <!-- applyGather form작성하기 -->
+
+                        <form action="<%=request.getContextPath() %>/gather/applyGather?no=${gather.no}" 
+                        method="post" name="applyGatherFrm">
+                        	<input type="hidden" name="gatherNo" value="${gather.no}" />
+                        	<sec:authorize access="isAuthenticated()">
+                        	<sec:authentication property="principal.no" var="loginMember"/>
+                        	<input type="hidden" name="userNo" id="login" value="${loginMember}"/>
+                        	</sec:authorize>
+
+        				</form>
+                    </td>
                 </tr>
                 <tr>
                     <th>모임 시간</th>
@@ -210,26 +233,117 @@ td{
         </form>
     </div>
     <script>
-        document.getElementById("gatherOut").style.display="none";
-        document.getElementById("inChat").style.display="none";
-        document.getElementById("writeReview").style.display="none";
+	    document.getElementById("gatherIn").style.display="inline";
+	    document.getElementById("gatherOut").style.display="none";
+	    const gatherNo=document.querySelector('#gatherNo').value;
+	    const loginMember=document.querySelector('#loginMember').value;
+		//참여하기 버튼 디스플레이 설정
+		window.onload=function(){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/gather/chkGatherIn",
+				method:"POST",
+				data:{
+					"gatherNo":gatherNo,
+					"loginMember":loginMember
+				},
+				success(response){
+					console.log(response);
+					if(response==0){
+	       		        document.getElementById("gatherIn").style.display="inline";
+	       		        document.getElementById("gatherOut").style.display="none";
+					}else{
+                    document.getElementById("gatherIn").style.display="none";
+                    document.getElementById("gatherOut").style.display="inline";
+					}
+				},
+				error:console.log
+			})
+		}
 
-        const gatherIn=()=>{
-        	if(confirm("모임 참여시 200포인트가 차감됩니다.")){
-        		document.applyGatherFrm.submit();
-                document.getElementById("gatherIn").style.display="none";
-                document.getElementById("gatherOut").style.display="inline";
-                document.getElementById("inChat").style.display="inline";
-                document.getElementById("writeReview").style.display="inline";
-                document.getElementById("countNow").value+=1;
-        	}
-        }
-        const gatherOut=()=>{
-            document.getElementById("gatherIn").style.display="inline";
-            document.getElementById("gatherOut").style.display="none";
-            document.getElementById("inChat").style.display="none";
-            document.getElementById("writeReview").style.display="none";
-        }
+		//참여하기 비동기제출
+		function gatherInAjax(gatherNo,loginMember){
+	    	console.log(gatherNo,loginMember);
+       		$.ajax({
+       			url:"${pageContext.request.contextPath}/gather/applyGather",
+       			method:"POST",
+       			data:{
+       				"gatherNo":gatherNo,
+       				"loginMember":loginMember
+       			},
+       			success(response){
+       				console.log(response);
+                       document.getElementById("gatherIn").style.display="none";
+                       document.getElementById("gatherOut").style.display="inline";
+                       document.querySelector('#countNow').innerText=${count+1};
+       			},
+       			error:console.log
+       		})
+	    }
+    
+	    <sec:authorize access="isAuthenticated()">
+	    var n=0;
+	    const gatherIn=()=>{
+		    const genderRestriction = document.querySelector('#genderRestriction').value;
+		    
+		    console.log(genderRestriction);
+	    	if(confirm("모임 참여시 200포인트가 차감됩니다.")){
+	        	if(loginMember==${gather.userNo}){
+	        		alert('이미 참가한 모임입니다.');
+	        	}
+	        	else{
+	        		if(genderRestriction=='A'){
+	        			if(${gather.ageRestrictionTop}==0){
+	        				gatherInAjax(gatherNo,loginMember);
+	        			}
+	        			else if(${gather.ageRestrictionBottom}<=${2023-member.bornAt}&&${gather.ageRestrictionTop}>=${2023-member.bornAt}){
+	        				gatherInAjax(gatherNo,loginMember);
+	        			}
+	        			else{
+	        				alert('조건이 맞지 않아 참여할 수 없습니다.');
+	        			}
+	        		}
+	        		else if(genderRestriction=='${member.gender}'){
+	        			if(${gather.ageRestrictionTop}==0){
+	        				gatherInAjax(gatherNo,loginMember);
+	        			}
+	        			else if(${gather.ageRestrictionBottom}<=${2023-member.bornAt}&&${gather.ageRestrictionTop}>=${2023-member.bornAt}){
+	        				gatherInAjax(gatherNo,loginMember);
+	        			}
+	        			else{
+	        				alert('조건이 맞지 않아 참여할 수 없습니다.');
+	        			}
+	        		}
+	        		else{
+	        			alert('조건이 맞지 않아 참여할 수 없습니다.');
+	        		}
+
+	        	}
+	    	}
+	    }
+	    //참여취소
+	    const gatherOut=()=>{
+		    const gatherNo=document.querySelector('#gatherNo').value;
+		    const loginMember=document.querySelector('#loginMember').value;
+		    
+		    if(confirm("참여를 취소하시겠습니까?")){
+	       		$.ajax({
+	       			url:"${pageContext.request.contextPath}/gather/cancelGather",
+	       			method:"POST",
+	       			data:{
+	       				"gatherNo":gatherNo,
+	       				"loginMember":loginMember
+	       			},
+	       			success(response){
+	       				console.log(response);
+		       		        document.getElementById("gatherIn").style.display="inline";
+		       		        document.getElementById("gatherOut").style.display="none";
+	                        document.querySelector('#countNow').innerText=${count-1};
+	       			},
+	       			error:console.log
+	       		})
+		    }
+	    }
+	    </sec:authorize>
         const deleteGather=()=>{
         	if(confirm("정말 모임을 삭제하시겠습니까?")){
         		document.gatherDeleteFrm.submit();

@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,13 +8,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.eatwith.common.typehandler.EatWithUtils;
@@ -46,7 +50,7 @@ public class GatherController {
 	}
 	
 	@GetMapping("/gatherDetail")
-	public void gatherDetail(@RequestParam int no, Model model) {
+	public void gatherDetail(@RequestParam int no, Principal principal, Model model) {
 		Gather gather=gatherService.selectOneGather(no);
 		log.debug("gather = {}",gather);
 		model.addAttribute("gather",gather);
@@ -54,6 +58,16 @@ public class GatherController {
 		Map<String,Object> gatherD=gatherService.getOneGather(no);
 		log.debug("gatherDetail = {}",gatherD);
 		model.addAttribute("gatherD",gatherD);
+		
+		String loginId=principal.getName();
+		log.debug("loginId={}",loginId);
+		Member member=gatherService.getMemberNo(loginId);
+		log.debug("member={}",member);
+		model.addAttribute("member",member);
+
+		int count=gatherService.countGatherMem(no);
+		log.debug("count={}",count);
+		model.addAttribute("count",count);
 	}
 	
 	@GetMapping("/gatherList")
@@ -86,7 +100,6 @@ public class GatherController {
 		return "gather/gatherUpdate";
 	}
 	
-	
 	@PostMapping("/gatherUpdate")
 	public String gatherUpdate(Gather gather,RedirectAttributes redirectAttr) {
 		int result=gatherService.gatherUpdate(gather);
@@ -103,10 +116,41 @@ public class GatherController {
 	}
 	
 	@PostMapping("/applyGather")
-	public String applyGather(@RequestParam int no,Member member,Gather gather,MemberGather memberGather, RedirectAttributes redirectAttr) {
-		int result=gatherService.applyGather(no,memberGather,member);
-		log.debug("memberGather = {}",memberGather);
-		
-		return "redirect:/gather/gatherDetail?no="+gather.getNo();
+	@ResponseBody
+	public ResponseEntity<?> applyGather(@RequestParam("gatherNo") int gatherNo,@RequestParam("loginMember") int loginMember) {
+		log.debug("gatherNo={}",gatherNo);
+		log.debug("loginMember={}",loginMember);
+		Map<String,Object> param =new HashMap<String, Object>();
+		param.put("gatherNo", gatherNo);
+		param.put("loginMember", loginMember);
+		int result=gatherService.applyGather(param);
+		log.debug("result={}",result);
+		return ResponseEntity.ok(null);
+	}
+	
+	@PostMapping("/cancelGather")
+	@ResponseBody
+	public ResponseEntity<?> cancelGather(@RequestParam("gatherNo") int gatherNo,@RequestParam("loginMember") int loginMember) {
+		log.debug("gatherNo={}",gatherNo);
+		log.debug("loginMember={}",loginMember);
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("gatherNo", gatherNo);
+		param.put("loginMember", loginMember);
+		int resultC=gatherService.cancelGather(param);
+		log.debug("resultC={}",resultC);
+		return ResponseEntity.ok(null);
+	}
+	
+	@PostMapping("/chkGatherIn")
+	@ResponseBody
+	public ResponseEntity<?> chkGatherIn(@RequestParam("gatherNo") int gatherNo,@RequestParam("loginMember") int loginMember) {
+		log.debug("gatherNo={}",gatherNo);
+		log.debug("loginMember={}",loginMember);
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("gatherNo", gatherNo);
+		param.put("loginMember", loginMember);
+		Integer resultChk=gatherService.chkGatherIn(param);
+		log.debug("resultChk={}",resultChk);
+		return ResponseEntity.ok(resultChk);
 	}
 }
