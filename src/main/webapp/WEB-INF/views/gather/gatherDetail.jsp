@@ -8,14 +8,6 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="com.kh.eatwith.member.model.dto.Member" %>
-<%--
-	Authentication auth=SecurityContextHolder.getContext().getAuthentication();
-	Object principal=auth.getPrincipal();
-	int no=0;
-	if(principal!=null && principal instanceof Member){
-		no=((Member)principal).getNo();
-	}
---%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -209,10 +201,25 @@ td{
                     <th></th>
                     <td>
                         <br><br><br>
+                        <sec:authorize access="isAuthenticated()">
+                    	<sec:authentication property="principal" var="loginMember"/>
                         <button type="button" id="inChat">모임 채팅방 입장하기</button><br>
-                        <button type="button" id="writeReview">리뷰 작성하러 가기</button>
+                        
+                        <button type="button" id="writeReview"
+                        onclick="writeReview()">리뷰 작성하러 가기</button>
+                        <form action="<%=request.getContextPath() %>/review/writeReview" 
+                        method="POST" name="writeReviewFrm">
+                        <input type="hidden" name="gatherNo" value="${gather.no}">
+                        </form>
+                        </sec:authorize>
                     </td>
                 </tr>
+                <script>
+                console.log(${gather.no});
+                	const writeReview=()=>{
+                		document.writeReviewFrm.submit();
+                	}
+                </script>
                 <tr>
                     <th></th>
                     <td>

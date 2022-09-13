@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,9 +15,17 @@
     <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>
     <title>리뷰 작성하기</title>
 <style>
+#container{
+	display:flex;
+    font-size:16px;
+	width: 1200px;	
+	left:0;
+	right:0;
+	margin:auto;
+	padding:100px;
+}
 aside{
-    float: left;
-    width:200px;
+    width:260px;
     margin-left: 10px;
     padding-left: 20px;
     padding-right:20px;
@@ -25,14 +34,15 @@ aside{
     background-color: white;
 }
 #review{
-    float: left;
-    width: 750px;
-    background-color: white;
-    padding-bottom: 20px;
-    margin-left: 10px;
-    padding-right:20px;
-    margin-right: 10px;
-    padding-left: 20px;
+	display:flex;
+    font-size:16px;
+	width: 1200px;	
+	background-color: white;
+	padding-bottom: 20px;
+	margin-left: 10px;
+	padding-right: 20px;
+	margin-right: 10px;
+	padding:30px;
 }
 #makegather{
     float: right;
@@ -115,21 +125,26 @@ input[type=checkbox]{
     width: 500px;
     height: 40px;
     font-size: 20px;
-    
+}
+#restaurantName{
+	display:block;
+	width:240px;
+	font-size:20px;
+	font-weight:bold;
 }
 </style>
 </head>
 <body bgcolor="#F0EBEC">
     <div id="container">
         <aside>
-            <h3>'음식점 이름' 평가하기</h3>
-            <h5>음식점 사진</h5>
-            <h6>음식점 카테고리 - 네이버 지도 분류</h6>
-            <h6>음식점 주소</h6>
-            <h6>음식점 전화번호</h6>
+           	<div id="restaurantName">'<span>${reviewInfo.name}</span>' 평가하기</div>
+            <h4>음식점 사진</h4>
+            <h4>${reviewInfo.naverFoodType}</h4>
+            <h5>${reviewInfo.address} [${reviewInfo.dong} ]</h5>
+            <h4>${reviewInfo.phone}</h4>
         </aside>
         <section id="review">
-            <form:form method="post" action="${pageContext.request.contextPath}/review/writeReview">
+            <form:form method="post" action="${pageContext.request.contextPath}/review/enrollReview">
             <table>
                 <tbody>
                     <tr>
@@ -257,5 +272,6 @@ input[type=checkbox]{
         })
 
     </script>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
