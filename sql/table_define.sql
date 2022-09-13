@@ -233,6 +233,7 @@ CREATE TABLE FAVORITE_DISTRICT (
   constraint fk_favorite_district_no FOREIGN KEY(no) references MEMBER(no) on delete cascade,
   constraint fk_favorite_district_code FOREIGN KEY(code) references DISTRICT(code) on delete cascade
 );
+select * from district;
 
 COMMENT ON COLUMN FAVORITE_DISTRICT.no IS 'seq_member_no.nextval';
 
