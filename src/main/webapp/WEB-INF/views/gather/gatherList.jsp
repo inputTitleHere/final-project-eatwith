@@ -178,15 +178,16 @@ td {
 			</select>
 		</aside>
 		<section id="content">
+			<sec:authorize access="isAuthenticated()">
 			<input type="button" id="makeGather" value="모임 만들기"
 				onclick="gatherEnroll();">
 			<script>
             const gatherEnroll=()=>{
-            	//loginMember==null일때 조건 추가
             	location.href='<%=request.getContextPath()%>/gather/gatherEnroll';
             }
             </script>
-			<br> <br>
+            
+			<br></sec:authorize><br>
 			<table id="tbl-gather">
 				<tbody>
 				<c:if test="${empty lists}">
