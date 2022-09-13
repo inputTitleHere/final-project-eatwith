@@ -1,5 +1,7 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,4 +40,14 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneByNickname(String nickname) {
 		return memberDao.selectOneByNickname(nickname);
 	}
+	
+	@Override
+	public int insertFavDistrict(Map<String, Object> params) {
+		return memberDao.insertFavDistrict(params);
+	}
+	@Override
+	public int insertFavFood(Map<String, Object> params) {
+		return memberDao.insertFavFood(params);
+	}
+	
 }

@@ -1,5 +1,6 @@
 package com.kh.eatwith.common;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import org.springframework.jdbc.support.JdbcUtils;
@@ -17,6 +18,12 @@ public class CustomMap extends HashMap<String, Object> {
 
 	@Override
 	public Object put(String key, Object value) {
+		
+		if(value instanceof java.sql.Timestamp) {
+			
+			value = ((java.sql.Timestamp) value).toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+		}
+		
 		return super.put(JdbcUtils.convertUnderscoreNameToPropertyName(key), value);
 	}
 }

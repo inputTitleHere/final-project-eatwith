@@ -13,18 +13,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review {
-	
 	private List<Attachment> attachments = new ArrayList<>();
+	
+	
 	protected int no;
-	protected int gather_no;
-	protected String restaurant_no;
+	protected int gatherNo;
+	protected String restaurantNo;
 	protected int overallScore;
-	protected int tasteStars;
-	protected int priceStars;
-	protected int serviceStars;
+	protected int tasteScore;
+	protected int priceScore;
+	protected int serviceScore;
 	protected String content;
-	protected String image_name;
+	protected int userNo;
+	
 	public void add(Attachment attach) {
 		this.attachments.add(attach);
 	}
+	
+	
 }

@@ -50,6 +50,7 @@ public class MemberSecurityController {
 	public String memberEnroll(Member member, @RequestParam(required = false) List<String> favDistrict, @RequestParam(required = false) List<String> favFoodType) {
 		try {
 			log.debug("member = {} ",member);
+			// 여기 member 테이블에 직접 저장하는 것을 fav계열 테이블로 변경
 			if(favDistrict!=null) {
 				member.setFavDistrict(favDistrict.toArray(new String[0]));
 			}
@@ -63,6 +64,24 @@ public class MemberSecurityController {
 			log.debug("encodedPassword : {}",encodePwd);
 			
 			int result = memberService.insertMember(member);
+			// 위 코드를 실행하면 member객체에 no정보가 생성되어서 보관될 것이다.
+			int no = member.getNo();
+			Map<String, Object> params = null;
+			if(favDistrict!=null) {
+				params = new HashMap<String, Object>();
+				params.put("no", no);
+				params.put("favDistrict", favDistrict);
+				result = memberService.insertFavDistrict(params);
+			}
+			if(favFoodType!=null) {
+				params = new HashMap<String, Object>();
+				params.put("no", no);
+				params.put("favFood", favFoodType);
+				result=memberService.insertFavFood(params);
+			}
+			
+			
+			
 			log.debug("회원가입에 성공했습니다. : {}",member);
 		}catch(Exception e) {
 			log.error("회원 가입 오류 : "+e.getMessage(),e);

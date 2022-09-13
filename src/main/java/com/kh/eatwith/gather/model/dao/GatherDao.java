@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.gather.model.dto.Gather;
 import com.kh.eatwith.gather.model.dto.MemberGather;
 import com.kh.eatwith.member.model.dto.Member;
@@ -28,6 +29,8 @@ public interface GatherDao {
 	@Select("select * from gather where no = #{no}")
 	Gather selectOneGather(int no);
 
+	List<CustomMap> getNearClosure();
+	
 	List<Map<String, Object>> getGatherList();
 
 	Map<String, Object> getOneGather(int no);
