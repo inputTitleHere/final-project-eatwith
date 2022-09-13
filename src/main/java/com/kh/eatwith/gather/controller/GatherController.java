@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,6 +53,15 @@ public class GatherController {
 		return "redirect:/gather/gatherList";
 	}
 	
+	private boolean isAuthenticated() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication == null || AnonymousAuthenticationToken.class.
+	      isAssignableFrom(authentication.getClass())) {
+	        return false;
+	    }
+	    return authentication.isAuthenticated();
+	}
+	
 	@GetMapping("/gatherDetail")
 	public void gatherDetail(@RequestParam int no, Principal principal, Model model) {
 		Gather gather=gatherService.selectOneGather(no);
@@ -61,12 +72,14 @@ public class GatherController {
 		log.debug("gatherDetail = {}",gatherD);
 		model.addAttribute("gatherD",gatherD);
 		
-		String loginId=principal.getName();
-		log.debug("loginId={}",loginId);
-		Member member=gatherService.getMemberNo(loginId);
-		log.debug("member={}",member);
-		model.addAttribute("member",member);
-
+		if(isAuthenticated()) {
+			String loginId=principal.getName();
+			log.debug("loginId={}",loginId);
+			Member member=gatherService.getMemberNo(loginId);
+			log.debug("member={}",member);
+			model.addAttribute("member",member);
+		}
+		
 		int count=gatherService.countGatherMem(no);
 		log.debug("count={}",count);
 		model.addAttribute("count",count);
