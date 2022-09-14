@@ -165,4 +165,20 @@ public class GatherController {
 		log.debug("resultChk={}",resultChk);
 		return ResponseEntity.ok(resultChk);
 	}
+	
+	// 백승윤 START
+	@GetMapping("/getNewestGatherings")
+	@ResponseBody
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<?> getNewestGatherings(){
+		int items = 4;
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("no", items);
+		List<CustomMap> result = gatherService.getNewestGatherings(params);
+		return ResponseEntity.ok(result);
+	}
+	
+	
+	// 백승윤 END
+	
 }

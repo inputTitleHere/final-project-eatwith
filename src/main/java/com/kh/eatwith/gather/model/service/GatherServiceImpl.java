@@ -85,4 +85,8 @@ public class GatherServiceImpl implements GatherService{
 	public Member getMemberNo(String loginId) {
 		return gatherDao.getMemberNo(loginId);
 	}
+	@Override
+	public List<CustomMap> getNewestGatherings(Map<String, Object> params) {
+		return gatherDao.getNewestGatherings(params);
+	}
 }
