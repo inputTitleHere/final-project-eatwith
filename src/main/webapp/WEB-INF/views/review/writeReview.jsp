@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,25 +15,37 @@
     <script src="<%= request.getContextPath() %>/resources/js/jquery-3.6.0.js"></script>
     <title>리뷰 작성하기</title>
 <style>
+form{
+	margin-block-end:0em;
+}
+#container{
+	display:flex;
+    font-size:16px;
+	width: 1200px;	
+	left:0;
+	right:0;
+	margin:auto;
+	padding:100px;
+}
 aside{
-    float: left;
-    width:200px;
+    width:260px;
     margin-left: 10px;
-    padding-left: 20px;
-    padding-right:20px;
+    padding:20px 20px 0px 20px;
     margin-right: 10px;
     padding-bottom: 20px;
     background-color: white;
+    white-space: normal;
+    height:fit-content;
 }
 #review{
-    float: left;
-    width: 750px;
-    background-color: white;
-    padding-bottom: 20px;
-    margin-left: 10px;
-    padding-right:20px;
-    margin-right: 10px;
-    padding-left: 20px;
+	display:flex;
+    font-size:16px;
+	background-color: white;
+	padding-bottom: 20px;
+	margin-left: 10px;
+	padding-right: 20px;
+	margin-right: 10px;
+	padding:30px;
 }
 #makegather{
     float: right;
@@ -86,26 +99,19 @@ border: 0; /* 필드셋 테두리 제거 */
 }
 #content{
     height: 200px;
-    width: 700px;
+    width: 770px;
     margin: 20px;
 }
 #counter{
-    margin-left: 660px;
+    margin-left: 700px;
 }
 #attachFile{
-    background-color: #DC948A;
-    border: 0;
-    color: white;
-    margin-left: 100px;
-    width: 100px;
-    height: 30px;
-    border-radius: 3%;
-    font-size: 16px;
+
 }
 input[type=checkbox]{
     zoom:2;
 }
-#submitReview{
+input[type="submit"]{
     background-color: #DC948A;
     border: 0;
     color: white;
@@ -115,21 +121,41 @@ input[type=checkbox]{
     width: 500px;
     height: 40px;
     font-size: 20px;
-    
+}
+#restaurantName{
+	display:block;
+	font-size:20px;
+ 	font-weight:bold;
+}
+input[type="file"]{
+	background-color: #DC948A;
+    border: 0;
+    color: white;
+	margin: 0;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+}
+label{
+	cursor:pointer;
+/* 	font-size:1em; */
+}
+input#file-upload-button{
+	visibility:hidden;
 }
 </style>
 </head>
 <body bgcolor="#F0EBEC">
     <div id="container">
         <aside>
-            <h3>'음식점 이름' 평가하기</h3>
-            <h5>음식점 사진</h5>
-            <h6>음식점 카테고리 - 네이버 지도 분류</h6>
-            <h6>음식점 주소</h6>
-            <h6>음식점 전화번호</h6>
+           	<div id="restaurantName">'<span>${reviewInfo.name}</span>' 평가하기</div>
+            <h4>음식점 사진</h4>
+            <h4>${reviewInfo.naverFoodType}</h4>
+            <h5>${reviewInfo.address} [${reviewInfo.dong} ]</h5>
+            <h4>${reviewInfo.phone}</h4>
         </aside>
         <section id="review">
-            <form:form method="post" action="${pageContext.request.contextPath}/review/writeReview">
+            <form:form method="post" action="${pageContext.request.contextPath}/review/enrollReview"  enctype="multipart/form-data">
             <table>
                 <tbody>
                     <tr>
@@ -138,11 +164,11 @@ input[type=checkbox]{
                         <td id="starsName">평점</td>
                         <td id="stars">
                                 <fieldset id="rateStars">
-                                    <input type="radio" name="rateStars" value="5" id="rate1"><label for="rate1">⭐</label>
-                                    <input type="radio" name="rateStars" value="4" id="rate2"><label for="rate2">⭐</label>
-                                    <input type="radio" name="rateStars" value="3" id="rate3"><label for="rate3">⭐</label>
-                                    <input type="radio" name="rateStars" value="1" id="rate5"><label for="rate5">⭐</label>
-                                    <input type="radio" name="rateStars" value="2" id="rate4"><label for="rate4">⭐</label>
+                                    <input type="radio" name="overallScore" value="5" id="rate1"><label for="rate1" onclick="rateStar()" >⭐</label>
+                                    <input type="radio" name="overallScore" value="4" id="rate2" ><label for="rate2" onclick="rateStar()" >⭐</label>
+                                    <input type="radio" name="overallScore" value="3" id="rate3" ><label for="rate3" onclick="rateStar()" >⭐</label>
+                                    <input type="radio" name="overallScore" value="2" id="rate4" ><label for="rate4" onclick="rateStar()" >⭐</label>
+                                    <input type="radio" name="overallScore" value="1" id="rate5" ><label for="rate5" onclick="rateStar()" >⭐</label>
                                 </fieldset>
                         </td>
                     </tr>
@@ -158,11 +184,11 @@ input[type=checkbox]{
                         </td>
                         <td id="stars">
                                 <fieldset id="tasteStars">
-                                    <input type="radio" name="tasteStars" value="1">
+                                    <input type="radio" name="tasteScore" onclick="tasteStar()" value="1">
                                     맛없음
-                                    <input type="radio" name="tasteStars" value="3">
+                                    <input type="radio" name="tasteScore" onclick="tasteStar()" value="3">
                                     보통
-                                    <input type="radio" name="tasteStars" value="5">
+                                    <input type="radio" name="tasteScore" onclick="tasteStar()" value="5">
                                     맛있음
                                 </fieldset>
                         </td>
@@ -174,11 +200,11 @@ input[type=checkbox]{
                         </td>
                         <td id="stars">
                                 <fieldset id="priceStars">
-                                    <input type="radio" name="priceStars" value="1">
+                                    <input type="radio" name="priceScore" onclick="priceStar()" value="1">
                                     불만족
-                                    <input type="radio" name="priceStars" value="3">
+                                    <input type="radio" name="priceScore" onclick="priceStar()" value="3">
                                     보통
-                                    <input type="radio" name="priceStars" value="5">
+                                    <input type="radio" name="priceScore" onclick="priceStar()" value="5">
                                     만족함
                                 </fieldset>
                         </td>
@@ -190,11 +216,11 @@ input[type=checkbox]{
                         </td>
                         <td id="stars">
                                 <fieldset id="serviceStars">
-                                    <input type="radio" name="serviceStars" value="1">
+                                    <input type="radio" name="serviceScore" onclick="serviceStar()" value="1">
                                     불친절
-                                    <input type="radio" name="serviceStars" value="3">
+                                    <input type="radio" name="serviceScore" onclick="serviceStar()" value="3">
                                     보통
-                                    <input type="radio" name="serviceStars" value="5">
+                                    <input type="radio" name="serviceScore" onclick="serviceStar()" value="5">
                                     친절함
                                 </fieldset>
                         </td>
@@ -215,7 +241,9 @@ input[type=checkbox]{
                 <tbody>
                     <tr>
                         <td> - 본인이 직접 촬영하지 않은 사진</td>
-                        <td><input type="button" id="attachFile" value="사진첨부"></td>
+                        <td>
+                        <input type="file" name="upFile" id="attachFile" accept="image/*" value="사진첨부" multiple>
+                        </td>
                     </tr>
                     <tr>
                         <td> - 형체를 알아볼 수 없는 저해상도의 사진은 통보없이 삭제될 수 있습니다.</td>
@@ -234,11 +262,12 @@ input[type=checkbox]{
                 </tbody>
             </table>
             <hr>
-            <div><input type="submit" id="submitReview" value="리뷰 등록하기"></div>
+            <div><input type="submit" id="submitReview" onclick="enrollReview()" value="리뷰 등록하기"></div>
         </form:form>
         </section>
     </div>
     <script>
+    	//content 글자수 세기
         const MAX_COUNTER=1000;
         $("#counter").html(0);
         $("#max-counter").html(MAX_COUNTER);
@@ -255,7 +284,54 @@ input[type=checkbox]{
                 $counter.css('color',"red");
             }
         })
+        
+        //유효성 검사 후 제출
+        var rateStars=0;
+		var tasteStars=0;
+		var priceStars=0;
+		var serviceStars=0;
+		
+		const rateStar=()=>{
+			rateStars+=1;
+		}
+		const tasteStar=()=>{
+			tasteStars+=1;
+		}
+		const priceStar=()=>{
+			priceStars+=1;
+		}
+		const serviceStar=()=>{
+			serviceStars+=1;
+		}
+		
+        const enrollReview=()=>{
+        	if(rateStars==0){
+        		alert("전체 평점을 체크해주세요.");
+        		return false;
+        	}
+        	if(tasteStars==0){
+        		alert("맛을 평가해 주세요.");
+        		return false;
+        	}
+        	if(priceStars==0){
+        		alert("가격을 평가해 주세요.");
+        		return false;
+        	}
+        	if(serviceStars==0){
+        		alert("서비스를 평가해 주세요.");
+        		return false;
+        	}
+        	if(document.querySelector('#content')==null){
+        		alert("방문 후기를 작성해주세요.");
+        		return false;
+        	}
+        	if(!document.querySelector('#cleanPromise').checked){
+        		alert("클린평가 서약을 읽고 체크하세요.");
+        		return false;
+        	}
+        }
 
     </script>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
