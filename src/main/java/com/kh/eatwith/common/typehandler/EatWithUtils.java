@@ -7,12 +7,12 @@ import java.util.Date;
 public class EatWithUtils {
 
 
-	public static String getRenamedFilename(String originalFilename) {
+	public static String getRenamedFilename(String imageName) {
 		// 확장자추출
-		int beginIndex = originalFilename.lastIndexOf(".");
+		int beginIndex = imageName.lastIndexOf(".");
 		String ext = "";
 		if(beginIndex > -1) 
-			ext = originalFilename.substring(beginIndex); // .txt
+			ext = imageName.substring(beginIndex); // .txt
 		
 		// 새이름 생성
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS_");
