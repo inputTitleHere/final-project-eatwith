@@ -3,6 +3,7 @@ package com.kh.eatwith.review.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,11 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +51,16 @@ public class ReviewController extends HttpServlet {
 	}
 	
 	@PostMapping("/writeReview")
-	public String writeReview (
+	public String writeReview(@Param("gatherNo") int gatherNo, Model model) {
+
+		Map<String,Object> reviewInfo=reviewService.writeReview(gatherNo);
+		model.addAttribute("reviewInfo",reviewInfo);
+		log.debug("reviewInfo={}",reviewInfo);
+		return "review/writeReview";
+	}
+	
+	@PostMapping("/enrollReview")
+	public String enrollReview (
 		Review review,
 		@RequestParam(name="upFile") List<MultipartFile> upFileList,
 		RedirectAttributes redirectAttr) throws IllegalStateException, IOException {

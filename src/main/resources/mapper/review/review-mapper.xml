@@ -58,5 +58,14 @@
   	</collection>
   </resultMap>
   
+  <select id="writeReview" resultType="CustomMap">
+  	select 
+        r.name, r.naver_food_type, r.address, r.dong, r.phone
+	from
+        gather g join restaurant r on g.restaurant_no=r.no
+	where
+        g.no=#{gatherNo}
+  </select>
+  
   
 </mapper>

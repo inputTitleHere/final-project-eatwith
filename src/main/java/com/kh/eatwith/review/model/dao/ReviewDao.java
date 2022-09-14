@@ -19,4 +19,6 @@ public interface ReviewDao {
 
 	List<ReviewExt> getNewestReviews(RowBounds rowBounds);
 
+	Map<String, Object> writeReview(int gatherNo);
+
 }

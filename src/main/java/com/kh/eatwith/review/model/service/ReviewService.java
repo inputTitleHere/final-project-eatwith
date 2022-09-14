@@ -14,4 +14,6 @@ public interface ReviewService {
 
 	List<ReviewExt> getNewestReviews(Map<String, Integer> param);
 
+	Map<String, Object> writeReview(int gatherNo);
+
 }

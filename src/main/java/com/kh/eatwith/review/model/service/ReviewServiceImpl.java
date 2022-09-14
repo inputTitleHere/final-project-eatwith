@@ -39,6 +39,11 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		return reviewDao.getNewestReviews(rowBounds);
 	}
+	
+	@Override
+	public Map<String, Object> writeReview(int gatherNo) {
+		return reviewDao.writeReview(gatherNo);
+	}
 
 
 }
