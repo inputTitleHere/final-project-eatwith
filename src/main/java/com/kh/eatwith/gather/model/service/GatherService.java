@@ -38,4 +38,6 @@ public interface GatherService {
 
 	Member getMemberNo(String loginId);
 
+	List<CustomMap> getNewestGatherings(Map<String, Object> params);
+
 }
