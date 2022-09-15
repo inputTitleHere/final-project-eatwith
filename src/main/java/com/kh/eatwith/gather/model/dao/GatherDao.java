@@ -67,6 +67,10 @@ public interface GatherDao {
 	@Select("select * from member where no=#{no}")
 	Member getMemberNo(String loginId);
 
+	List<CustomMap> getNewestGatherings(Map<String, Object> params);
+
+	
+
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 
 }

@@ -117,8 +117,16 @@ commit;
 --delete from favorite_district where no=161;
 --delete from member where no=161;
 
-
-
+select * from gather order by no desc;
+select * from food_type;
+select * from district;
+select * from member_gather;
+select 
+    g.*,
+    (select count(*) from member_gather where gather_no = g.no) as enrolled_count
+from 
+    (select * from gather order by no desc) g
+where  rownum <5;
 
 
 
