@@ -91,4 +91,44 @@ select sysdate from dual;
 select to_char(sysdate, 'yyyy-MM-dd HH24:mi:ss') from dual;
 select to_char(current_date, 'yyyy-MM-dd HH24:mi:ss') from dual;
 
+select * from restaurant;
+
+	  select
+	    r.*,
+	    (select name from member where no = r.user_no) as writer,
+	    rest.name as restaurant_name,
+	    rest.dong as restaurant_dong,
+	    ri.no as review_image_no,
+	    ri.restaurant_no as restno,
+	    ri.review_no as revno,
+	    ri.image_name as image_name
+		from
+	    review r join restaurant rest on r.restaurant_no = rest.no left join review_image ri on r.no=ri.review_no
+		order by 
+	    r.no desc;
+
+
+select * from favorite_district;
+select * from favorite_food;
+select * from member;
+
+commit;
+
+--delete from favorite_district where no=161;
+--delete from member where no=161;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

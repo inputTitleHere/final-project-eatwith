@@ -55,4 +55,13 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePasswordByReset(Map<String, Object> map) {
 		return memberDao.updatePasswordByReset(map);
 	}
+
+	@Override
+	public int insertFavDistrict(Map<String, Object> params) {
+		return memberDao.insertFavDistrict(params);
+	}
+	@Override
+	public int insertFavFood(Map<String, Object> params) {
+		return memberDao.insertFavFood(params);
+	}
 }

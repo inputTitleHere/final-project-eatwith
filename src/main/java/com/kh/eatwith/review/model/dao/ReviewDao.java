@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.session.RowBounds;
 
 import com.kh.eatwith.review.model.dto.Review;
+import com.kh.eatwith.review.model.dto.ReviewExt;
 
 @Mapper
 public interface ReviewDao {
@@ -19,5 +21,8 @@ public interface ReviewDao {
 	
 	List<Map<String, Object>> getBestReviews();
 
-	
+	List<ReviewExt> getNewestReviews(RowBounds rowBounds);
+
+	Map<String, Object> writeReview(int gatherNo);
+
 }

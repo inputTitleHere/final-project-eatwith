@@ -18,4 +18,7 @@ public interface MemberService {
 
 	int updatePasswordByReset(Map<String, Object> map);
 	
+	int insertFavDistrict(Map<String, Object> params);
+
+	int insertFavFood(Map<String, Object> params);
 }

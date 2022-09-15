@@ -20,5 +20,52 @@
 			rownum &lt;=5
   </select>
   
+  <select id="getNewestReviews" resultMap="ReviewMap">
+	  select
+	    r.*,
+	    (select name from member where no = r.user_no) as writer,
+	    rest.name as restaurant_name,
+	    rest.dong as restaurant_dong,
+	    ri.no as review_image_no,
+	    ri.restaurant_no as restno,
+	    ri.review_no as revno,
+	    ri.image_name as image_name
+		from
+	    review r join restaurant rest on r.restaurant_no = rest.no left join review_image ri on r.no=ri.review_no
+		order by 
+	    r.no desc
+  </select>
+  
+  <resultMap type="ReviewExt" id="ReviewMap">
+  	<id column="no" property="no"/>
+  	<result column="gather_no" property="gatherNo"/>
+  	<result column="restaurant_no" property="restaurantNo"/>
+  	<result column="overall_score" property="overallScore"/>
+  	<result column="taste_score" property="tasteScore"/>
+  	<result column="price_score" property="priceScore"/>
+  	<result column="service_score" property="serviceScore"/>
+  	<result column="content" property="content"/>
+  	<result column="user_no" property="userNo"/>
+  	<result column="writer" property="writer"/>
+  	<result column="restaurant_name" property="restaurantName"/>
+  	<result column="restaurant_dong" property="restaurantDong"/>
+  	<!-- 명시 안해도 DTO와 DB컬럼명이 일치하면...? -->
+  	<collection property="reviewImages" column="image_name" ofType="Attachment">
+  		<id column="review_image_no" property="no"/>
+  		<result column="restno" property="restaurantNo"/>
+  		<result column="revno" property="reviewNo"/>
+  		<result column="image_name" property="imageName"/>
+  	</collection>
+  </resultMap>
+  
+  <select id="writeReview" resultType="CustomMap">
+  	select 
+        r.name, r.naver_food_type, r.address, r.dong, r.phone
+	from
+        gather g join restaurant r on g.restaurant_no=r.no
+	where
+        g.no=#{gatherNo}
+  </select>
+  
   
 </mapper>

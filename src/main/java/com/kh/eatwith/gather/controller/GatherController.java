@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +28,7 @@ import com.kh.eatwith.common.typehandler.EatWithUtils;
 import com.kh.eatwith.gather.model.dto.Gather;
 import com.kh.eatwith.gather.model.dto.MemberGather;
 import com.kh.eatwith.gather.model.service.GatherService;
+import com.kh.eatwith.member.model.dto.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,8 +43,27 @@ public class GatherController {
 	@GetMapping("/gatherEnroll")
 	public void gatherEnroll() {}
 	
+	@PostMapping("/gatherEnroll")
+	public String gatherEnroll(Gather gather, MemberGather memberGather, RedirectAttributes redirectAttr) {
+		log.debug("gather = {}",gather);
+		log.debug("memberGather ={}",memberGather);
+		int result=gatherService.gatherEnroll(gather);
+		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
+		
+		return "redirect:/gather/gatherList";
+	}
+	
+	private boolean isAuthenticated() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication == null || AnonymousAuthenticationToken.class.
+	      isAssignableFrom(authentication.getClass())) {
+	        return false;
+	    }
+	    return authentication.isAuthenticated();
+	}
+	
 	@GetMapping("/gatherDetail")
-	public void gatherDetail(@RequestParam int no, Model model) {
+	public void gatherDetail(@RequestParam int no, Principal principal, Model model) {
 		Gather gather=gatherService.selectOneGather(no);
 		log.debug("gather = {}",gather);
 		model.addAttribute("gather",gather);
@@ -46,6 +71,18 @@ public class GatherController {
 		Map<String,Object> gatherD=gatherService.getOneGather(no);
 		log.debug("gatherDetail = {}",gatherD);
 		model.addAttribute("gatherD",gatherD);
+		
+		if(isAuthenticated()) {
+			String loginId=principal.getName();
+			log.debug("loginId={}",loginId);
+			Member member=gatherService.getMemberNo(loginId);
+			log.debug("member={}",member);
+			model.addAttribute("member",member);
+		}
+		
+		int count=gatherService.countGatherMem(no);
+		log.debug("count={}",count);
+		model.addAttribute("count",count);
 	}
 	
 	@GetMapping("/gatherList")
@@ -67,16 +104,6 @@ public class GatherController {
 		model.addAttribute("pagebar", pagebar);
 	}
 	
-	@PostMapping("/gatherEnroll")
-	public String gatherEnroll(Gather gather, MemberGather memberGather, RedirectAttributes redirectAttr) {
-		log.debug("gather = {}",gather);
-		log.debug("memberGather ={}",memberGather);
-		int result=gatherService.gatherEnroll(gather);
-		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
-		
-		return "redirect:/gather/gatherList";
-	}
-	
 	@GetMapping("/getNearClosure")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
@@ -86,7 +113,6 @@ public class GatherController {
 		log.debug("==마감임박 = {} ",result);
 		return ResponseEntity.ok(result);
 	}
-	
 	
 	@GetMapping("/gatherUpdate")
 	public String gatherUpdate(@RequestParam int no, Model model) {
@@ -98,7 +124,6 @@ public class GatherController {
 		log.debug("gather = {}",gather);
 		return "gather/gatherUpdate";
 	}
-	
 	
 	@PostMapping("/gatherUpdate")
 	public String gatherUpdate(Gather gather,RedirectAttributes redirectAttr) {
@@ -113,5 +138,44 @@ public class GatherController {
 		int result=gatherService.gatherDelete(no);
 		log.debug("gatherDelete = {}",result);
 		return "redirect:/gather/gatherList";
+	}
+	
+	@PostMapping("/applyGather")
+	@ResponseBody
+	public ResponseEntity<?> applyGather(@RequestParam("gatherNo") int gatherNo,@RequestParam("loginMember") int loginMember) {
+		log.debug("gatherNo={}",gatherNo);
+		log.debug("loginMember={}",loginMember);
+		Map<String,Object> param =new HashMap<String, Object>();
+		param.put("gatherNo", gatherNo);
+		param.put("loginMember", loginMember);
+		int result=gatherService.applyGather(param);
+		log.debug("result={}",result);
+		return ResponseEntity.ok(null);
+	}
+	
+	@PostMapping("/cancelGather")
+	@ResponseBody
+	public ResponseEntity<?> cancelGather(@RequestParam("gatherNo") int gatherNo,@RequestParam("loginMember") int loginMember) {
+		log.debug("gatherNo={}",gatherNo);
+		log.debug("loginMember={}",loginMember);
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("gatherNo", gatherNo);
+		param.put("loginMember", loginMember);
+		int resultC=gatherService.cancelGather(param);
+		log.debug("resultC={}",resultC);
+		return ResponseEntity.ok(null);
+	}
+	
+	@PostMapping("/chkGatherIn")
+	@ResponseBody
+	public ResponseEntity<?> chkGatherIn(@RequestParam("gatherNo") int gatherNo,@RequestParam("loginMember") int loginMember) {
+		log.debug("gatherNo={}",gatherNo);
+		log.debug("loginMember={}",loginMember);
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("gatherNo", gatherNo);
+		param.put("loginMember", loginMember);
+		Integer resultChk=gatherService.chkGatherIn(param);
+		log.debug("resultChk={}",resultChk);
+		return ResponseEntity.ok(resultChk);
 	}
 }

@@ -13,6 +13,20 @@
 		id = #{id}
 	</select>
 
+	<insert id="insertFavDistrict">
+		insert into favorite_district(no,code)
+			<foreach collection="favDistrict" item="code" separator=" union all ">
+				select #{no}, #{code} from dual
+			</foreach>
+	</insert>
+
+	<insert id="insertFavFood">
+		insert into favorite_food(no,code)
+			<foreach collection="favFood" item="code" separator=" union all ">
+				select #{no}, #{code} from dual
+			</foreach>
+	</insert>
+
 <!-- 이 부분은 따로 @Insert 어노테이션으로 구분하였습니다.
 	<insert id="insertMember">
 		insert into member

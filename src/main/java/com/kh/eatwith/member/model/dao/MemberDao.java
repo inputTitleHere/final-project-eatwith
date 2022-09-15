@@ -34,8 +34,11 @@ public interface MemberDao {
 	@Select("select * from member where id = #{id} and name = #{name} and email = #{email}")
 	Member findPasswordByInfo(Map<String, Object> map);
 
-
 	@Update("update member set password = #{code} where id = #{id} and name = #{name} and email = #{email}")
 	int updatePasswordByReset(Map<String, Object> map);
+
+	int insertFavDistrict(Map<String, Object> params);
+	
+	int insertFavFood(Map<String, Object> params);
 
 }
