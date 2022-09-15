@@ -12,8 +12,6 @@ import com.kh.eatwith.review.model.dao.ReviewDao;
 import com.kh.eatwith.review.model.dto.Review;
 import com.kh.eatwith.review.model.dto.ReviewExt;
 
-
-
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ReviewServiceImpl implements ReviewService{

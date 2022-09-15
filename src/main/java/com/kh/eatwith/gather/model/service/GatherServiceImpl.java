@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.gather.model.dao.GatherDao;
@@ -14,6 +15,7 @@ import com.kh.eatwith.gather.model.dto.MemberGather;
 import com.kh.eatwith.member.model.dto.Member;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class GatherServiceImpl implements GatherService{
 	@Autowired
 	GatherDao gatherDao;

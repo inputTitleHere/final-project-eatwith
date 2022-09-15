@@ -32,6 +32,6 @@
   
 </div>  
 
-<script type="text/javascript" src="/eatwith/resources/js/bundle/member-enroll.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bundle/member-enroll.js"></script>
 </body>
 </html>

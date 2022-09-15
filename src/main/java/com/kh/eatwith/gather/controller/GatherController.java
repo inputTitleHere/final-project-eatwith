@@ -184,7 +184,7 @@ public class GatherController {
 	@ResponseBody
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<?> getNewestGatherings(){
-		int items = 4;
+		int items = 9;
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("no", items);
 		List<CustomMap> result = gatherService.getNewestGatherings(params);
