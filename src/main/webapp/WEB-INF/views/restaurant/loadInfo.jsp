@@ -37,25 +37,59 @@ body {
 </style>
 </head>
 <body>
+
+	<script>
+	const add_ul = () => {
+		const ul1 = document.getElementById("btn-more");
+		const btnId = document.createElement('li');
+		btnId.innerHTML = `<c:forEach var="menuList" items="\${menuList}" begin="10">
+			<li><c:out value="\${menuList}" /></li>
+			</c:forEach>`;
+	}
+	
+	window.onload = function(){
+		document.querySelector("#like-restaurant").addEventListener('submit', (e) => {
+			e.preventDefault();
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/restaurant/checkFaved",
+				method:"GET",
+				data:{"result":result},
+				success(response){
+					console.log(response);
+				},
+				error:console.log
+			})
+		});
+	}
+	
+	
+	</script>
 	<section id="info1">
 		<form id="loadInfoFrm">
 			<section style="border-spacing: 5px">
 				<div>
 					<p>${restaurant.name} </p>
-					${district.name}
-					[${restaurant.districtCode}][${restaurant.dong}]<br/>
-					[${restaurant.foodCode}][${restaurant.naverFoodType}]<br/><br/>
 					
-					n명의 평가 : (평균) 
+					
+					[${district.name}][${restaurant.getDong().trim()}]<br/>
+					[${foodType.type}][${restaurant.naverFoodType}]<br/><br/>
+					
+					${reviews.size()}명의 평가 : (평균) ${avg}
+					
+				</div>
+				<div>
+					<p>이 가게 찜하기</p>
+					<input type="submit" value="♡" id="like-restaurant"/>
 				</div>
 			</section>
 			<hr />
 			<section>
 				<div>
 					<p>가게 정보</p>
-					${restaurant.address}<br/>
-					${restaurant.phone}<br/>
-					찜
+					🚩📌 ${restaurant.address}<br/>
+					📞☎️ ${restaurant.phone}<br/>
+					❤️💗 이 식당을 n명의 사용자가 찜했습니다.❤
 				</div>
 			</section>
 			<hr />
@@ -125,13 +159,7 @@ body {
 			error:console.log
 		});
 	})
-	const add_ul = () => {
-		const ul1 = document.getElementById("btn-more");
-		const btnId = document.createElement('li');
-		btnId.innerHTML = `<c:forEach var="menuList" items="\${menuList}" begin="10">
-			<li><c:out value="\${menuList}" /></li>
-			</c:forEach>`;
-	}
+	
 	
 	</script>
 	

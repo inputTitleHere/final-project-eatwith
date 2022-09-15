@@ -17,4 +17,9 @@ public class FoodtypeSerivceImpl implements FoodtypeService {
 	public List<FoodType> getAllFoodtype() {
 		return foodtypeDao.getAllFoodtype();
 	}
+	
+	@Override
+	public FoodType findTypeByCode(String code) {
+		return foodtypeDao.findTypeByCode(code);
+	}
 }

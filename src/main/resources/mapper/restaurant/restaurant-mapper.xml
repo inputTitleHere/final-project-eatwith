@@ -20,11 +20,11 @@
 
 	<select id="selectOneRestaurant" resultType="Restaurant">
 		select
-			rest.*,
-			d.name
+			*
 		from
-			restaurant rest join district d on rest.district_code = d.code
+			restaurant
 		where
-			rest.no = #{no}
+			no = #{no}
 	</select>
+	
 </mapper>

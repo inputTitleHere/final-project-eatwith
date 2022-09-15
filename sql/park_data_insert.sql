@@ -1,5 +1,5 @@
 select * from member;
-select * from restaurant where no='3150000-101-2001-09860';
+select * from restaurant where no='3010000-101-2017-00400';
 select * from district;
 select * from food_type;
 select * from review where restaurant_no ='3010000-101-2017-00400';
@@ -7,8 +7,22 @@ select * from review_image;
 select * from food_type;
 select * from favorite_restaurant;
 select f.type from restaurant r left join food_type f on r.food_code = f.code where r.no='3020000-101-2018-00337';
+
+select * from favorite_restaurant where restaurant_no = '3010000-101-2017-00400';
 --insert into gather values(seq_gather_no.nextval,'3110000-101-2022-00001','2인3메뉴 조질사람',1,to_date('2022-09-11 12:30','YYYY-MM-DD hh24:mi'),'999','9876543','여의도에서 일하는 30대 남성입니다.편하게 먹고가요',149,null,null,'M');
 -- abcd : 143 (1975)/ qwerty:151(1984) / park :148(1993)
+select
+    rest.*,
+    d.name as district_name
+from
+    restaurant rest join district d on rest.district_code = d.code
+where
+    rest.no = '3010000-101-2014-00196';
+insert into favorite_restaurant values (148, '3010000-101-2017-00400');
+select * from favorite_restaurant where user_no = 148 and restaurant_no='3010000-101-2017-00400';
+
+select * from district where code = 3010000;
+select * from food_type where code = '010';
 insert into gather 
 values(SEQ_GATHER_NO.nextval, '3020000-101-2018-00337', '뜨끈한 부대찌개 먹으실분', 4, to_date('2022-09-11 12:30','YYYY-MM-DD hh24:mi'), '007', '3020000', '부대찌개에 밥 한공기 해요', 143, null, null, 'M');
 

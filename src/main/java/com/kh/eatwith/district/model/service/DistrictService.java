@@ -8,4 +8,7 @@ public interface DistrictService {
 
 	List<District> getAllDistrict();
 
+	District findNameByCode(String code);
+
+
 }

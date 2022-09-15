@@ -12,5 +12,8 @@ public interface DistrictDao {
 
 	@Select("select * from district order by name")
 	List<District> getAllDistrict();
+
+	@Select("select * from district where code = #{code}")
+	District findNameByCode(String code);
 	
 }

@@ -13,4 +13,7 @@ public interface FoodtypeDao {
 	@Select("select * from food_type order by code")
 	List<FoodType> getAllFoodtype();
 
+	@Select("select * from food_type where code = #{code}")
+	FoodType findTypeByCode(String code);
+
 }
