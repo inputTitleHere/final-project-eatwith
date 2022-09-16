@@ -67,6 +67,9 @@ public interface GatherDao {
 	@Select("select * from member where no=#{no}")
 	Member getMemberNo(String loginId);
 
+	@Select("select * from gather where restaurant_no = #{restaurantNo}")
+	List<Gather> selectReviewByRestaurantNo(String no);
+
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 
 }
