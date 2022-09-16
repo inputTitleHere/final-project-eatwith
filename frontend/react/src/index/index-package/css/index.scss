@@ -12,13 +12,14 @@ $Font-Happiness : 'Happiness-Sans-Title';
 $Font-Nanum : "NanumBarunGothic";
 
 body{
-  background-color: $Rose-Fog;
+  background-color: $Bright-Gray;
 }
 
 div.content-wrapper{
   position: relative;
   width: 900px;
-  border : 2px solid black;
+  border : 2px solid $Indigo-Blue;
+  border-radius: 10px;
   background-color: $Near-White;
   margin: 20px auto;
   padding: 10px;
@@ -26,6 +27,10 @@ div.content-wrapper{
   .inner-content{
     width: 850px;
     margin: 0px auto;
+  }
+
+  .inner-content-ext{
+    width: 100%;
   }
 
   .carousel-item{
@@ -48,7 +53,8 @@ div.restaurant-info-wrapper{
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  border-right: 2px solid $Dark-Gray;
+  border-right: 2px solid $Indigo-Blue;
+  cursor: pointer;
   .img-section{
     height: 175px;
     border: 1px solid black;
@@ -133,6 +139,7 @@ div.review-info{
 div.gather-info{
   margin-left: 10px;
   font-family: $Font-Nanum;
+  cursor: pointer;
   h2{
     margin: 5px 0px;
     font-family: $Font-Happiness;
@@ -151,19 +158,21 @@ div.review-wrapper{
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 
   .individual-review{
     margin-bottom: 10px;
     padding: 10px;
-    width: 47%;
-    border: 1px solid black;
+    width: 45%;
+    border: 2px solid $Lavender;
+    border-radius: 10px;
     h3{
+      cursor: pointer;
       font-family: $Font-Happiness;
       span.lighter{
         padding-left: 5px;
         margin-left: 5px;
-        border-left: 2px solid $Dark-Gray;
+        border-left: 2px solid $Indigo-Blue;
         font-family: $Font-Nanum;
         font-weight: normal;
       }
@@ -226,6 +235,7 @@ div.review-wrapper{
     font-family: $Font-Happiness;
     // background: linear-gradient($Near-White, $Dark-Gray);
     background: $Gray;
+    border-radius: 0px 0px 10px 10px;
     .button-text{
       padding: 0px 10px;
       font-size: 20px;
@@ -251,6 +261,8 @@ span.bolder{
     cursor: pointer;
     padding: 5px 15px;
     background: $Gray;
+    border-radius: 10px;
+    border: 2px solid $Lavender;
 
     div{
       margin-bottom: 10px;
@@ -278,7 +290,7 @@ span.bolder{
       }
       &#district{
         padding-left: 0px;
-        border-right: 3px solid $Dark-Gray;
+        border-right: 3px solid $Indigo-Blue;
       }
       &#food-type{
         padding-left: 5px;
@@ -299,6 +311,7 @@ span.bolder{
     left: 0px;
     position: absolute;
     background-color: $Gray;
+    border-radius: 0px 0px 10px 10px;
     display: flex;
     justify-content: flex-end;
     align-items: center;

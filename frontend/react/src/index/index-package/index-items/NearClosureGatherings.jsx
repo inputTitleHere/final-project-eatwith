@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import $ from "jquery";
-import { API_BASE_URL } from "../configs/App-config.js";
+import { API_BASE_URL } from "../../configs/App-config.js";
 import Slider from "react-slick";
 import RestaurantInfo from "../restaurant-info/RestaurantInfo.jsx";
 
@@ -64,15 +64,29 @@ function GatherItem(props) {
 }
 
 function GatherInfo(props) {
-  const { title, enrolledCount, count, meetDate, content } = props.children;
+  const [xloc, setXloc] = useState(undefined);
+  const { no, title, enrolledCount, count, meetDate, content } = props.children;
   let modMeetDate = meetDate.split(/[-T:]/);
   modMeetDate[5] = modMeetDate[3] < 12 ? "오전" : "오후";
   modMeetDate[3] = modMeetDate[3] > 12 ? modMeetDate[3] - 12 : modMeetDate[3];
 
   modMeetDate = `${modMeetDate[0]}년 ${parseInt(modMeetDate[1],10)}월 ${parseInt(modMeetDate[2], 10)}일 ${modMeetDate[5]} ${modMeetDate[3]}:${modMeetDate[4]}`;
 
+  const redirect =()=>{
+    console.log(props.children);
+    window.location.href = `${API_BASE_URL}/gather/gatherDetail?no=${no}`;
+  }
+  const saveXloc=(e)=>{
+    setXloc(e.clientX);
+  }
+  const evalXloc=(e)=>{
+    if(Math.abs(e.clientX - xloc)<5){
+      redirect();
+    }
+  }
+
   return (
-    <div className="gather-info">
+    <div className="gather-info" onMouseDown={saveXloc} onMouseUp={evalXloc} >
       <h2>{title}</h2>
       <div className="enrolled">
         <span className="bolder">모임 인원</span>

@@ -1,4 +1,5 @@
-import { API_BASE_URL } from "../configs/App-config.js";
+import { useState } from "react";
+import { API_BASE_URL } from "../../configs/App-config.js";
 import DongFormatter from "../functions/DongFormatter.js";
 import Stars from "../stars/Stars.jsx";
 /**
@@ -7,6 +8,7 @@ import Stars from "../stars/Stars.jsx";
  *
  */
 function RestaurantInfo(props) {
+  const [xloc, setXloc] = useState(undefined);
   const { image, name, dong, foodType, reviewCount, avgScore } = props.children;
   const trimedAvgScore = Math.round(avgScore * 10) / 10;
   let dongMod = DongFormatter(dong);
@@ -14,8 +16,21 @@ function RestaurantInfo(props) {
   if(nameMod.length > 9){
     nameMod = nameMod.substring(0,9) + "..."
   }
+
+  const redirect =()=>{
+    window.location.href = `${API_BASE_URL}/restaurant/loadinfo?no=${props.children.restaurantNo}`;
+  }
+  const saveXloc=(e)=>{
+    setXloc(e.clientX);
+  }
+  const evalXloc=(e)=>{
+    if(Math.abs(e.clientX - xloc)<5){
+      redirect();
+    }
+  }
+
   return (
-    <div className="restaurant-info-wrapper">
+    <div className="restaurant-info-wrapper" onMouseDown={saveXloc} onMouseUp={evalXloc}>
       <RestaurantImage image={image} />
       <div className="restaurant-info">
         <h2 className="restaurant-title">{nameMod}</h2>
@@ -36,7 +51,6 @@ function RestaurantInfo(props) {
 }
 
 function RestaurantImage(props) {
-  // console.log(props);
   if (props.image) {
     return (
       <div className="img-section">
