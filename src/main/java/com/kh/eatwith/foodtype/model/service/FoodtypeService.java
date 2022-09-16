@@ -8,4 +8,6 @@ public interface FoodtypeService {
 
 	List<FoodType> getAllFoodtype();
 
+	FoodType findTypeByCode(String code);
+
 }

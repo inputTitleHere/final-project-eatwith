@@ -38,6 +38,8 @@ public interface GatherService {
 
 	Member getMemberNo(String loginId);
 
+	List<Gather> selectReviewByRestaurantNo(String restaurantNo);
+
 	List<CustomMap> getNewestGatherings(Map<String, Object> params);
 
 }

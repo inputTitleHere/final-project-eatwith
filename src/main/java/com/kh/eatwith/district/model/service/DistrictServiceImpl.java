@@ -18,5 +18,8 @@ public class DistrictServiceImpl implements DistrictService {
 		return districtDao.getAllDistrict();
 	}
 	
-	
+	@Override
+	public District findNameByCode(String code) {
+		return districtDao.findNameByCode(code);
+	}
 }

@@ -3,15 +3,17 @@ package com.kh.eatwith.member.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,42 +30,44 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 @Slf4j
 public class MemberSecurityController {
-
+	
 	@Autowired
 	private MemberService memberService;
 
 	@Autowired
 	private MemberSecurityService memberSecurityService;
 	/**
-	 * BCryptPasswordEncoder의 약자.
-	 * -백승윤-
+	 * BCryptPasswordEncoder의 약자. -백승윤-
 	 */
 	@Autowired
 	private BCryptPasswordEncoder bcpe;
-	
+
 	@GetMapping("/memberEnroll")
 	public void memberEnroll() {
-		
+
 	}
-	
-	@PostMapping("/memberEnroll") 
-	public String memberEnroll(Member member, @RequestParam(required = false) List<String> favDistrict, @RequestParam(required = false) List<String> favFoodType) {
+
+	@PostMapping("/memberEnroll")
+	public String memberEnroll(Member member, @RequestParam(required = false) List<String> favDistrict,
+			@RequestParam(required = false) List<String> favFoodType) {
 		try {
+
 			log.debug("member = {} ",member);
 			// 여기 member 테이블에 직접 저장하는 것을 fav계열 테이블로 변경
 			if(favDistrict!=null) {
 				member.setFavDistrict(favDistrict.toArray(new String[0]));
 			}
-			if(favFoodType!=null) {
+			if (favFoodType != null) {
 				member.setFavFoodType(favFoodType.toArray(new String[0]));
 			}
 			// 비번 암호화
 			String rawPwd = member.getPassword();
 			String encodePwd = bcpe.encode(rawPwd);
 			member.setPassword(encodePwd);
-			log.debug("encodedPassword : {}",encodePwd);
-			
+			log.debug("encodedPassword : {}", encodePwd);
+
 			int result = memberService.insertMember(member);
+
 			// 위 코드를 실행하면 member객체에 no정보가 생성되어서 보관될 것이다.
 			int no = member.getNo();
 			Map<String, Object> params = null;
@@ -89,66 +93,133 @@ public class MemberSecurityController {
 		}
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/checkDuplicateId")
 	@ResponseBody
-	public ResponseEntity<?> checkDuplicateId(@RequestParam String id){
-		log.debug("check duplicate id = {} ",id);
+	public ResponseEntity<?> checkDuplicateId(@RequestParam String id) {
+		log.debug("check duplicate id = {} ", id);
 		Member member = memberService.selectOneMember(id);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if(member==null) {
+		if (member == null) {
 			resultMap.put("result", true);
-		}else {
-			resultMap.put("result",	false);
+		} else {
+			resultMap.put("result", false);
 		}
 		return ResponseEntity.ok(resultMap);
 	}
-	
+
 	@GetMapping("/checkDuplicateNickname")
 	@ResponseBody
-	public ResponseEntity<?> checkDuplicateNickname(@RequestParam String nickname){
-		log.debug("check duplicate nickname = {} ",nickname);	
+	public ResponseEntity<?> checkDuplicateNickname(@RequestParam String nickname) {
+		log.debug("check duplicate nickname = {} ", nickname);
 		Member member = memberService.selectOneByNickname(nickname);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if(member==null) {
+		if (member == null) {
 			resultMap.put("result", true);
-		}else {
-			resultMap.put("result",	false);
-		}	
+		} else {
+			resultMap.put("result", false);
+		}
 		return ResponseEntity.ok(resultMap);
 	}
-	
 
-	
 	@GetMapping("/memberLogin")
 	public String memberLogin() {
-		
+
 		return "member/memberLogin";
 	}
-	
+
 	@PostMapping("/memberLoginSuccess")
 	public String memberLoginSuccess(HttpSession session) {
 		log.debug("memberLoginSuccess 호출");
 		// 로그인 후처리
 		String location = "/";
-		
+
 		// security가 관리하는 리다이렉트 url
 		SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SAVED_SECURITY_REQUEST");
-		if(savedRequest != null)
-			location =  savedRequest.getRedirectUrl();
+		if (savedRequest != null)
+			location = savedRequest.getRedirectUrl();
 		log.debug("location = {}", location);
-		
+
 		return "redirect:" + location;
 	}
-	
-	@GetMapping("/memberFind")
-	public void memberFind(
-			@RequestParam String name,
-			@RequestParam String phone,
-			@RequestParam String email,
-			@RequestParam String id,
-			Model model) {
 
-		
+	@GetMapping("/memberFindId")
+	public String memberFind(String name, String phone) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("phone", phone);
+		Member member = memberService.findIdByInfo(map);
+		return "member/memberFind";
 	}
+
+	@GetMapping("/memberFindById")
+	@ResponseBody
+	public ResponseEntity<?> memberFindId(@RequestParam String name, @RequestParam String phone) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", name);
+		map.put("phone", phone);
+
+		log.debug("아이디 찾기 실행");
+		Member member = memberService.findIdByInfo(map);
+		log.debug("member = {}", member);
+		return ResponseEntity.ok(member);
+	}
+			 
+	@GetMapping("/memberResetPw")
+	public String memberReset(String id, String name, String email) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("name", name);
+		map.put("email", email);
+		
+		Member member = memberService.findPasswordByInfo(map);
+		return "member/memberFind";
+	}
+
+	@GetMapping("/memberResetPassword")
+	@ResponseBody
+	public ResponseEntity<?> memberResetPassword(@RequestParam String id, @RequestParam String name, @RequestParam String email) {
+		log.debug("비밀번호 초기화 실행");
+		String code = randomPassword(8); // 난수처리된 비밀번호
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("name", name);
+		map.put("email", email);
+		map.put("code", code);
+		
+		Member member = memberService.findPasswordByInfo(map);
+		log.debug("password = {}", code);
+		log.debug("member = {}", member);
+
+		// 비번 암호화
+		String encodePwd = bcpe.encode(code);
+		member.setPassword(code);
+		
+		map.put("code", encodePwd);
+		int result = memberService.updatePasswordByReset(map);
+		log.debug("password = {}", encodePwd);
+
+		return ResponseEntity.ok(member);
+	}
+
+	/**
+	 * 비밀번호 알파벳(대소문자)+숫자 랜덤 값 생성
+	 */
+	public static String randomPassword(int length) {
+
+		int index = 0;
+
+		char[] charset = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a',
+				'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+				'w', 'x', 'y', 'z' };
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			index = (int) (charset.length * Math.random());
+			sb.append(charset[index]);
+		}
+		System.out.println("sb = " + sb);
+		return sb.toString();
+	}
+
 }

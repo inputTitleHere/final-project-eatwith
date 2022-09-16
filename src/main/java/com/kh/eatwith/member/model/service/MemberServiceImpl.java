@@ -42,6 +42,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member findIdByInfo(Map<String, Object> map) {
+		return memberDao.findIdByInfo(map);
+	}
+	
+	@Override
+	public Member findPasswordByInfo(Map<String, Object> map) {
+		return memberDao.findPasswordByInfo(map);
+	}
+	
+	@Override
+	public int updatePasswordByReset(Map<String, Object> map) {
+		return memberDao.updatePasswordByReset(map);
+	}
+
+	@Override
 	public int insertFavDistrict(Map<String, Object> params) {
 		return memberDao.insertFavDistrict(params);
 	}
@@ -49,5 +64,4 @@ public class MemberServiceImpl implements MemberService {
 	public int insertFavFood(Map<String, Object> params) {
 		return memberDao.insertFavFood(params);
 	}
-	
 }

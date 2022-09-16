@@ -49,7 +49,7 @@
 	</insert>
  -->
 
-	<select id="findId" resultType="Member">
+	<!-- <select id="findId" resultType="Member">
 		select
 			*
 		from
@@ -58,7 +58,7 @@
 			name = #{name}
 			and
 			phone = #{phone}
-	</select>
+	</select> -->
 
 	<select id="resetPassword" resultType="Member">
 		select

@@ -53,5 +53,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDao.writeReview(gatherNo);
 	}
 
+	@Override
+	public List<Review> selectOneReview(String no) {
+		return reviewDao.selectOneReview(no);
+	}
 
 }

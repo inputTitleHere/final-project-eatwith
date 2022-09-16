@@ -330,6 +330,9 @@ create table persistent_logins (
 );
 
 select * from persistent_logins;
+select * from favorite_restaurant;
+insert into favorite_restaurant
+values (143, '3010000-101-2017-00400');
 -- 박우석 END
 
 -- 신유경 START

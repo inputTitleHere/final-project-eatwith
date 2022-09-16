@@ -8,4 +8,6 @@ public interface RestaurantService {
 
 	List<Restaurant> findRestaurantByName(String searchString);
 
+	Restaurant selectOneRestaurant(String no);
+
 }
