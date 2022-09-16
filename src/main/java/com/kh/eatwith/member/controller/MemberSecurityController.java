@@ -1,16 +1,21 @@
 package com.kh.eatwith.member.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.eatwith.member.model.dto.Member;
+import com.kh.eatwith.member.model.dto.MemberSecurity;
 import com.kh.eatwith.member.model.service.MemberService;
 import com.kh.eatwith.security.model.service.MemberSecurityService;
 
@@ -133,7 +139,8 @@ public class MemberSecurityController {
 		log.debug("memberLoginSuccess 호출");
 		// 로그인 후처리
 		String location = "/";
-
+		
+	
 		// security가 관리하는 리다이렉트 url
 		SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SAVED_SECURITY_REQUEST");
 		if (savedRequest != null)
