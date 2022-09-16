@@ -63,16 +63,18 @@
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/">공지사항</a></li>
 						<sec:authorize access="hasRole('USER')">
-							<li><a href="${pageContext.request.contextPath}/">마이페이지</a></li>
+							<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ADMIN')">
 							<li><a href="${pageContext.request.contextPath}/member/memberEnroll">관리자페이지</a></li>
 						</sec:authorize>
+						<li>
+							<form action="${pageContext.request.contextPath}/member/memberLogout" method="post">
+								<button class="btn btn-logout" type="submit">로그아웃</button>
+								<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}">
+							</form>						
+						</li>
 					</ul>
-					<form action="${pageContext.request.contextPath}/member/memberLogout" method="post">
-						<button class="btn btn-logout" type="submit">로그아웃</button>
-						<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}">
-					</form>
 				</div>
 			</sec:authorize>
 		</div>

@@ -1,1 +1,0 @@
-export const IMAGE_LOCATION = 'http://localhost:9090/eatwith/resources';

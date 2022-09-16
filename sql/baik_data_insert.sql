@@ -2,7 +2,7 @@
 alter session set time_zone = '09:00';
 
 
-select * from member;
+select * from member order by no desc;
 select * from gather order by no desc;
 select * from restaurant;
 select * from restaurant where no = '3170000-101-2020-00142';
