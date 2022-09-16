@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.member.model.dao.MemberDao;
 import com.kh.eatwith.member.model.dto.Member;
 import com.kh.eatwith.security.model.dao.MemberSecurityDao;
@@ -63,5 +64,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertFavFood(Map<String, Object> params) {
 		return memberDao.insertFavFood(params);
+	}
+	
+	@Override
+	public Member selectOneByNo(int no) {
+		return memberDao.selectOneByNo(no);
 	}
 }

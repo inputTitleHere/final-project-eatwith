@@ -117,6 +117,10 @@ commit;
 --delete from favorite_district where no=161;
 --delete from member where no=161;
 
+select * from member;
+select * from authority;
+select * from member where id = 'zxcv';
+select * from review;
 select * from gather order by no desc;
 select * from food_type;
 select * from district;

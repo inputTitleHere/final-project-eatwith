@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.member.model.dto.Member;
 
 @Mapper
@@ -40,5 +41,8 @@ public interface MemberDao {
 	int insertFavDistrict(Map<String, Object> params);
 	
 	int insertFavFood(Map<String, Object> params);
+
+	@Select("select * from member where no=#{no}")
+	Member selectOneByNo(int no);
 
 }

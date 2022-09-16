@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -135,10 +136,16 @@ public class MemberSecurityController {
 	}
 
 	@PostMapping("/memberLoginSuccess")
-	public String memberLoginSuccess(HttpSession session) {
+	public String memberLoginSuccess(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
 		log.debug("memberLoginSuccess 호출");
 		// 로그인 후처리
 		String location = "/";
+		
+		MemberSecurity memberSecurity = (MemberSecurity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Cookie cookie = new Cookie("no", String.valueOf(memberSecurity.getNo()));
+		cookie.setPath(request.getContextPath()+"/mypage/currentUser");
+		cookie.setMaxAge(7*24*60*60);
+		response.addCookie(cookie);
 		
 	
 		// security가 관리하는 리다이렉트 url
