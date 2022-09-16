@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.eatwith.review.model.dao.ReviewDao;
+import com.kh.eatwith.review.model.dto.Attachment;
 import com.kh.eatwith.review.model.dto.Review;
 import com.kh.eatwith.review.model.dto.ReviewExt;
-
-
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -24,6 +23,15 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int insertReview(Review review) {
 		int result = reviewDao.insertReview(review);
+		List<Attachment> images = review.getAttachments();
+		if(images!=null) {
+		for(Attachment image:images) {
+			image.setReviewNo(review.getNo());
+			image.setRestaurantNo(review.getRestaurantNo());
+			
+			result=reviewDao.insertImage(image);
+		}}
+		
 		return result;
 	}
 	@Override

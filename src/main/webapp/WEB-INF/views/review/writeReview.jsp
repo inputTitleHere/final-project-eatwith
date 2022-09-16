@@ -243,6 +243,7 @@ input#file-upload-button{
                         <td> - 본인이 직접 촬영하지 않은 사진</td>
                         <td>
                         <input type="file" name="upFile" id="attachFile" accept="image/*" value="사진첨부" multiple>
+                        <label class="file-name" for="attachFile">파일없음</label>
                         </td>
                     </tr>
                     <tr>
@@ -262,6 +263,12 @@ input#file-upload-button{
                 </tbody>
             </table>
             <hr>
+            <input type="hidden" name="restaurantNo" value="${reviewInfo.restaurantNo}">
+            <input type="hidden" name="gatherNo" value="${reviewInfo.gatherNo}">
+            <sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal.no" var="loginMember"/>
+            <input type="hidden" name="userNo" id="userNo" value="${loginMember}"/>
+            </sec:authorize>
             <div><input type="submit" id="submitReview" onclick="enrollReview()" value="리뷰 등록하기"></div>
         </form:form>
         </section>
@@ -284,6 +291,20 @@ input#file-upload-button{
                 $counter.css('color',"red");
             }
         })
+        
+        document.querySelectorAll("[name=upFile]").forEach((input) => {
+		input.addEventListener("change", (e) => {
+		const {files} = e.target;
+		const label = e.target.nextElementSibling;
+			if(files[0]){
+				label.textContent = files[0].name;	
+			}
+			else {
+				label.textContent = "파일 없음";
+			}
+		});
+		});
+        
         
         //유효성 검사 후 제출
         var rateStars=0;

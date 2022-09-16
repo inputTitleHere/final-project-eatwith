@@ -70,6 +70,8 @@ public interface GatherDao {
 	@Select("select * from gather where restaurant_no = #{restaurantNo}")
 	List<Gather> selectReviewByRestaurantNo(String no);
 
+	List<CustomMap> getNewestGatherings(Map<String, Object> params);
+
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 
 }

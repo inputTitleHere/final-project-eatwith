@@ -40,4 +40,6 @@ public interface GatherService {
 
 	List<Gather> selectReviewByRestaurantNo(String restaurantNo);
 
+	List<CustomMap> getNewestGatherings(Map<String, Object> params);
+
 }
