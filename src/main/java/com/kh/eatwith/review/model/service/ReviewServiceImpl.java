@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.review.model.dao.ReviewDao;
 import com.kh.eatwith.review.model.dto.Attachment;
 import com.kh.eatwith.review.model.dto.Review;
@@ -58,4 +59,8 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDao.selectOneReview(no);
 	}
 
+	@Override
+	public List<String> findName(int userNo) {
+		return reviewDao.findName(userNo);
+	}
 }

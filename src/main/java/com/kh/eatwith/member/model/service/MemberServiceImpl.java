@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertFavFood(Map<String, Object> params) {
 		return memberDao.insertFavFood(params);
+	}
+	
+	@Override
+	public String selectOneNameByNo(int userNo) {
+		return memberDao.selectOneNameByNo(userNo);
 	}
 }

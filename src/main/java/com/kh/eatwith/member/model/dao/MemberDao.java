@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
@@ -40,5 +41,8 @@ public interface MemberDao {
 	int insertFavDistrict(Map<String, Object> params);
 	
 	int insertFavFood(Map<String, Object> params);
+
+	@Select("select m.name from review r join member m on r.user_no = m.no where r.user_no = #{userNo}")
+	String selectOneNameByNo(int userNo);
 
 }
