@@ -51,13 +51,12 @@ aside {
 	width:45%;
 }
 #content {
-	width: 780px;
+	width: 720px;
 	background-color: white;
 	padding-bottom: 20px;
 	margin-left: 10px;
 	margin-right: 10px;
 }
-
 #makegather {
 	float: right;
 }
@@ -65,14 +64,16 @@ aside {
 	height: 30px;
 }
 #makeGather {
-	margin-left: 630px;
+	margin-left: 520px;
 	color: white;
 	background-color: #DC948A;
 	border: 0;
-	width: 100px;
-	height: 30px;
+	width: 180px;
+	height: 40px;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	font-size:28px;
+	font-family:var(--short-font);
 }
 #seeMore {
 	background-color: #e3e3e3;
@@ -109,8 +110,8 @@ aside {
 .gather-items{
 	display:flex;
 	width:100%;
-	margin-left:10px;
-	justify-content:space-between;
+	margin-left:20px;
+	justify-content:flex-start;
 	flex-wrap:wrap;
 }
 .each-items{
@@ -119,7 +120,7 @@ aside {
 	padding:5px 15px;
 	background-color:var(--seperate-gray);
 	cursor:pointer;
-	font-size:18px;
+	font-size:16px;
 	display:block;
 	min-height:150px;
 }
@@ -138,6 +139,31 @@ div#type, div#locaName{
 	margin-left:290px;
 	font-size:20px;
 	font-weight:bold;
+	font-family:var(--short-font);
+}
+#title{
+	font-size:20px;
+	font-family:var(--short-font);	
+}
+#name{
+	font-weight:bold;
+	margin:8px 0;
+}
+#seperate{
+	border-right:3px var(--indigo-blue) solid;
+	padding-right:4px;
+}
+#seperate2{
+	padding-left:4px;
+}
+#type{
+	margin:8px 0;
+}
+#meetDate{
+	margin:8px 0;
+}
+#count{
+	margin:8px 0;
 }
 </style>
 </head>
@@ -197,9 +223,9 @@ div#type, div#locaName{
 		                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
     	                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
     	                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
-		                    addListHtml += `<div id="type">`+ loca[i].type + ` | `+loca[i].locaName+`</div>`;
+		                    addListHtml += `<div id="type"><span id="seperate">`+ loca[i].type+`</span><span id="seperate2">`+ loca[i].locaname+`</span></div>`;
     	                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
-    	                    addListHtml += `<div><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
+    	                    addListHtml += `<div id="count"><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
     	                    addListHtml += `</div>`;
         				}
 	                    list.innerHTML+=addListHtml;
@@ -257,12 +283,16 @@ div#type, div#locaName{
 		                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
 	                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
 	                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
-	                    addListHtml += `<div id="type">`+ loca[i].type + ` | `+loca[i].locaName+`</div>`;
+	                    addListHtml += `<div id="type"><span id="seperate">`+ loca[i].type+`</span><span id="seperate2">`+ loca[i].locaname+`</span></div>`;
 	                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
-	                    addListHtml += `<div><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
+	                    addListHtml += `<div id="count"><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
 	                    addListHtml += `</div>`;
     					}
 	                    list.innerHTML+=addListHtml;
+	                	document.querySelector('#moreBtn').style.display="none";
+	                	if(loca.length==0){
+		                	document.querySelector('#noMore').innerHTML="더이상 모임이 없습니다.";
+	                	}
 	                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
 	                    	tr.addEventListener('click', (e) => {
 	                    		// console.log(e.target); // td
@@ -305,9 +335,9 @@ div#type, div#locaName{
 					 <div class="each-items" data-no="${gather.no}" >
 					 	<div id="title">${gather.title}</div>
 					 	<div id="name">${gather.name}</div>
-					 	<div id="type">${gather.type} | ${gather.locaName}</div>
+					 	<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaName}</span></div>
 					 	<div id="meetDate">${gather.meetDate}</div>
-					 	<div><span id="nowCount">${gather.nowcount}</span>/<span id="totalCount">${gather.count+1}</span></div>
+					 	<div id="count">모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
 					 </div>
 					 </c:forEach>
 				</c:if>
@@ -359,17 +389,17 @@ div#type, div#locaName{
 							 //<div class="each-items" data-no="${gather.no}" >
 							 	//<div id="title">${gather.title}</div>
 							 	//<div id="name">${gather.name}</div>
-							 	//<div id="type">${gather.type} | ${gather.locaName}</div>
+					 			//<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaName}</span></div>
 							 	//<div id="meetDate">${gather.meetDate}</div>
-							 	//<div><span id="nowCount"></span>/<span id="totalCount">${gather.count+1}</span></div>
+					 			//<div>모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
 							 //</div>
 		                    // 글번호 : startNum 이  10단위로 증가되기 때문에 startNum +i (+1은 i는 0부터 시작)
 		                    addListHtml += `<div class="each-items" data-no="`+data[i].no+`">`;
 		                    addListHtml += `<div id="title">`+ data[i].title + `</div>`;
 		                    addListHtml += `<div id="name">`+ data[i].name + `</div>`;
-		                    addListHtml += `<div id="type">`+ data[i].type + ` | `+data[i].locaName+`</div>`;
+		                    addListHtml += `<div id="type"><span id="seperate">`+ data[i].type+`</span><span id="seperate2">`+ data[i].locaName+`</span></div>`;
 		                    addListHtml += `<div id="meetDate">`+ data[i].meetDate + `</div>`;
-		                    addListHtml += `<div><span id="nowCount">`+data[i].nowcount+`</span>/`+`<span id="totalCount">`+(data[i].count+1)+`<span></div>`;
+		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+data[i].nowcount+`</span> / `+`<span id="totalCount">`+(data[i].count+1)+`<span> )</div>`;
 		                    addListHtml += `</div>`;}
 		                if(data.length<=8){
 		                	document.querySelector('#moreBtn').style.display="none";

@@ -103,7 +103,7 @@ public class GatherServiceImpl implements GatherService{
 	}
 	
 	@Override
-	public List<Gather> getGatherByLocation(CustomMap param) {
+	public List<Map<String, Object>> getGatherByLocation(CustomMap param) {
 		return gatherDao.getGatherByLocation(param);
 	}
 	@Override

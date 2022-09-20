@@ -211,7 +211,7 @@ public class GatherController {
 		CustomMap param=new CustomMap();
 		param.put("checkLoca", checkLoca);
 		log.debug("param={}",param);
-		List<Gather> resultL=gatherService.getGatherByLocation(param);
+		List<Map<String, Object>> resultL=gatherService.getGatherByLocation(param);
 		log.debug("resultL={}",resultL);
 		model.addAttribute(resultL);
 		return ResponseEntity.ok(resultL);

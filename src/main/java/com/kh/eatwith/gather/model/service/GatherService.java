@@ -44,7 +44,7 @@ public interface GatherService {
 
 	List<Gather> checkFood(int checkFood);
 
-	List<Gather> getGatherByLocation(CustomMap param);
+	List<Map<String, Object>> getGatherByLocation(CustomMap param);
 
 	List<Map<String, Object>> gatherMore(int startNum);
 
