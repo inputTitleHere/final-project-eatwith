@@ -1,7 +1,9 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.member.model.dto.Member;
 
 public interface MemberService {
@@ -21,4 +23,14 @@ public interface MemberService {
 	int insertFavDistrict(Map<String, Object> params);
 
 	int insertFavFood(Map<String, Object> params);
+
+	Member selectOneByNo(int no);
+
+	int updateMember(Member member);
+
+	int removeFav(Map<String, Object> params);
+
+	int updatePassword(CustomMap param);
+	
+	String selectOneNameByNo(int userNo);
 }

@@ -1,6 +1,7 @@
 package com.kh.eatwith.gather.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +26,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.common.typehandler.EatWithUtils;
+import com.kh.eatwith.favorite.model.dto.FavoriteRestaurant;
+import com.kh.eatwith.favorite.model.service.FavoriteRestaurantService;
 import com.kh.eatwith.gather.model.dto.Gather;
 import com.kh.eatwith.gather.model.dto.MemberGather;
 import com.kh.eatwith.gather.model.service.GatherService;
 import com.kh.eatwith.member.model.dto.Member;
+import com.kh.eatwith.notification.model.dto.Notification;
+import com.kh.eatwith.notification.model.service.NotificationService;
+import com.kh.eatwith.restaurant.model.dto.Restaurant;
+import com.kh.eatwith.restaurant.model.service.RestaurantService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +47,15 @@ public class GatherController {
 	@Autowired
 	private GatherService gatherService;
 	
+	@Autowired
+	private RestaurantService restaurantService;
+	
+	@Autowired
+	private NotificationService notificationSerivce;
+	
+	@Autowired
+	FavoriteRestaurantService favoriteRestaurantService;
+	
 	@GetMapping("/gatherEnroll")
 	public void gatherEnroll() {}
 	
@@ -50,6 +66,26 @@ public class GatherController {
 		int result=gatherService.gatherEnroll(gather);
 		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
 		
+		// 백승윤 2022/09/20 모임 등록시 가게 찜한 사람에게 알림 보내기
+		String restaurantNo = gather.getRestaurantNo();
+		Restaurant restaurant = restaurantService.selectOneRestaurant(restaurantNo); // 레스토랑 이름.
+		String content = String.format("찜한 가게 \"%s\"에서 만나는 모임 [%s]가 생성되었어요! 확인해봐요~!", restaurant.getName(), gather.getTitle()); // 알림 컨텐트
+		List<Integer> users = favoriteRestaurantService.getUsersByRestaurantNo(restaurantNo);
+		if(users.size()>0) {
+			log.debug("users:{}",users);
+			List<Notification> toSend = new ArrayList<Notification>();
+			log.debug("toSend:{}",toSend);
+			for(int no : users) {
+				Notification notification = Notification.builder().content(content).userNo(no).build();
+				toSend.add(notification);
+			}
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("toSend", toSend);
+			result = notificationSerivce.insertNotification(param);
+			
+			// favorite_restaurant - restaurantNo 기반으로 userNo list를 뽑아와서 List<String>으로 해서 notification에 쫙 뿌려야한다.			
+		}
+		// 백승윤 END
 		return "redirect:/gather/gatherList";
 	}
 	

@@ -22,4 +22,9 @@ public class DistrictServiceImpl implements DistrictService {
 	public District findNameByCode(String code) {
 		return districtDao.findNameByCode(code);
 	}
+	@Override
+	public List<String> getFavedByNo(int no) {
+		return districtDao.getFavedByNo(no);
+	}
+	
 }

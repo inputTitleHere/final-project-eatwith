@@ -67,5 +67,7 @@
         g.no=#{gatherNo}
   </select>
   
-  
+  <select id="selectOneReview" resultMap="ReviewMap">
+	  select * from (select r.*, m.name as writer from review r join member m on r.user_no = m.no) where restaurant_no = #{restaurantNo}
+  </select>
 </mapper>

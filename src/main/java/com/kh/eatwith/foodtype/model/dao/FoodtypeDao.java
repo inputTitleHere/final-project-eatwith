@@ -16,4 +16,7 @@ public interface FoodtypeDao {
 	@Select("select * from food_type where code = #{code}")
 	FoodType findTypeByCode(String code);
 
+	@Select("select code from favorite_food where no=#{no}")
+	List<String> getFavedByNo(int no);
+
 }

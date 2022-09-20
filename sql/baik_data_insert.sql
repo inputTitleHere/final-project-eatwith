@@ -3,6 +3,7 @@ alter session set time_zone = '09:00';
 
 
 select * from member order by no desc;
+select * from member where id= 'zxcv';
 select * from gather order by no desc;
 select * from restaurant;
 select * from restaurant where no = '3170000-101-2020-00142';
@@ -110,13 +111,22 @@ select * from restaurant;
 
 select * from favorite_district;
 select * from favorite_food;
+select * from member where no=144;
+select * from notification;
+select * from favorite_restaurant;
 select * from member;
 
+insert into notification values(seq_notification_no.nextval, 144, '테스팅 001',sysdate, null,null);
+insert into favorite_restaurant values(144,'3100000-101-2022-00087');
 commit;
 
 --delete from favorite_district where no=161;
 --delete from member where no=161;
 
+select * from member;
+select * from authority;
+select * from member where id = 'zxcv';
+select * from review;
 select * from gather order by no desc;
 select * from food_type;
 select * from district;

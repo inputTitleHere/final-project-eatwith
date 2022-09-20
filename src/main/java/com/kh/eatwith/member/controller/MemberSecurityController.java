@@ -1,12 +1,15 @@
 package com.kh.eatwith.member.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -20,11 +23,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.eatwith.common.CustomMap;
+import com.kh.eatwith.district.model.dto.District;
+import com.kh.eatwith.district.model.service.DistrictService;
+import com.kh.eatwith.foodtype.model.service.FoodtypeService;
 import com.kh.eatwith.member.model.dto.Member;
 import com.kh.eatwith.member.model.dto.MemberSecurity;
 import com.kh.eatwith.member.model.service.MemberService;
@@ -40,6 +51,12 @@ public class MemberSecurityController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private DistrictService districtService;
+	
+	@Autowired
+	private FoodtypeService foodTypeService;
+	
 	@Autowired
 	private MemberSecurityService memberSecurityService;
 	/**
@@ -135,11 +152,22 @@ public class MemberSecurityController {
 	}
 
 	@PostMapping("/memberLoginSuccess")
-	public String memberLoginSuccess(HttpSession session) {
+	public String memberLoginSuccess(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
 		log.debug("memberLoginSuccess 호출");
 		// 로그인 후처리
 		String location = "/";
 		
+		MemberSecurity memberSecurity = (MemberSecurity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Cookie cookie = new Cookie("no", String.valueOf(memberSecurity.getNo()));
+		cookie.setPath("/eatwith");
+		cookie.setHttpOnly(true);
+//		cookie.setMaxAge(24*60*60); // 1일 // 아예 세션 쿠키로
+		response.addCookie(cookie);
+		
+		for(Cookie c :  request.getCookies()) {
+			log.debug("COOKIE Name = {}",c.getName());
+			log.debug("COOKIE Value = {}",c.getValue());
+		}
 	
 		// security가 관리하는 리다이렉트 url
 		SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SAVED_SECURITY_REQUEST");
@@ -228,5 +256,132 @@ public class MemberSecurityController {
 		System.out.println("sb = " + sb);
 		return sb.toString();
 	}
+	
+	/**
+	 * 멤버 정보 업데이트
+	 *  @RequestBody List<String> favDistrict, @RequestBody List<String> favFoodType
+	 */
+	@PutMapping("/updateMember")
+	@ResponseBody
+	public ResponseEntity<?> updateMember(@RequestBody Member member) throws Exception{
+		log.debug("member = {}",member);
+		
+		int result = memberService.updateMember(member);
+		// 기존 fav 
+		List<String> originalFavDistrict = districtService.getFavedByNo(member.getNo());
+		List<String> originalFavFoodType = foodTypeService.getFavedByNo(member.getNo());
+		
+		// 새로운 fav
+		
+		// 지울거, 새로 넣을거 구분
+		Map<String, Object> params = null;
+		if(member.getFavDistrict()!=null) {
+			List<String> favDistrict = new ArrayList<String>(Arrays.asList(member.getFavDistrict()));
+			for(String code : member.getFavDistrict()) {
+				if(originalFavDistrict.contains(code)) {
+					originalFavDistrict.remove(code);
+					favDistrict.remove(code);
+				}
+			}
+			if(favDistrict.size()>0) {
+				params = new HashMap<String, Object>();
+				params.put("no",member.getNo());
+				params.put("favDistrict",favDistrict);
+				result = memberService.insertFavDistrict(params);				
+			}
+		}
+		if(member.getFavFoodType()!=null) {
+			List<String> favFoodType = new ArrayList<String>(Arrays.asList(member.getFavFoodType()));
+			log.debug("favFood = {} ",favFoodType);
+			for(String code : member.getFavFoodType()) {
+				if(originalFavFoodType.contains(code)) {
+					originalFavDistrict.remove(code);
+					favFoodType.remove(code);
+				}
+			}
+			if(favFoodType.size()>0) {
+				params = new HashMap<String, Object>();
+				params.put("no",member.getNo());
+				params.put("favFood",favFoodType);
+				result = memberService.insertFavFood(params);				
+			}
+		}
+		// 체크 해제 데이터 삭제
+		log.debug("Originals DISTRICT = {} FOODTYPE = {}",originalFavDistrict, originalFavFoodType);
+		params=new HashMap<String, Object>();
+		params.put("no",member.getNo());
+		params.put("favDistrict", originalFavDistrict);
+		params.put("favFood", originalFavFoodType);
+		result = memberService.removeFav(params);
+		
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	
+	@GetMapping("/checkPassword")
+	@ResponseBody
+	public ResponseEntity<?> checkPassword(@RequestParam int no, @RequestParam String password){
+		log.debug("no = {}, Password = {}",no,password);
+		Member member = memberService.selectOneByNo(no);
+		boolean result = bcpe.matches(password, member.getPassword());
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/checkPasswordCookie")
+	@ResponseBody
+	public ResponseEntity<?> checkPasswordCookie(@RequestParam String oldPassword, HttpServletRequest request){
+		log.debug("oldPassword={}",oldPassword);
+		Cookie[] cookies = request.getCookies();
+		int no=0;
+		for(Cookie c : cookies){
+			if("no".equals(c.getName())) {
+				no = Integer.parseInt(c.getValue());
+				log.debug("COOKIE || NO : {}",no);
+				break;
+			}
+		}
+		Member member = memberService.selectOneByNo(no);
+		log.debug("encrypted = {}",member.getPassword());
+		log.debug("bcpe.matches = {}",bcpe.matches(oldPassword, member.getPassword()));
+		if(bcpe.matches(oldPassword, member.getPassword())) {
+			return ResponseEntity.ok(true);
+		}
+		return ResponseEntity.ok(false);
+	}
+	@PutMapping("/updatePassword")
+	@ResponseBody
+	public ResponseEntity<?> updatePassword(@RequestBody Member member,HttpServletRequest request){
+		Cookie[] cookies = request.getCookies();
+		int no=0;
+		for(Cookie c : cookies){
+			if("no".equals(c.getName())) {
+				no = Integer.parseInt(c.getValue());
+				log.debug("COOKIE || NO : {}",no);
+				break;
+			}
+		}
+		String password = member.getPassword();
+		log.debug("newPassword = {} ",password);
+		String encoded = bcpe.encode(password);
+		CustomMap param = new CustomMap();
+		param.put("no", no);
+		param.put("password",encoded);
+		int result = memberService.updatePassword(param);		
+		
+		return ResponseEntity.ok(null);
+	}
+	
+	@GetMapping("/testResetPassword")
+	public ResponseEntity<?> testResetPassword(){
+		CustomMap param = new CustomMap();
+		param.put("no", 144);
+		param.put("password", bcpe.encode("qq11``"));
+		int result = memberService.updatePassword(param);
+		return ResponseEntity.ok(null);
+	}
+	
+	
 
 }

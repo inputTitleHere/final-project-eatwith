@@ -1,11 +1,13 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.member.model.dao.MemberDao;
 import com.kh.eatwith.member.model.dto.Member;
 import com.kh.eatwith.security.model.dao.MemberSecurityDao;
@@ -63,5 +65,40 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertFavFood(Map<String, Object> params) {
 		return memberDao.insertFavFood(params);
+	}
+	
+	@Override
+	public Member selectOneByNo(int no) {
+		return memberDao.selectOneByNo(no);
+	}
+	
+	@Override
+	public int updateMember(Member member) {
+		int result = memberDao.updateMember(member);
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public int removeFav(Map<String, Object> params) {
+		int result=0;
+		if(((List<String>)params.get("favDistrict")).size()>0) {
+			result = memberDao.removeFavDistrict(params);			
+		}
+		if(((List<String>)params.get("favFood")).size()>0) {
+			result = memberDao.removeFavFood(params);			
+		}
+		return result;
+	}
+	
+	@Override
+	public int updatePassword(CustomMap param) {
+		return memberDao.updatePassword(param);
+	}
+	
+	
+	
+	public String selectOneNameByNo(int userNo) {
+		return memberDao.selectOneNameByNo(userNo);
 	}
 }

@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
@@ -8,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.member.model.dto.Member;
 
 @Mapper
@@ -40,5 +42,21 @@ public interface MemberDao {
 	int insertFavDistrict(Map<String, Object> params);
 	
 	int insertFavFood(Map<String, Object> params);
+
+	@Select("select * from member where no=#{no}")
+	Member selectOneByNo(int no);
+
+	
+	int updateMember(Member member);
+
+	int removeFavDistrict(Map<String, Object> params);
+
+	int removeFavFood(Map<String, Object> params);
+
+	@Update("update member set password=#{password} where no=#{no}")
+	int updatePassword(CustomMap param);
+	
+	@Select("select m.name from review r join member m on r.user_no = m.no where r.user_no = #{userNo}")
+	String selectOneNameByNo(int userNo);
 
 }
