@@ -73,7 +73,7 @@ public class RestaurantController {
 	 */
 	@GetMapping("/loadInfo")
 	public String loadInfo(@RequestParam String no, Model model) {
-		no="3010000-101-2017-00400"; // 리뷰 많은 쌀국수집
+//		no="3010000-101-2017-00400"; // 리뷰 많은 쌀국수집
 //		no="3150000-101-2001-09860"; //빈대떡집 메뉴 5개
 //		no="3010000-101-2014-00196"; //카페
 //		no="3010000-101-2017-00021"; // 복국 멤버 모집 확인용
