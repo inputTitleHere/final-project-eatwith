@@ -16,4 +16,7 @@ public interface DistrictDao {
 	@Select("select * from district where code = #{code}")
 	District findNameByCode(String code);
 	
+	@Select("select code from favorite_district where no=#{no}")
+	List<String> getFavedByNo(int no);
+	
 }

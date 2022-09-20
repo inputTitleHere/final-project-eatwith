@@ -10,4 +10,6 @@ public interface FoodtypeService {
 
 	FoodType findTypeByCode(String code);
 
+	List<String> getFavedByNo(int no);
+
 }

@@ -10,5 +10,7 @@ public interface DistrictService {
 
 	District findNameByCode(String code);
 
+	List<String> getFavedByNo(int no);
+
 
 }
