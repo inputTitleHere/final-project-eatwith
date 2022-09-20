@@ -1,5 +1,6 @@
 package com.kh.eatwith.favorite.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,14 @@ import com.kh.eatwith.favorite.model.dto.FavoriteRestaurant;
 public class FavoriteRestaurantServiceImpl implements FavoriteRestaurantService {
 
 	@Autowired
-	FavoriteRestaurantDao favoriteFoodDao;
+	FavoriteRestaurantDao favoriteRestaurantDao;
 	
 	@Override
 	public int checkFav(Map<String, Object> param) {
-		return favoriteFoodDao.checkFav(param);
+		return favoriteRestaurantDao.checkFav(param);
+	}
+	@Override
+	public List<Integer> getUsersByRestaurantNo(String restaurantNo) {
+		return favoriteRestaurantDao.getUsersByRestaurantNo(restaurantNo);
 	}
 }

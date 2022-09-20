@@ -27,6 +27,22 @@
 			</foreach>
 	</insert>
 
+	<delete id="removeFavDistrict">
+		delete from favorite_district
+		where no=#{no} and code in
+		<foreach collection="favDistrict" item="code" separator="," open="(" close=")">
+			#{code}
+		</foreach>
+	</delete>
+	
+	<delete id="removeFavFood">
+		delete from favorite_food
+		where no=#{no} and code in
+		<foreach collection="favFood" item="code" separator="," open="(" close=")">
+			#{code}
+		</foreach>
+	</delete>
+	
 <!-- 이 부분은 따로 @Insert 어노테이션으로 구분하였습니다.
 	<insert id="insertMember">
 		insert into member
@@ -71,5 +87,10 @@
 			email = #{email}
 	</select>
 
+	<update id="updateMember">
+		update member 
+		set name=#{name}, phone=#{phone}, gender=#{gender},born_at=#{bornAt}, email=#{email}, fav_district=#{favDistrict},fav_food_type=#{favFoodType}
+		where no=#{no}
+	</update>
 
 </mapper>

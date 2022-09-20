@@ -24,4 +24,10 @@ public interface MemberService {
 	int insertFavFood(Map<String, Object> params);
 
 	Member selectOneByNo(int no);
+
+	int updateMember(Member member);
+
+	int removeFav(Map<String, Object> params);
+
+	int updatePassword(CustomMap param);
 }

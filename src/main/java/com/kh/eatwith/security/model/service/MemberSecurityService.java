@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.kh.eatwith.member.model.dto.Member;
 import com.kh.eatwith.member.model.dto.MemberSecurity;
 import com.kh.eatwith.security.model.dao.MemberSecurityDao;
 
@@ -24,5 +25,6 @@ public class MemberSecurityService implements UserDetailsService {
 		}
 		return memberSecurity;
 	}
+
 
 }

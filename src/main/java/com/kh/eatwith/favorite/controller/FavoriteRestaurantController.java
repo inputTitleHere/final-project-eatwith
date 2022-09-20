@@ -34,4 +34,8 @@ public class FavoriteRestaurantController {
 //		int result = favoriteRestaurantService.like(param);
 //		return ResponseEntity.ok(result);
 //	}
+	
+	
+	
+	
 }

@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,4 +71,31 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneByNo(int no) {
 		return memberDao.selectOneByNo(no);
 	}
+	
+	@Override
+	public int updateMember(Member member) {
+		int result = memberDao.updateMember(member);
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public int removeFav(Map<String, Object> params) {
+		int result=0;
+		if(((List<String>)params.get("favDistrict")).size()>0) {
+			result = memberDao.removeFavDistrict(params);			
+		}
+		if(((List<String>)params.get("favFood")).size()>0) {
+			result = memberDao.removeFavFood(params);			
+		}
+		return result;
+	}
+	
+	@Override
+	public int updatePassword(CustomMap param) {
+		return memberDao.updatePassword(param);
+	}
+	
+	
+	
 }

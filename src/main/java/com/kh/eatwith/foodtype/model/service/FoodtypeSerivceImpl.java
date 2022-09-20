@@ -22,4 +22,8 @@ public class FoodtypeSerivceImpl implements FoodtypeService {
 	public FoodType findTypeByCode(String code) {
 		return foodtypeDao.findTypeByCode(code);
 	}
+	@Override
+	public List<String> getFavedByNo(int no) {
+		return foodtypeDao.getFavedByNo(no);
+	}
 }

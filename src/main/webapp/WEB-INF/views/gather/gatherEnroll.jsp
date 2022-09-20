@@ -72,6 +72,7 @@
 							restaurantType.innerHTML=type;
 							                    		
 							inputRestaurantNo.value=no;
+							console.log("restaurantNo = ",no);
 							chkRestaurant=1;
 							console.log(inputRestaurantNo);
 							

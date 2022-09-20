@@ -45,4 +45,14 @@ public interface MemberDao {
 	@Select("select * from member where no=#{no}")
 	Member selectOneByNo(int no);
 
+	
+	int updateMember(Member member);
+
+	int removeFavDistrict(Map<String, Object> params);
+
+	int removeFavFood(Map<String, Object> params);
+
+	@Update("update member set password=#{password} where no=#{no}")
+	int updatePassword(CustomMap param);
+
 }
