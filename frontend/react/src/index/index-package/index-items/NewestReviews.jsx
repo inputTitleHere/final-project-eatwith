@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import $ from "jquery";
-import { API_BASE_URL } from "../configs/App-config.js";
+import { API_BASE_URL } from "../../configs/App-config.js";
 import DongFormatter from "../functions/DongFormatter.js";
 import RestaurantImage from "../restaurant-info/Restaurant-Image.jsx";
 import Stars from "../stars/Stars.jsx";
@@ -35,7 +35,7 @@ function NewestReviews(props) {
   const loadMoreReviews = () => {
     loadPage(currPage + 1);
     setCurrPage(currPage + 1);
-    console.log(currPage);
+    // console.log(currPage);
   };
 
   //! 첫번쨰 로드시 데이터 로드 시도
@@ -43,7 +43,7 @@ function NewestReviews(props) {
 
   return (
     <div className="content-wrapper" id="newest-reviews">
-      <div className="inner-content">
+      <div className="inner-content-ext">
         <h2 className="title">최신 리뷰</h2>
         <div className="review-wrapper">{data}</div>
       </div>
@@ -71,7 +71,9 @@ function NewestReviews(props) {
 }
 
 function ReviewItem(props) {
+  
   const {
+    restaurantNo,
     restaurantName,
     restaurantDong,
     writer,
@@ -82,9 +84,15 @@ function ReviewItem(props) {
     content,
     reviewImages,
   } = props.item;
+
+  const toRestaurant=()=>{
+    // console.log(restaurantNo);
+    window.location.href=`${API_BASE_URL}/restaurant/loadinfo?no=${restaurantNo}`;
+  }
+
   return (
     <div className="individual-review">
-      <h3 className="header">
+      <h3 className="header" onClick={toRestaurant}>
         {restaurantName}{" "}
         <span className="lighter">{DongFormatter(restaurantDong)}</span>
       </h3>

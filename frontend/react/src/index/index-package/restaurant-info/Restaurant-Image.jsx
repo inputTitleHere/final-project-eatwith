@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../configs/App-config.js";
+import { API_BASE_URL } from "../../configs/App-config.js";
 
 /**
  * 
@@ -8,7 +8,7 @@ import { API_BASE_URL } from "../configs/App-config.js";
 function RestaurantImage(props) {
   // console.log(props);
   if (props.image) {
-    console.log("props.image = ",props.image);
+    // console.log("props.image = ",props.image);
     return (
       <div className="img-section">
         <img

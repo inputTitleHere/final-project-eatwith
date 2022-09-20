@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import $ from "jquery";
-import { API_BASE_URL } from "../configs/App-config.js";
+import { API_BASE_URL } from "../../configs/App-config.js";
 
 function NewestGatherings(props) {
   const [data, setData] = useState("");
@@ -10,7 +10,7 @@ function NewestGatherings(props) {
       url: `${API_BASE_URL}/gather/getNewestGatherings`,
       method: "GET",
       success(response) {
-        console.log(response);
+        // console.log(response);
         const processed = [];
         response.forEach((item, index) => {
           processed.push(<GatherItem item={item} key={index} />);
@@ -24,7 +24,7 @@ function NewestGatherings(props) {
   };
 
   return (
-    <div className="inner-content">
+    <div className="inner-content-ext">
       <h2 className="title">최신 모임</h2>
       <div id="newest-gather">{data}</div>
       <div id="button-section" onClick={toListPage}>
@@ -104,7 +104,7 @@ function GatherItem(props) {
       </div>
       <div>
         <span id="people-count">
-          모임인원 ( {enrolledCount} / {maxCount} )
+          모임인원 ( {enrolledCount} / {maxCount+1} )
         </span>
       </div>
       {formatRestriction()}

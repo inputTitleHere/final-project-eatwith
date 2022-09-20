@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import $ from "jquery";
-import { API_BASE_URL } from "../configs/App-config.js";
+import { API_BASE_URL } from "../../configs/App-config.js";
 import Slider from "react-slick";
 import "../css/slick.css";
 import "../css/slick-theme.css";
@@ -16,7 +16,7 @@ function BestReviews(props) {
       method: "GET",
       async:false,
       success(response) {
-        // console.log(response);
+        console.log('bestReviews = ',response);
         setData(response);
       },
       error: console.log,
@@ -54,6 +54,7 @@ function BestReviews(props) {
 }
 
 function ReviewItem(props) {
+
   return (
     <div className="carousel-item">
       <RestaurantInfo>{props.children}</RestaurantInfo>
