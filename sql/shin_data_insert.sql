@@ -32,13 +32,3 @@ where g.gender_restriction=null or g.gender_restriction=gender
 ) 
 from member m;
 select count(*) as count from member_gather where gather_no=103 and user_no=151;
-        select * from(
-	  	select 
-	        g.no,g.restaurant_no,r.name,g.title,g.count,g.meet_date,g.food_code,f.type,g.district_code,d.name as loca_name,g.content,g.user_no,g.age_restriction_top,g.age_restriction_bottom,g.gender_restriction
-		from
-	        gather g join district d on g.district_code=d.code
-	        left join food_type f on g.food_code=f.code
-	        left join (select no,name from restaurant) r on g.restaurant_no=r.no
-                order by g.no desc
-                )
-                where rownum<=18 and rownum>=10;

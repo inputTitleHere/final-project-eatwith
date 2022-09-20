@@ -73,7 +73,7 @@ public interface GatherDao {
 	List<CustomMap> getNewestGatherings(Map<String, Object> params);
 
 	@Select("select * from gather where food_code=#{checkFood}")
-	int checkFood(int checkFood);
+	List<Gather> checkFood(int checkFood);
 
 	List<Gather> getGatherByLocation(CustomMap param);
 

@@ -98,7 +98,7 @@ public class GatherServiceImpl implements GatherService{
 		return gatherDao.getNewestGatherings(params);
 	}
 	@Override
-	public int checkFood(int checkFood) {
+	public List<Gather> checkFood(int checkFood) {
 		return gatherDao.checkFood(checkFood);
 	}
 	

@@ -219,12 +219,12 @@ public class GatherController {
 	
 	@GetMapping("/checkFood")
 	@ResponseBody
-	public ResponseEntity<?> checkFood(@RequestParam("checkFood") int checkFood){
+	public ResponseEntity<?> checkFood(@RequestParam("checkFood") int checkFood,Model model){
 		
 		log.debug("checkFood={}",checkFood);
-		int resultF=gatherService.checkFood(checkFood);
+		List<Gather> resultF=gatherService.checkFood(checkFood);
 		log.debug("resultFood={}",resultF);
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(resultF);
 	}
 	@GetMapping("/gatherListNew")
 	@ResponseBody

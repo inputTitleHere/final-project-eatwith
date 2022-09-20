@@ -145,7 +145,7 @@ div#type, div#locaName{
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div id="container">
 		<aside>
-            <h3>모임 지역 선택</h3>
+            <h3>모임 지역별로 보기</h3>
             <input type="checkbox" name="location" id="selectAll" onclick="selectAll(this)">서울 전체<br>
             <div class="district-wrapper">
             <label><input type="checkbox" name="location" value="3220000" id="3220000" onclick="selectLoca()">강남구</label>
@@ -177,6 +177,8 @@ div#type, div#locaName{
             <hr>
             <script>
             function selectLoca(){
+				const list = document.querySelector('.gather-items');
+			    var addListHtml = "";  
                 var chk_location=[];
                 $("input[name=location]:checked").each(function(){
                     var chkLoca=$(this).val();
@@ -188,15 +190,40 @@ div#type, div#locaName{
     				url:"${pageContext.request.contextPath}/gather/checkLoca",
     				method:"GET",
     				data:{chk_location:chk_location},
-    				success(response){
-    					console.log(response);
+    				success(loca){
+    					console.log(loca);
+    					list.innerHTML=``;
+    					for(var i=0;i<loca.length;i++){
+		                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
+    	                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
+    	                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
+		                    addListHtml += `<div id="type">`+ loca[i].type + ` | `+loca[i].locaName+`</div>`;
+    	                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
+    	                    addListHtml += `<div><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
+    	                    addListHtml += `</div>`;
+        				}
+	                    list.innerHTML+=addListHtml;
+	                	document.querySelector('#moreBtn').style.display="none";
+	                	if(loca.length==0){
+		                	document.querySelector('#noMore').innerHTML="더이상 모임이 없습니다.";
+	                	}
+	                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+	                    	tr.addEventListener('click', (e) => {
+	                    		// console.log(e.target); // td
+	                    		const tr = e.target.parentElement;
+	                    		const no = tr.dataset.no;
+	                    		if(no){
+	                    			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+	                    		}
+	                    	});     	
+	                    });
     				},
     				error:console.log
     			})
             }
             </script>
 			
-            <h3>모임 음식 분야 선택</h3>
+            <h3>모임 음식별로 보기</h3>
             <div class="food-wrapper">
             <label><input type="radio" name="food" value="001" id="001" onclick="selectFood()">한식</label>
             <label><input type="radio" name="food" value="002" id="002" onclick="selectFood()">일식</label>
@@ -213,17 +240,39 @@ div#type, div#locaName{
 			<hr>
 			<script>
 			function selectFood(){
+				const list = document.querySelector('.gather-items');
+			    var addListHtml = "";  
 				var checkFood=$("input[name=food]:checked").val();
 				console.log(checkFood);
     			$.ajax({
     				url:"${pageContext.request.contextPath}/gather/checkFood",
-    				method:"POST",
+    				method:"GET",
     				data:{
     					"checkFood":checkFood
     				},
-    				success(response){
-    					console.log(response);
-    					
+    				success(loca){
+    					console.log(loca);
+    					list.innerHTML=``;
+    					for(var i=0;i<loca.length;i++){
+		                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
+	                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
+	                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
+	                    addListHtml += `<div id="type">`+ loca[i].type + ` | `+loca[i].locaName+`</div>`;
+	                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
+	                    addListHtml += `<div><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
+	                    addListHtml += `</div>`;
+    					}
+	                    list.innerHTML+=addListHtml;
+	                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+	                    	tr.addEventListener('click', (e) => {
+	                    		// console.log(e.target); // td
+	                    		const tr = e.target.parentElement;
+	                    		const no = tr.dataset.no;
+	                    		if(no){
+	                    			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+	                    		}
+	                    	});     	
+	                    });
     				},
     				error:console.log
     			})
@@ -271,45 +320,7 @@ div#type, div#locaName{
 			</div>
 			<script>
 	    
-			function more(){
-			    var startNum = $(".gather-items .each-items").length;  //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
-			    var addListHtml = "";  
-			    console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
-				console.log("모어버튼");
-				$.ajax({
-					url:"${pageContext.request.contextPath}/gather/gatherListNew",
-					method:"GET",
-			        data : {"startNum":startNum},
-					success(data){
-						console.log(data);
-			                for(var i=0; i<data.length;i++) {
-			                    var idx = Number(startNum)+Number(i)+1;   
-								 //<div class="each-items" data-no="${gather.no}" >
-								 	//<div id="title">${gather.title}</div>
-								 	//<div id="name">${gather.name}</div>
-								 	//<div id="type">${gather.type} | ${gather.locaName}</div>
-								 	//<div id="meetDate">${gather.meetDate}</div>
-								 	//<div><span id="nowCount"></span>/<span id="totalCount">${gather.count+1}</span></div>
-								 //</div>
-			                    // 글번호 : startNum 이  10단위로 증가되기 때문에 startNum +i (+1은 i는 0부터 시작)
-			                    addListHtml += `<div class="each-items">`;
-			                    addListHtml += `<div id="title">`+ data[i].title + `</div>`;
-			                    addListHtml += `<div id="name">`+ data[i].name + `</div>`;
-			                    addListHtml += `<div id="type">`+ data[i].type + `</div>`;
-			                    addListHtml += `<div id="meetDate">`+ data[i].meetDate + `</div>`;
-			                    addListHtml += `<div><span id="nowCount">`+data[i].nowcount+`</span>/`+`<span id="totalCount">`+(data[i].count+1)+`<span></div>`;
-			                    addListHtml += `</div>`;}
-			                if(data.length<=8){
-			                	document.querySelector('#moreBtn').style.display="none";
-			                	document.querySelector('#noMore').innerHTML+="더이상 모임이 없습니다.";
-			                }
-			                $(".gather-items").append(addListHtml);
-			                startNum+=9;
-			                console.log(data.length);
-			        	},
-					error:console.log
-				})
-			}
+
 			</script>
 			</c:if>
 		</section>
@@ -327,12 +338,62 @@ div#type, div#locaName{
         		// console.log(e.target); // td
         		const tr = e.target.parentElement;
         		const no = tr.dataset.no;
-        		// console.log(no);
         		if(no){
         			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
         		}
         	});     	
         });
+		function more(){
+		    var startNum = $(".gather-items .each-items").length;  //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
+		    var addListHtml = "";  
+		    console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
+			console.log("모어버튼");
+			$.ajax({
+				url:"${pageContext.request.contextPath}/gather/gatherListNew",
+				method:"GET",
+		        data : {"startNum":startNum},
+				success(data){
+					console.log(data);
+		                for(var i=0; i<data.length;i++) {
+		                    var idx = Number(startNum)+Number(i)+1;   
+							 //<div class="each-items" data-no="${gather.no}" >
+							 	//<div id="title">${gather.title}</div>
+							 	//<div id="name">${gather.name}</div>
+							 	//<div id="type">${gather.type} | ${gather.locaName}</div>
+							 	//<div id="meetDate">${gather.meetDate}</div>
+							 	//<div><span id="nowCount"></span>/<span id="totalCount">${gather.count+1}</span></div>
+							 //</div>
+		                    // 글번호 : startNum 이  10단위로 증가되기 때문에 startNum +i (+1은 i는 0부터 시작)
+		                    addListHtml += `<div class="each-items" data-no="`+data[i].no+`">`;
+		                    addListHtml += `<div id="title">`+ data[i].title + `</div>`;
+		                    addListHtml += `<div id="name">`+ data[i].name + `</div>`;
+		                    addListHtml += `<div id="type">`+ data[i].type + ` | `+data[i].locaName+`</div>`;
+		                    addListHtml += `<div id="meetDate">`+ data[i].meetDate + `</div>`;
+		                    addListHtml += `<div><span id="nowCount">`+data[i].nowcount+`</span>/`+`<span id="totalCount">`+(data[i].count+1)+`<span></div>`;
+		                    addListHtml += `</div>`;}
+		                if(data.length<=8){
+		                	document.querySelector('#moreBtn').style.display="none";
+		                	document.querySelector('#noMore').innerHTML+="더이상 모임이 없습니다.";
+		                }
+		                $(".gather-items").append(addListHtml);
+		                startNum+=9;
+		                console.log(data.length);
+		                const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+		                	tr.addEventListener('click', (e) => {
+		                		// console.log(e.target); // td
+		                		const tr = e.target.parentElement;
+		                		const no = tr.dataset.no;
+		                		 console.log(no)
+		                		if(no){
+		                			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+		                		}
+		                	});     	
+		                });
+		        	},
+				error:console.log
+			})
+		}
+        
     </script>
 </body>
 </html>
