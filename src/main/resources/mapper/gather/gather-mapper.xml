@@ -41,6 +41,7 @@
 	        left join (select no,name from restaurant) r on g.restaurant_no=r.no
 		order by g.no desc
 	</select>
+	
 	<select id="getOneGather" resultType="CustomMap">
 	select 
         g.no,g.restaurant_no,r.name,g.title,g.count,g.meet_date,g.food_code,f.type,g.district_code,d.name as loca_name,g.content,g.user_no,g.age_restriction_top,g.age_restriction_bottom,g.gender_restriction
@@ -65,6 +66,25 @@
 		where  rownum <![CDATA[<=]]> ${no}
 	</select>
 	
+	<select id="getGatherByLocation" resultType="Gather">
+		select *
+		from gather
+		where district_code in 
+		<foreach collection="checkloca" item="code" separator="," open="(" close=")">
+			#{code}
+		</foreach>
+	</select>
 	
-	
+	<select id="gatherMore" resultType="CustomMap">
+        select * from(
+	  	select 
+	        g.no,g.restaurant_no,r.name,g.title,g.count,g.meet_date,g.food_code,f.type,g.district_code,d.name as loca_name,g.content,g.user_no,g.age_restriction_top,g.age_restriction_bottom,g.gender_restriction
+		from
+	        gather g join district d on g.district_code=d.code
+	        left join food_type f on g.food_code=f.code
+	        left join (select no,name from restaurant) r on g.restaurant_no=r.no
+                order by g.no desc
+                )
+        OFFSET #{page} ROWS FETCH FIRST 9 ROWS ONLY
+	</select>
 </mapper>

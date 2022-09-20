@@ -86,7 +86,7 @@ public class ReviewController extends HttpServlet {
 		int result = reviewService.insertReview(review);
 		log.debug("review = {}",review);
 		redirectAttr.addFlashAttribute("msg","리뷰를 성공적으로 등록했습니다.");
-		return "redirect:/";
+		return "redirect:restaurant/loadInfo?no="+review.getRestaurantNo();
 	}
 	
 	@GetMapping("/getBestReviews")

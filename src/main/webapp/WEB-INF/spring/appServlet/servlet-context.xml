@@ -75,16 +75,18 @@
 	<beans:bean id="jacksonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 	<!-- #14.1 echoHandler등록 -->
-	<!-- <websocket:handlers> <websocket:mapping handler="echoHandler" path="/echo"/> 
-		<websocket:sockjs/> </websocket:handlers> -->
+<!-- 	<websocket:handlers> 
+		<websocket:mapping handler="echoHandler" path="/echo"/> 
+		<websocket:sockjs />
+	</websocket:handlers>-->
 	<!-- #14.2 stomp -->
-	<websocket:message-broker
+	<!-- <websocket:message-broker
 		application-destination-prefix="/app">
 		<websocket:stomp-endpoint path="/stomp">
 			<websocket:sockjs />
 		</websocket:stomp-endpoint>
 		<websocket:simple-broker prefix="/topic, /app" />
-	</websocket:message-broker>
+	</websocket:message-broker>-->
 
 	
 </beans:beans>

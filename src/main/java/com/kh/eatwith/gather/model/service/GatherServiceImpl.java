@@ -97,4 +97,18 @@ public class GatherServiceImpl implements GatherService{
 	public List<CustomMap> getNewestGatherings(Map<String, Object> params) {
 		return gatherDao.getNewestGatherings(params);
 	}
+	@Override
+	public int checkFood(int checkFood) {
+		return gatherDao.checkFood(checkFood);
+	}
+	
+	@Override
+	public List<Gather> getGatherByLocation(CustomMap param) {
+		return gatherDao.getGatherByLocation(param);
+	}
+	@Override
+	public List<Map<String, Object>> gatherMore(int page) {
+		return gatherDao.gatherMore(page);
+	}
+	
 }

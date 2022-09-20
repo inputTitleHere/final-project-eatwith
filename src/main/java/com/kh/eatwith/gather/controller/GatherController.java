@@ -88,20 +88,13 @@ public class GatherController {
 	@GetMapping("/gatherList")
 	public void gatherList(@RequestParam(defaultValue="1") int cPage,Model model, HttpServletRequest request) {
 		// 1. content영역
-		Map<String, Integer> param = new HashMap<>();
-		int limit = 10;
-		param.put("cPage", cPage);
-		param.put("limit", limit);
 		List<Map<String,Object>> lists=gatherService.getGatherList();
 		log.debug("lists = {}",lists);
 		model.addAttribute("lists",lists);
-		
-		// 2. pagebar영역
-		int totalContent = gatherService.getTotalContent();
-		log.debug("totalContent = {}", totalContent);
-		String url = request.getRequestURI(); // /spring/board/boardList.do
-		String pagebar = EatWithUtils.getPagebar(cPage, limit, totalContent, url);
-		model.addAttribute("pagebar", pagebar);
+		int page=1;
+		int pageSize=9;
+		model.addAttribute("page", page);
+		model.addAttribute("pageSize",pageSize);
 	}
 	
 	@GetMapping("/getNearClosure")
@@ -177,6 +170,37 @@ public class GatherController {
 		Integer resultChk=gatherService.chkGatherIn(param);
 		log.debug("resultChk={}",resultChk);
 		return ResponseEntity.ok(resultChk);
+	}
+	
+	@GetMapping("/checkLoca")
+	@ResponseBody
+	public ResponseEntity<?> checkLoca(@RequestParam("chk_location[]") List<String> checkLoca,Model model){
+		log.debug("chk_location={}",checkLoca);
+		CustomMap param=new CustomMap();
+		param.put("checkLoca", checkLoca);
+		log.debug("param={}",param);
+		List<Gather> resultL=gatherService.getGatherByLocation(param);
+		log.debug("resultL={}",resultL);
+		model.addAttribute(resultL);
+		return ResponseEntity.ok(resultL);
+	}
+	
+	@GetMapping("/checkFood")
+	@ResponseBody
+	public ResponseEntity<?> checkFood(@RequestParam("checkFood") int checkFood){
+		
+		log.debug("checkFood={}",checkFood);
+		int resultF=gatherService.checkFood(checkFood);
+		log.debug("resultFood={}",resultF);
+		
+		return ResponseEntity.ok(null);
+	}
+	@GetMapping("/gatherListNew")
+	@ResponseBody
+	public ResponseEntity<?> gatherMore(@RequestParam("startNum") int startNum){
+		List<Map<String,Object>> listMore=gatherService.gatherMore(startNum);
+		log.debug("listMore={}",listMore);
+		return ResponseEntity.ok(listMore);
 	}
 	
 	// 백승윤 START
