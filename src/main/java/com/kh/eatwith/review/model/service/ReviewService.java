@@ -19,4 +19,6 @@ public interface ReviewService {
 
 	Map<String, Object> writeReview(int gatherNo);
 
+	List<String> findName(int userNo);
+
 }

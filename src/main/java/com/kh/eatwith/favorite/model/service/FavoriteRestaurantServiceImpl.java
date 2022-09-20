@@ -18,4 +18,19 @@ public class FavoriteRestaurantServiceImpl implements FavoriteRestaurantService 
 	public int checkFav(Map<String, Object> param) {
 		return favoriteFoodDao.checkFav(param);
 	}
+	
+	@Override
+	public int cancelFav(Map<String, Object> param) {
+		return favoriteFoodDao.cancelFav(param);
+	}
+	
+	@Override
+	public int addFav(Map<String, Object> param) {
+		return favoriteFoodDao.addFav(param);
+	}
+	
+	@Override
+	public int checkFavCount(String no) {
+		return favoriteFoodDao.checkFavCount(no);
+	}
 }

@@ -8,5 +8,11 @@ public interface FavoriteRestaurantService {
 
 	int checkFav(Map<String, Object> param);
 
+	int cancelFav(Map<String, Object> param);
+
+	int addFav(Map<String, Object> param);
+
+	int checkFavCount(String no);
+
 
 }
