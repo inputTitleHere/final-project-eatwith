@@ -122,15 +122,11 @@ public class GatherController {
 	}
 	
 	@GetMapping("/gatherList")
-	public void gatherList(@RequestParam(defaultValue="1") int cPage,Model model, HttpServletRequest request) {
+	public void gatherList(Model model, HttpServletRequest request) {
 		// 1. content영역
 		List<Map<String,Object>> lists=gatherService.getGatherList();
 		log.debug("lists = {}",lists);
 		model.addAttribute("lists",lists);
-		int page=1;
-		int pageSize=9;
-		model.addAttribute("page", page);
-		model.addAttribute("pageSize",pageSize);
 	}
 	
 	@GetMapping("/getNearClosure")
@@ -228,7 +224,6 @@ public class GatherController {
 		log.debug("checkFood={}",checkFood);
 		int resultF=gatherService.checkFood(checkFood);
 		log.debug("resultFood={}",resultF);
-		
 		return ResponseEntity.ok(null);
 	}
 	@GetMapping("/gatherListNew")

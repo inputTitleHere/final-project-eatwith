@@ -258,7 +258,7 @@ div#type, div#locaName{
 					 	<div id="name">${gather.name}</div>
 					 	<div id="type">${gather.type} | ${gather.locaName}</div>
 					 	<div id="meetDate">${gather.meetDate}</div>
-					 	<div><span id="nowCount"></span>/<span id="totalCount">${gather.count+1}</span></div>
+					 	<div><span id="nowCount">${gather.nowcount}</span>/<span id="totalCount">${gather.count+1}</span></div>
 					 </div>
 					 </c:forEach>
 				</c:if>
@@ -297,7 +297,7 @@ div#type, div#locaName{
 			                    addListHtml += `<div id="name">`+ data[i].name + `</div>`;
 			                    addListHtml += `<div id="type">`+ data[i].type + `</div>`;
 			                    addListHtml += `<div id="meetDate">`+ data[i].meetDate + `</div>`;
-			                    addListHtml += `<div><span id="nowCount"></span>/`+`<span id="totalCount">`+(data[i].count+1)+`<span></div>`;
+			                    addListHtml += `<div><span id="nowCount">`+data[i].nowcount+`</span>/`+`<span id="totalCount">`+(data[i].count+1)+`<span></div>`;
 			                    addListHtml += `</div>`;}
 			                if(data.length<=8){
 			                	document.querySelector('#moreBtn').style.display="none";

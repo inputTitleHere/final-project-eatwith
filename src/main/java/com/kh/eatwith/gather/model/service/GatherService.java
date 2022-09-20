@@ -46,6 +46,6 @@ public interface GatherService {
 
 	List<Gather> getGatherByLocation(CustomMap param);
 
-	List<Map<String, Object>> gatherMore(int page);
+	List<Map<String, Object>> gatherMore(int startNum);
 
 }
