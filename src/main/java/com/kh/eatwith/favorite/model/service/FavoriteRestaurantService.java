@@ -10,6 +10,12 @@ public interface FavoriteRestaurantService {
 	int checkFav(Map<String, Object> param);
 
 	List<Integer> getUsersByRestaurantNo(String restaurantNo);
+	
+	int cancelFav(Map<String, Object> param);
+
+	int addFav(Map<String, Object> param);
+
+	int checkFavCount(String no);
 
 
 }

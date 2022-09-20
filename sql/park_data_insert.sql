@@ -1,5 +1,5 @@
 select * from member;
-select * from restaurant where no='3010000-101-2017-00400';
+select * from restaurant where name='할머니가래 떡볶이';
 select * from district;
 select * from food_type;
 select * from review where restaurant_no ='3010000-101-2017-00400';
@@ -7,7 +7,7 @@ select * from review_image;
 select * from food_type;
 select * from favorite_restaurant;
 select f.type from restaurant r left join food_type f on r.food_code = f.code where r.no='3020000-101-2018-00337';
-
+select * from gather where restaurant_no = '3150000-101-2001-09860';
 select * from favorite_restaurant where restaurant_no = '3010000-101-2017-00400';
 --insert into gather values(seq_gather_no.nextval,'3110000-101-2022-00001','2인3메뉴 조질사람',1,to_date('2022-09-11 12:30','YYYY-MM-DD hh24:mi'),'999','9876543','여의도에서 일하는 30대 남성입니다.편하게 먹고가요',149,null,null,'M');
 -- abcd : 143 (1975)/ qwerty:151(1984) / park :148(1993)
@@ -58,4 +58,29 @@ insert into member_gather values(148, 43, sysdate);
 insert into member_gather values(151, 42, sysdate);
 insert into member_gather values(151, 41, sysdate);
 
-select * from member_gather;
+-- select * from review where restaurant_no ='3010000-101-2017-00400'; : user_no 보유
+-- select * from member; : no(user_no) 및 name 보유
+select * from review where restaurant_no='3010000-101-2017-00400';
+select no, name, id from member order by no asc;
+select * from (select * from review r join member m on r.user_no = m.no) where restaurant_no ='3010000-101-2017-00400';
+select
+    r.*,
+    (select name from member where no = r.user_no) as writer,
+    rest.name as restaurant_name,
+    rest.dong as restaurant_dong,
+    ri.no as review_image_no,
+    ri.restaurant_no as restno,
+    ri.review_no as revno,
+    ri.image_name as image_name
+from
+    review r join restaurant rest on r.restaurant_no = rest.no left join review_image ri on r.no=ri.review_no
+where
+    rest.no='3010000-101-2017-00400';
+
+select * from (select r.*, m.name as writer from review r join member m on r.user_no = m.no) where restaurant_no = '3010000-101-2017-00400';
+select * from gather where no = 61;
+select * from member_gather where gather_no = 61;
+select * from review;
+select count(*) from favorite_restaurant where restaurant_no = '3010000-101-2017-00400';
+insert into favorite_restaurant values (148,'3010000-101-2017-00400');
+delete from favorite_restaurant where user_no = 148 and restaurant_no = '3010000-101-2017-00400';

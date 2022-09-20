@@ -23,4 +23,19 @@ public class FavoriteRestaurantServiceImpl implements FavoriteRestaurantService 
 	public List<Integer> getUsersByRestaurantNo(String restaurantNo) {
 		return favoriteRestaurantDao.getUsersByRestaurantNo(restaurantNo);
 	}
+	
+	@Override
+	public int cancelFav(Map<String, Object> param) {
+		return favoriteRestaurantDao.cancelFav(param);
+	}
+	
+	@Override
+	public int addFav(Map<String, Object> param) {
+		return favoriteRestaurantDao.addFav(param);
+	}
+	
+	@Override
+	public int checkFavCount(String no) {
+		return favoriteRestaurantDao.checkFavCount(no);
+	}
 }

@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.kh.eatwith.common.CustomMap;
@@ -30,4 +31,6 @@ public interface MemberService {
 	int removeFav(Map<String, Object> params);
 
 	int updatePassword(CustomMap param);
+	
+	String selectOneNameByNo(int userNo);
 }

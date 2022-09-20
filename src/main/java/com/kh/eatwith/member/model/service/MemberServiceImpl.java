@@ -68,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public Member selectOneByNo(int no) {
 		return memberDao.selectOneByNo(no);
 	}
@@ -98,4 +99,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
+=======
+	public String selectOneNameByNo(int userNo) {
+		return memberDao.selectOneNameByNo(userNo);
+	}
+>>>>>>> branch 'master' of https://github.com/inputTitleHere/final-project-eatwith.git
 }
