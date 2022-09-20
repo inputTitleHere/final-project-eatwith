@@ -225,7 +225,7 @@ div#type, div#locaName{
     	                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
 		                    addListHtml += `<div id="type"><span id="seperate">`+ loca[i].type+`</span><span id="seperate2">`+ loca[i].locaname+`</span></div>`;
     	                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
-    	                    addListHtml += `<div id="count"><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
+		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+loca[i].nowcount+`</span> / `+`<span id="totalCount">`+(loca[i].count+1)+`<span> )</div>`;
     	                    addListHtml += `</div>`;
         				}
 	                    list.innerHTML+=addListHtml;
@@ -285,7 +285,7 @@ div#type, div#locaName{
 	                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
 	                    addListHtml += `<div id="type"><span id="seperate">`+ loca[i].type+`</span><span id="seperate2">`+ loca[i].locaname+`</span></div>`;
 	                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
-	                    addListHtml += `<div id="count"><span id="nowCount">`+loca[i].nowcount+`</span>/`+`<span id="totalCount">`+(loca[i].count+1)+`<span></div>`;
+	                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+loca[i].nowcount+`</span> / `+`<span id="totalCount">`+(loca[i].count+1)+`<span> )</div>`;
 	                    addListHtml += `</div>`;
     					}
 	                    list.innerHTML+=addListHtml;
