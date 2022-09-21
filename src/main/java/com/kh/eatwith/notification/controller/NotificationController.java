@@ -38,7 +38,7 @@ public class NotificationController {
 		log.debug("MemberNo :{}",no);
 		
 		List<Notification> notifications = notificationService.getNotificationsByUserNo(no);
-		
+		log.debug("notifications = {}",notifications);
 		return ResponseEntity.ok(notifications);
 	}
 	
