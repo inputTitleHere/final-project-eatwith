@@ -234,6 +234,21 @@ public class GatherController {
 		return ResponseEntity.ok(listMore);
 	}
 	
+	@GetMapping("/checkLatest")
+	@ResponseBody
+	public ResponseEntity<?> checkLatest(){
+		List<Map<String,Object>> LatestList=gatherService.getLatestList();
+		log.debug("LatestList={}",LatestList);
+		return ResponseEntity.ok(LatestList);
+	}
+	
+	@GetMapping("/checkNewest")
+	@ResponseBody
+	public ResponseEntity<?> checkNewest(){
+		List<Map<String,Object>> NewestList=gatherService.getGatherList();
+		log.debug("NewestList={}",NewestList);
+		return ResponseEntity.ok(NewestList);
+	}
 	// 백승윤 START
 	@GetMapping("/getNewestGatherings")
 	@ResponseBody

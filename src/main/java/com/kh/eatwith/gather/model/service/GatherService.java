@@ -48,4 +48,6 @@ public interface GatherService {
 
 	List<Map<String, Object>> gatherMore(int startNum);
 
+	List<Map<String, Object>> getLatestList();
+
 }

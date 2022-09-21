@@ -127,7 +127,7 @@ aside {
 div#type, div#locaName{
 	display:flex;
 }
-#moreBtn{
+#moreBtn,#moreLBtn{
 	background-color: #e3e3e3;
 	width:-webkit-fill-available;
     height: 36px;
@@ -310,11 +310,93 @@ div#type, div#locaName{
 			</script>
 			
 			<h3>모임 정렬</h3>
-			<select name="see" id="seeSelect">
-				<option value="">보기 설정</option>
-				<option value="최신순">최신순 보기</option>
-				<option value="마감임박순">마감임박순 보기</option>
+			<select name="see" id="seeSelect" onchange="changeSelect()">
+				<option value="all">전체보기</option>
+				<option value="newest">등록최신순 보기</option>
+				<option value="latest">마감임박순 보기</option>
 			</select>
+			<script>
+				function changeSelect(){
+					const list = document.querySelector('.gather-items');
+				    var addListHtml = ""; 
+					var selectVal=document.getElementById('seeSelect').value;
+					console.log(selectVal);
+					if(selectVal=='newest'||selectVal=='all'){
+						console.log('최신순')
+						$.ajax({
+	    				url:"${pageContext.request.contextPath}/gather/checkNewest",
+	    				method:"GET",
+	    				data:{
+	    				},
+    					success(loca){
+	    					console.log(loca);
+	    					list.innerHTML=``;
+	    					for(var i=0;i<9;i++){
+			                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
+		                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
+		                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
+		                    addListHtml += `<div id="type"><span id="seperate">`+ loca[i].type+`</span><span id="seperate2">`+ loca[i].locaname+`</span></div>`;
+		                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
+		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+loca[i].nowcount+`</span> / `+`<span id="totalCount">`+(loca[i].count+1)+`<span> )</div>`;
+		                    addListHtml += `</div>`;
+	    					}
+		                    list.innerHTML+=addListHtml;
+		                	document.querySelector('#noMore').innerHTML="";
+		                	document.querySelector('#moreBtn').style.display="block";
+		                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+		                    	tr.addEventListener('click', (e) => {
+		                    		// console.log(e.target); // td
+		                    		const tr = e.target.parentElement;
+		                    		const no = tr.dataset.no;
+		                    		if(no){
+		                    			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+		                    		}
+		                    	});     	
+		                    });
+		                    
+	    				},
+	    				error:console.log
+	    			})
+	    			console.log('list.length '+list.length);
+					}
+					if(selectVal=='latest'){
+						console.log('마감임박순')
+					$.ajax({
+	    				url:"${pageContext.request.contextPath}/gather/checkLatest",
+	    				method:"GET",
+	    				data:{
+	    				},
+    					success(loca){
+	    					console.log(loca);
+	    					list.innerHTML=``;
+	    					for(var i=0;i<loca.length;i++){
+			                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
+		                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
+		                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
+		                    addListHtml += `<div id="type"><span id="seperate">`+ loca[i].type+`</span><span id="seperate2">`+ loca[i].locaname+`</span></div>`;
+		                    addListHtml += `<div id="meetDate">`+ loca[i].meetDate + `</div>`;
+		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+loca[i].nowcount+`</span> / `+`<span id="totalCount">`+(loca[i].count+1)+`<span> )</div>`;
+		                    addListHtml += `</div>`;
+	    					}
+		                    list.innerHTML+=addListHtml;
+		                	document.querySelector('#noMore').innerHTML="더이상 모임이 없습니다.";
+		                	document.querySelector('#moreBtn').style.display="none";
+		                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+		                    	tr.addEventListener('click', (e) => {
+		                    		// console.log(e.target); // td
+		                    		const tr = e.target.parentElement;
+		                    		const no = tr.dataset.no;
+		                    		if(no){
+		                    			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+		                    		}
+		                    	});     	
+		                    });
+	    				},
+	    				error:console.log
+	    			})
+					}
+				}
+			</script>
 		</aside>
 		<section id="content">
 			<sec:authorize access="isAuthenticated()">
@@ -335,7 +417,7 @@ div#type, div#locaName{
 					 <div class="each-items" data-no="${gather.no}" >
 					 	<div id="title">${gather.title}</div>
 					 	<div id="name">${gather.name}</div>
-					 	<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaName}</span></div>
+					 	<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaname}</span></div>
 					 	<div id="meetDate">${gather.meetDate}</div>
 					 	<div id="count">모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
 					 </div>
@@ -347,9 +429,10 @@ div#type, div#locaName{
 			<div class="moreZone">
 				<div id="noMore"></div>
 				<button type="button" id="moreBtn" onclick="more()" display="block">더보기</button>
+				<button type="button" id="moreLBtn" onclick="moreLatest()">더보기</button>
 			</div>
 			<script>
-	    
+	    	
 
 			</script>
 			</c:if>
@@ -357,6 +440,7 @@ div#type, div#locaName{
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>
+		document.querySelector('#moreLBtn').style.display="none";
         function selectAll(selectAll){
             const checkboxes = document.getElementsByName('location');
             checkboxes.forEach((checkbox)=>{

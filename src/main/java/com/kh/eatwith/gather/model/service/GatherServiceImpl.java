@@ -110,5 +110,8 @@ public class GatherServiceImpl implements GatherService{
 	public List<Map<String, Object>> gatherMore(int page) {
 		return gatherDao.gatherMore(page);
 	}
-	
+	@Override
+	public List<Map<String, Object>> getLatestList() {
+		return gatherDao.getLatestList();
+	}
 }
