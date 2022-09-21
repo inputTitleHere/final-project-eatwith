@@ -203,7 +203,10 @@ td{
                         <br><br><br>
                         <sec:authorize access="isAuthenticated()">
                     	<sec:authentication property="principal" var="loginMember"/>
-                        <button type="button" id="inChat">모임 채팅방 입장하기</button><br>
+                        <button type="button" id="inChat" onclick="goChat()">모임 채팅방 입장하기</button><br>
+                        <form action="<%=request.getContextPath() %>/chat/chat?no+${gather.no}" method="GET" name="goChatFrm">
+                        	<input type="hidden" name="gatherNo" value="${gather.no}">
+                        </form>
                         
                         <button type="button" id="writeReview"
                         onclick="writeReview()">리뷰 작성하러 가기</button>
@@ -215,6 +218,10 @@ td{
                     </td>
                 </tr>
                 <script>
+                	const goChat=()=>{
+                		document.goChatFrm.submit();
+                	}
+                
                 console.log(${gather.no});
                 	const writeReview=()=>{
                 		document.writeReviewFrm.submit();

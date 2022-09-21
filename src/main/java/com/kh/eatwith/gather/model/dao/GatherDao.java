@@ -72,6 +72,14 @@ public interface GatherDao {
 
 	List<CustomMap> getNewestGatherings(Map<String, Object> params);
 
+	List<Gather> checkFood(int checkFood);
+
+	List<Map<String, Object>> getGatherByLocation(CustomMap param);
+
+	List<Map<String, Object>> gatherMore(int page);
+
+	List<Map<String, Object>> getLatestList();
+
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 
 }

@@ -42,4 +42,12 @@ public interface GatherService {
 
 	List<CustomMap> getNewestGatherings(Map<String, Object> params);
 
+	List<Gather> checkFood(int checkFood);
+
+	List<Map<String, Object>> getGatherByLocation(CustomMap param);
+
+	List<Map<String, Object>> gatherMore(int startNum);
+
+	List<Map<String, Object>> getLatestList();
+
 }
