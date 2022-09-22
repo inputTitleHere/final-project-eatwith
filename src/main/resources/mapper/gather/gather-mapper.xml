@@ -33,14 +33,17 @@
 
 
 	<select id="getGatherList" resultType="CustomMap">
-	  	select 
-	        g.no,g.restaurant_no,r.name,g.title,g.count,g.meet_date,g.food_code,f.type,g.district_code,d.name as loca_name,g.content,g.user_no,g.age_restriction_top,g.age_restriction_bottom,g.gender_restriction
-		from
-	        gather g join district d on g.district_code=d.code
-	        left join food_type f on g.food_code=f.code
-	        left join (select no,name from restaurant) r on g.restaurant_no=r.no
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as nowCount,
+	    (select type from food_type f where g.food_code = f.code) as type,
+	    (select name from district d where g.district_code = d.code) as locaName,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as name
+		from 
+	    (select * from gather order by no desc) g
 		order by g.no desc
 	</select>
+	
 	<select id="getOneGather" resultType="CustomMap">
 	select 
         g.no,g.restaurant_no,r.name,g.title,g.count,g.meet_date,g.food_code,f.type,g.district_code,d.name as loca_name,g.content,g.user_no,g.age_restriction_top,g.age_restriction_bottom,g.gender_restriction
@@ -65,6 +68,55 @@
 		where  rownum <![CDATA[<=]]> ${no}
 	</select>
 	
+	<select id="getGatherByLocation" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as nowCount,
+	    (select type from food_type f where g.food_code = f.code) as type,
+	    (select name from district d where g.district_code = d.code) as locaName,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as name
+		from 
+	    (select * from gather order by no desc) g
+		where district_code in 
+		<foreach collection="checkloca" item="code" separator="," open="(" close=")">
+			#{code}
+		</foreach>
+	</select>
 	
+	<select id="checkFood" resultType="CustomMap">
+			select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as nowCount,
+	    (select type from food_type f where g.food_code = f.code) as type,
+	    (select name from district d where g.district_code = d.code) as locaName,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as name
+		from 
+	    (select * from gather order by no desc) g
+	    where g.food_code=#{checkFood}
+	</select>
 	
+	<select id="gatherMore" resultType="CustomMap">
+        select * from(
+	  	select 
+	        g.no,g.restaurant_no,r.name,g.title,g.count,g.meet_date,g.food_code,f.type,g.district_code,d.name as loca_name,g.content,g.user_no,g.age_restriction_top,g.age_restriction_bottom,g.gender_restriction,
+                (select count(*) from member_gather where gather_no=g.no) as nowCount
+		from
+	        gather g join district d on g.district_code=d.code
+	        left join food_type f on g.food_code=f.code
+	        left join (select no,name from restaurant) r on g.restaurant_no=r.no
+		order by g.no desc
+                )
+        OFFSET #{page} ROWS FETCH FIRST 9 ROWS ONLY
+	</select>
+	<select id="getLatestList" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as nowCount,
+	    (select type from food_type f where g.food_code = f.code) as type,
+	    (select name from district d where g.district_code = d.code) as locaName,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as name
+		from 
+	    (select * from gather where meet_date>(sysdate+9/24)) g
+		order by meet_date asc
+	</select>
 </mapper>
