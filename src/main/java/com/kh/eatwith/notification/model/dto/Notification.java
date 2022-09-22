@@ -14,9 +14,12 @@ import lombok.NoArgsConstructor;
 public class Notification {
 	long no; // long을 사용하겠다.
 	int userNo;
+	String title;
 	String content;
 	LocalDate sentAt;
 	LocalDate readAt;
 	LocalDate DeletedAt; // 이거 안쓰고 그냥 날리겠다. 
-	
+	int gatherNo;
+	String restaurantNo;
+	NotificationType type;
 }
