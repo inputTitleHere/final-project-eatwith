@@ -62,10 +62,28 @@ hr {
 #info1 #loadInfoFrm section {
 	border-spacing: 20px;
 }
-.inner-star::before{color: #FF9600;}
-.outer-star {position: relative;display: inline-block;color: #CCCCCC;}
-.inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
-.outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
+.inner-star::before{
+	color: #FF9600;
+}
+.outer-star {
+	position: relative;
+	display: inline-block;
+	color: #CCCCCC;
+}
+.inner-star {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.outer-star::before, .inner-star::before {
+	content: '\f005 \f005 \f005 \f005 \f005';
+	font-family: 'Font Awesome 5 free';
+	font-weight: 900;
+}
+
 </style>
 </head>
 <body>
@@ -168,6 +186,9 @@ hr {
 						<c:if test="${reviews.size() ne '0'}">
 							<c:out value="${reviews.size()}명의 방문자 리뷰"/><br />
 							<strong><c:out value="${totalAvg}점"/></strong>
+							<%-- <c:out value="${}" escapeXml="false"> 
+							
+							</c:out>--%>
 							<div class='RatingStar'>
 						        <div class='RatingScore'>
 						            <div class='outer-star'><div class='inner-star'></div></div>
@@ -220,43 +241,48 @@ hr {
 	<br />
 	<span></span>
 	<br />
+	<%@ include file="/WEB-INF/views/restaurant/map.jsp" %>
 	<section id="info2">
 		<div id="lastDiv">
 			<div>
-				<p id="gather" style="border-bottom: 1px solid gray;">이 가게의 모임</p>
+				<p id="gather" style="border-bottom: 1px solid gray; margin-bottom: 10px;">이 가게의 모임</p>
 			</div>
-			<c:forEach var="gathers" items="${gathers}">
-				<div style="background-color: #F1F1F1; margin: 15px; display: flex; width: 25%; white-space: normal;">
-					<c:out value="${gathers.title}" /><br />
-					<c:out value="${restaurant.name}" /><br />
-					<c:out value="${foodType.type}" /><br />
-					<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-					<fmt:formatDate value="${meetTime}" pattern="MM월dd일 HH:mm"/><br />
-					<c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /><br />
-					
-					<c:if test="${gathers.ageRestrictionTop eq '0'}">
-						<c:out value="누구나 참여 가능합니다." /><br />
-					</c:if>
-					<c:if test="${gathers.ageRestrictionTop ne '0'}">
-						<c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/><br />
-					</c:if>
-					
-					<c:choose>
-						<c:when test="${gathers.genderRestriction eq 'M' }">
-							<c:out value="성별제한 : 남성만"/>
-						</c:when>
+			<div style="display: flex;">
+				<c:forEach var="gathers" items="${gathers}">
+					<div style="background-color: #F1F1F1; margin: 15px; display: flex; width: 25%; white-space: normal;">
+						<c:out value="${gathers.title}" /><br />
+						<c:out value="${restaurant.name}" /><br />
+						<c:out value="${foodType.type}" /><br />
+						<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+						<fmt:formatDate value="${meetTime}" pattern="MM월dd일 HH:mm"/><br />
+						<c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /><br />
 						
-						<c:when test="${gathers.genderRestriction eq 'F' }">
-							<c:out value="성별제한 : 여성만"/>
-						</c:when>
+						<c:if test="${gathers.ageRestrictionTop eq '0'}">
+							<c:out value="누구나 참여 가능합니다." /><br />
+						</c:if>
+						<c:if test="${gathers.ageRestrictionTop ne '0'}">
+							<c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/><br />
+						</c:if>
 						
-						<c:otherwise>
-							<c:out value="성별제한 : 남녀무관" /><br />
-						</c:otherwise>
-					</c:choose>
-				
-				</div>
-			</c:forEach>
+						<c:choose>
+							<c:when test="${gathers.genderRestriction eq 'M' }">
+								<c:out value="성별제한 : 남성만"/>
+							</c:when>
+							
+							<c:when test="${gathers.genderRestriction eq 'F' }">
+								<c:out value="성별제한 : 여성만"/>
+							</c:when>
+							
+							<c:otherwise>
+								<c:out value="성별제한 : 남녀무관" /><br />
+							</c:otherwise>
+						</c:choose>
+					
+					</div>
+				</c:forEach>
+			
+			</div>
+			
 		</div>
 	</section>
 	<div style="display: none;">
@@ -281,7 +307,7 @@ hr {
 	window.addEventListener('load', ()=> {
 		const userNo = document.querySelector("#hiddenMemberNo").value;
 		const restaurantNo = '${restaurant.no}';
-		
+		rateIt();
 		$.ajax({
 			url:"${pageContext.request.contextPath}/restaurant/checkFaved",
 			method:"GET",
