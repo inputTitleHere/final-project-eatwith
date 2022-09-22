@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.favorite.model.dto.FavoriteRestaurant;
 
 @Mapper
@@ -27,6 +28,8 @@ public interface FavoriteRestaurantDao {
 
 	@Select("select count(*) from favorite_restaurant where restaurant_no = #{restaurantNo}")
 	int checkFavCount(String no);
+
+	List<CustomMap> getFavoriteRestaurant(int no);
 
 	
 }
