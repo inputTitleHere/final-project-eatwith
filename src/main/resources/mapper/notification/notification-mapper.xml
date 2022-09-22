@@ -5,9 +5,9 @@
 <mapper namespace="com.kh.eatwith.notification.model.dao.NotificationDao">
   
   <insert id="insertNotification">
-  	insert into notification(no,user_no,content,sent_at)
+  	insert into notification(no,user_no,content,sent_at,gather_no,restaurant_no,type,title)
   	<foreach collection="toSend" item="notification" separator="union all">
-  		select seq_notification_no.nextval, #{notification.userNo},#{notification.content},sysdate from dual
+  		select seq_notification_no.nextval, #{notification.userNo},#{notification.content},sysdate,#{notification.gatherNo},#{notification.restaurantNo},#{notification.type},#{notification.title} from dual
   	</foreach>
   </insert>
   

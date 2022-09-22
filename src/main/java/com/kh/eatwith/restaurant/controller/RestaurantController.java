@@ -2,8 +2,10 @@ package com.kh.eatwith.restaurant.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +83,6 @@ public class RestaurantController {
 		StringTokenizer stk1 = new StringTokenizer(restaurant.getWorkHours(), "\n");
 		String result1 = "";
 		List<String> whlist = new ArrayList<>();
-		
 		while(stk1.hasMoreTokens()) {
 			result1 = stk1.nextToken();
 			whlist.add(result1);

@@ -24,5 +24,13 @@ public class NotificationServiceImpl implements NotificationService {
 	public List<Notification> getNotificationsByUserNo(int no) {
 		return notificationDao.getNotificationsByUserNo(no);
 	}
+	@Override
+	public int updateRead(int no) {
+		return notificationDao.updateRead(no);
+	}
+	@Override
+	public int deleteNotification(int no) {
+		return notificationDao.deleteNotification(no);
+	}
 	
 }

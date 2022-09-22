@@ -116,8 +116,32 @@ select * from notification;
 select * from favorite_restaurant;
 select * from member;
 
+
+select * from restaurant where no in (select restaurant_no from favorite_restaurant where user_no=144);
+
+alter table notification add link_data varchar2(256);
+alter table notification add link_type varchar2(256);
+alter table notification modify gather_no number; -- 
+alter table notification drop column link_type;
+alter table notification rename column link_data to gather_no;
+alter table notification add type char(1);
+alter table notification add title char(1);
+alter table notification modify title varchar2(2000);
+alter table notification add constraint ck_notification_type check(type in ('W','N','J'));
+
+alter table notification add restaurant_no char(22);
+
 insert into notification values(seq_notification_no.nextval, 144, '테스팅 001',sysdate, null,null);
 insert into favorite_restaurant values(144,'3100000-101-2022-00087');
+update notification set gather_no=105  where 1=1;
+update notification set restaurant_no='3100000-101-2022-00087' where 1=1;
+update notification set deleted_at=null where 1=1;
+update notification set read_at=null where 1=1;
+commit;
+
+select * from gather order by no desc;
+delete from gather where no in (107, 106, 105);
+delete from notification where no=21;
 commit;
 
 --delete from favorite_district where no=161;
@@ -128,6 +152,11 @@ select * from authority;
 select * from member where id = 'zxcv';
 select * from review;
 select * from gather order by no desc;
+
+select * from gather where gender_restriction is null order by no desc;
+select * from gather where gender_restriction is not null order by no desc;
+
+
 select * from food_type;
 select * from district;
 select * from member_gather;
@@ -139,9 +168,18 @@ from
 where  rownum <5;
 
 
+select 
+    r.no,
+    (select name from district where code = r.district_code) as district_name,
+    (select type from food_type where code = r.food_code) as food_name,
+    r.name,
+    (select * from(select image_name from review_image where restaurant_no = r.no order by no desc) where rownum=1) as image
+from 
+    restaurant r 
+where 
+    no in (select restaurant_no from favorite_restaurant where user_no=144)	;
 
-
-
+--select * from review_image where restaurant_no = '3010000-101-2017-00021';
 
 
 

@@ -11,4 +11,8 @@ public interface NotificationService {
 
 	List<Notification> getNotificationsByUserNo(int no);
 
+	int updateRead(int no);
+
+	int deleteNotification(int no);
+
 }

@@ -67,14 +67,18 @@ public class MypageController {
 //		result.put("no", ((MemberSecurity)MemberObj).getNo());
 		
 		Member result = memberService.selectOneByNo(no);
-		if(result.getFavDistrict()==null) {
-			result.setFavDistrict(new String[0]);
+		if(result!=null){
+			if(result.getFavDistrict()==null) {
+				result.setFavDistrict(new String[0]);
+			}
+			if(result.getFavFoodType()==null) {
+				result.setFavFoodType(new String[0]);
+			}
+			result.setPassword("");
+		}else {
+			result = new Member();
 		}
-		if(result.getFavFoodType()==null) {
-			result.setFavFoodType(new String[0]);
-		}
-		result.setPassword("");
-		log.debug("@@Mypage Currmember : {}",result);
+		log.debug("@@Mypage Currmember : {}",result);			
 		
 //		response.addHeader("Access-Control-Allow-Origin", "*");
 		return ResponseEntity.ok(result);

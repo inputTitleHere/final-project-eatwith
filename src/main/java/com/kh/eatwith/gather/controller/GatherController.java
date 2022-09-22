@@ -1,6 +1,7 @@
 package com.kh.eatwith.gather.controller;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,7 @@ import com.kh.eatwith.gather.model.dto.MemberGather;
 import com.kh.eatwith.gather.model.service.GatherService;
 import com.kh.eatwith.member.model.dto.Member;
 import com.kh.eatwith.notification.model.dto.Notification;
+import com.kh.eatwith.notification.model.dto.NotificationType;
 import com.kh.eatwith.notification.model.service.NotificationService;
 import com.kh.eatwith.restaurant.model.dto.Restaurant;
 import com.kh.eatwith.restaurant.model.service.RestaurantService;
@@ -63,20 +65,30 @@ public class GatherController {
 	public String gatherEnroll(Gather gather, MemberGather memberGather, RedirectAttributes redirectAttr) {
 		log.debug("gather = {}",gather);
 		log.debug("memberGather ={}",memberGather);
-		int result=gatherService.gatherEnroll(gather);
+		int result=gatherService.gatherEnroll(gather); // selectkey으로 신규생셩 no를 받아왔음했음. -- 백승윤
 		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
 		
 		// 백승윤 2022/09/20 모임 등록시 가게 찜한 사람에게 알림 보내기
 		String restaurantNo = gather.getRestaurantNo();
 		Restaurant restaurant = restaurantService.selectOneRestaurant(restaurantNo); // 레스토랑 이름.
-		String content = String.format("찜한 가게 \"%s\"에서 만나는 모임 [%s]가 생성되었어요! 확인해봐요~!", restaurant.getName(), gather.getTitle()); // 알림 컨텐트
+		String title = String.format("찜한 가게 : \"%s\"에서 만나는 모임 [%s]가 생겼어요!", restaurant.getName(), gather.getTitle()); // 알림 컨텐트
+		String content  = String.format("[%s]에서 모이는 [%s] 모임이 생겼습니다!\n"
+				+ "모임은 %s에 진행됩니다.!\n"
+				+ "모임 상세에서 더 자세히 봐요!", restaurant.getName(), gather.getTitle(), gather.getMeetDate().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 E요일 a hh시 mm분")));
 		List<Integer> users = favoriteRestaurantService.getUsersByRestaurantNo(restaurantNo);
 		if(users.size()>0) {
 			log.debug("users:{}",users);
 			List<Notification> toSend = new ArrayList<Notification>();
 			log.debug("toSend:{}",toSend);
 			for(int no : users) {
-				Notification notification = Notification.builder().content(content).userNo(no).build();
+				Notification notification = Notification.builder()
+						.content(content)
+						.title(title)
+						.userNo(no)
+						.gatherNo(gather.getNo())
+						.restaurantNo(restaurantNo)
+						.type(NotificationType.N)
+						.build();
 				toSend.add(notification);
 			}
 			Map<String, Object> param = new HashMap<String, Object>();

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.favorite.model.dao.FavoriteRestaurantDao;
 import com.kh.eatwith.favorite.model.dto.FavoriteRestaurant;
 
@@ -38,4 +39,9 @@ public class FavoriteRestaurantServiceImpl implements FavoriteRestaurantService 
 	public int checkFavCount(String no) {
 		return favoriteRestaurantDao.checkFavCount(no);
 	}
+	@Override
+	public List<CustomMap> getFavoriteRestaurant(int no) {
+		return favoriteRestaurantDao.getFavoriteRestaurant(no);
+	}
+	
 }
