@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +80,13 @@ public interface GatherDao {
 	List<Map<String, Object>> gatherMore(int page);
 
 	List<Map<String, Object>> getLatestList();
+	
+	List<Map<String, Object>> checkLeader(int gatherNo);
+	@Update("update member_gather set checked='1' where user_no=#{userNo} and gather_no=#{gNo}")
+	int checkLeaderIn(Map<String, Object> param);
+	
+	@Update("update member_gather set checked='0' where user_no=#{userNo} and gather_no=#{gNo}")
+	int checkLeaderOut(Map<String, Object> param);
 
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 

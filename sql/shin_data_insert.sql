@@ -31,4 +31,22 @@ from gather g
 where g.gender_restriction=null or g.gender_restriction=gender
 ) 
 from member m;
-select count(*) as count from member_gather where gather_no=103 and user_no=151;
+  ALTER SESSION SET TIME_ZONE = 'Asia/Seoul';
+
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as nowCount,
+	    (select type from food_type f where g.food_code = f.code) as type,
+	    (select name from district d where g.district_code = d.code) as locaName,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as name
+		from 
+	    (select * from gather where meet_date>(sysdate+9/24)) g
+		order by meet_date asc;
+                
+select gender_restriction,
+case gender_restriction
+        when 'M' then 'M'
+        when 'F' then 'F'
+        else '제한없음'
+        end as gender
+from gather;

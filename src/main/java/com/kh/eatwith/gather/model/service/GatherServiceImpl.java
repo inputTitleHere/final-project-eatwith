@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -113,5 +114,17 @@ public class GatherServiceImpl implements GatherService{
 	@Override
 	public List<Map<String, Object>> getLatestList() {
 		return gatherDao.getLatestList();
+	}
+	@Override
+	public List<Map<String,Object>> checkLeader(int gatherNo) {
+		return gatherDao.checkLeader(gatherNo);
+	}
+	@Override
+	public int checkLeaderIn(Map<String, Object> param) {
+		return gatherDao.checkLeaderIn(param);
+	}
+	@Override
+	public int checkLeaderOut(Map<String, Object> param) {
+		return gatherDao.checkLeaderOut(param);
 	}
 }

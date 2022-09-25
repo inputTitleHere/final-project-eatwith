@@ -203,11 +203,12 @@ td{
                         <br><br><br>
                         <sec:authorize access="isAuthenticated()">
                     	<sec:authentication property="principal" var="loginMember"/>
-                        <button type="button" id="inChat" onclick="goChat()">모임 채팅방 입장하기</button><br>
-                        <form action="<%=request.getContextPath() %>/chat/chat?no+${gather.no}" method="GET" name="goChatFrm">
+                    	<c:if test="${gather.userNo eq loginMember.no}">
+                        <button type="button" id="inChat" onclick="goCheck()">모임 인원체크하기</button><br>
+                        <form action="<%=request.getContextPath() %>/gather/checkLeader?no+${gather.no}" method="GET" name="goCheckFrm">
                         	<input type="hidden" name="gatherNo" value="${gather.no}">
                         </form>
-                        
+                        </c:if>
                         <button type="button" id="writeReview"
                         onclick="writeReview()">리뷰 작성하러 가기</button>
                         <form action="<%=request.getContextPath() %>/review/writeReview" 
@@ -218,8 +219,8 @@ td{
                     </td>
                 </tr>
                 <script>
-                	const goChat=()=>{
-                		document.goChatFrm.submit();
+                	const goCheck=()=>{
+                		document.goCheckFrm.submit();
                 	}
                 
                 console.log(${gather.no});

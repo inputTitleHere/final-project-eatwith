@@ -242,12 +242,48 @@ public class GatherController {
 		return ResponseEntity.ok(LatestList);
 	}
 	
+	@GetMapping("/checkLeader")
+	public void checkLeader(@RequestParam("gatherNo") int gatherNo,Model model) {
+		log.debug("gatherNo={}",gatherNo);
+		model.addAttribute("gatherNo", gatherNo);
+		List<Map<String,Object>> check=gatherService.checkLeader(gatherNo);
+		log.debug("check={}",check);
+		model.addAttribute("check",check);
+	}
+	
 	@GetMapping("/checkNewest")
 	@ResponseBody
 	public ResponseEntity<?> checkNewest(){
 		List<Map<String,Object>> NewestList=gatherService.getGatherList();
 		log.debug("NewestList={}",NewestList);
 		return ResponseEntity.ok(NewestList);
+	}
+	
+	@PostMapping("/checkLeaderIn")//모임 조장이 직접 참여했는지 확인하는 코드
+	@ResponseBody
+	public ResponseEntity<?> checkLeaderIn(@RequestParam("userNo") int userNo,@RequestParam("gNo") int gNo){
+		log.debug("userNo",userNo);
+		log.debug("gNo",gNo);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("gNo",gNo);
+		param.put("userNo", userNo);
+		int inresult=gatherService.checkLeaderIn(param);
+		log.debug("inresult={}",inresult);
+		
+		return ResponseEntity.ok(inresult);
+	}
+	@PostMapping("/checkLeaderOut")//모임 조장이 직접 참여했는지 확인하는 코드
+	@ResponseBody
+	public ResponseEntity<?> checkLeaderOut(@RequestParam("userNo") int userNo,@RequestParam("gNo") int gNo){
+		log.debug("userNo",userNo);
+		log.debug("gNo",gNo);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("gNo",gNo);
+		param.put("userNo", userNo);
+		int outresult=gatherService.checkLeaderOut(param);
+		log.debug("outresult={}",outresult);
+		
+		return ResponseEntity.ok(outresult);
 	}
 	// 백승윤 START
 	@GetMapping("/getNewestGatherings")
