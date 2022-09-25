@@ -123,14 +123,23 @@ public class GatherController {
 		if(isAuthenticated()) {
 			String loginId=principal.getName();
 			log.debug("loginId={}",loginId);
-			Member member=gatherService.getMemberNo(loginId);
+			Member member=gatherService.getMemberNo(loginId);//모임참가여부가져오기
 			log.debug("member={}",member);
 			model.addAttribute("member",member);
+			
+			int gatherNo=no;
+			Map<String,Object> param =new HashMap<String, Object>();
+			param.put("gatherNo",gatherNo);
+			param.put("loginId", loginId);
+			Integer checked=gatherService.checkAttendance(param);
+			log.debug("checked={}",checked);
+			model.addAttribute("checked",checked);
 		}
 		
 		int count=gatherService.countGatherMem(no);
 		log.debug("count={}",count);
 		model.addAttribute("count",count);
+		
 	}
 	
 	@GetMapping("/gatherList")
@@ -254,12 +263,48 @@ public class GatherController {
 		return ResponseEntity.ok(LatestList);
 	}
 	
+	@GetMapping("/checkLeader")
+	public void checkLeader(@RequestParam("gatherNo") int gatherNo,Model model) {
+		log.debug("gatherNo={}",gatherNo);
+		model.addAttribute("gatherNo", gatherNo);
+		List<Map<String,Object>> check=gatherService.checkLeader(gatherNo);
+		log.debug("check={}",check);
+		model.addAttribute("check",check);
+	}
+	
 	@GetMapping("/checkNewest")
 	@ResponseBody
 	public ResponseEntity<?> checkNewest(){
 		List<Map<String,Object>> NewestList=gatherService.getGatherList();
 		log.debug("NewestList={}",NewestList);
 		return ResponseEntity.ok(NewestList);
+	}
+	
+	@PostMapping("/checkLeaderIn")//모임 조장이 직접 참여했는지 확인하는 코드
+	@ResponseBody
+	public ResponseEntity<?> checkLeaderIn(@RequestParam("userNo") int userNo,@RequestParam("gNo") int gNo){
+		log.debug("userNo",userNo);
+		log.debug("gNo",gNo);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("gNo",gNo);
+		param.put("userNo", userNo);
+		int inresult=gatherService.checkLeaderIn(param);
+		log.debug("inresult={}",inresult);
+		
+		return ResponseEntity.ok(inresult);
+	}
+	@PostMapping("/checkLeaderOut")//모임 조장이 직접 참여했는지 확인하는 코드
+	@ResponseBody
+	public ResponseEntity<?> checkLeaderOut(@RequestParam("userNo") int userNo,@RequestParam("gNo") int gNo){
+		log.debug("userNo",userNo);
+		log.debug("gNo",gNo);
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("gNo",gNo);
+		param.put("userNo", userNo);
+		int outresult=gatherService.checkLeaderOut(param);
+		log.debug("outresult={}",outresult);
+		
+		return ResponseEntity.ok(outresult);
 	}
 	// 백승윤 START
 	@GetMapping("/getNewestGatherings")
