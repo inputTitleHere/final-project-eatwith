@@ -209,12 +209,14 @@ td{
                         	<input type="hidden" name="gatherNo" value="${gather.no}">
                         </form>
                         </c:if>
+                        <c:if test="${checked ne null}">
                         <button type="button" id="writeReview"
                         onclick="writeReview()">리뷰 작성하러 가기</button>
                         <form action="<%=request.getContextPath() %>/review/writeReview" 
                         method="POST" name="writeReviewFrm">
                         <input type="hidden" name="gatherNo" value="${gather.no}">
                         </form>
+                        </c:if>
                         </sec:authorize>
                     </td>
                 </tr>

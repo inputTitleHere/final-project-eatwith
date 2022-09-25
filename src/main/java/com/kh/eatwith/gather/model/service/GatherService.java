@@ -57,4 +57,6 @@ public interface GatherService {
 
 	int checkLeaderOut(Map<String, Object> param);
 
+	Integer checkAttendance(Map<String, Object> param);
+
 }

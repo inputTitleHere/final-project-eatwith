@@ -111,14 +111,23 @@ public class GatherController {
 		if(isAuthenticated()) {
 			String loginId=principal.getName();
 			log.debug("loginId={}",loginId);
-			Member member=gatherService.getMemberNo(loginId);
+			Member member=gatherService.getMemberNo(loginId);//모임참가여부가져오기
 			log.debug("member={}",member);
 			model.addAttribute("member",member);
+			
+			int gatherNo=no;
+			Map<String,Object> param =new HashMap<String, Object>();
+			param.put("gatherNo",gatherNo);
+			param.put("loginId", loginId);
+			Integer checked=gatherService.checkAttendance(param);
+			log.debug("checked={}",checked);
+			model.addAttribute("checked",checked);
 		}
 		
 		int count=gatherService.countGatherMem(no);
 		log.debug("count={}",count);
 		model.addAttribute("count",count);
+		
 	}
 	
 	@GetMapping("/gatherList")

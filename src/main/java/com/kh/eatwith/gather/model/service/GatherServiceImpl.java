@@ -127,4 +127,8 @@ public class GatherServiceImpl implements GatherService{
 	public int checkLeaderOut(Map<String, Object> param) {
 		return gatherDao.checkLeaderOut(param);
 	}
+	@Override
+	public Integer checkAttendance(Map<String, Object> param) {
+		return gatherDao.checkAttendance(param);
+	}
 }

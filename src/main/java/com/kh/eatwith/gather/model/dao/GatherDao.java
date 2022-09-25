@@ -88,6 +88,9 @@ public interface GatherDao {
 	@Update("update member_gather set checked='0' where user_no=#{userNo} and gather_no=#{gNo}")
 	int checkLeaderOut(Map<String, Object> param);
 
+	@Select("select * from member_gather where user_no=#{loginId} and gather_no=#{gatherNo} and checked='1' ")
+	Integer checkAttendance(Map<String, Object> param);
+
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 
 }
