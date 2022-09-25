@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
@@ -22,6 +23,12 @@ public interface GatherDao {
 	@Insert("insert all "
 			+ "into gather values(seq_gather_no.nextval,#{restaurantNo},#{title},#{count},#{meetDate},#{foodCode},#{districtCode},#{content},#{userNo},#{ageRestrictionTop},#{ageRestrictionBottom},#{genderRestriction})"
 			+ "into member_gather values(#{userNo},seq_gather_no.nextval,default) select*from dual")
+	@SelectKey(
+			statement = "select seq_gather_no.currval from dual", 
+			before = false, 
+			keyProperty = "no", 
+			resultType = int.class
+		)
 	int gatherEnroll(Gather gather);
 
 	@Select("select count(*) from gather")

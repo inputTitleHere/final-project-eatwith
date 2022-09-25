@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.eatwith.favorite.model.dao.FavoriteRestaurantDao">
+
+	<select id="getFavoriteRestaurant" resultType="CustomMap">
+		select 
+			r.no,
+			(select name from district where code = r.district_code) as district_name,
+			(select type from food_type where code = r.food_code) as food_name,
+			r.name,
+			(select * from(select image_name from review_image where restaurant_no = r.no order by no desc) where rownum=1) as image
+		from 
+			restaurant r 
+		where 
+			no in (select restaurant_no from favorite_restaurant where user_no=#{no})	
+	</select>
+
+</mapper>
