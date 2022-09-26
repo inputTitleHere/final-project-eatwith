@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,5 +59,13 @@ public interface GatherService {
 	int checkLeaderOut(Map<String, Object> param);
 
 	Integer checkAttendance(Map<String, Object> param);
+
+	Integer gatherEnd(int no);
+
+	List<Map<String, Object>> gatherAllList();
+
+	List<Map<String, Object>> gatherMoreAll(int startNum);
+
+	List<Map<String, Object>> gatherLatestMore(int startNum);
 
 }

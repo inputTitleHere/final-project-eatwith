@@ -1,6 +1,7 @@
 package com.kh.eatwith.gather.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,6 +141,10 @@ public class GatherController {
 		log.debug("count={}",count);
 		model.addAttribute("count",count);
 		
+
+		Integer endGather=gatherService.gatherEnd(no);
+		log.debug("endGather={}",endGather);
+		model.addAttribute("endGather", endGather);
 	}
 	
 	@GetMapping("/gatherList")
@@ -247,15 +252,30 @@ public class GatherController {
 		log.debug("resultFood={}",resultF);
 		return ResponseEntity.ok(resultF);
 	}
-	@GetMapping("/gatherListNew")
+	@GetMapping("/gatherListAll")
 	@ResponseBody
-	public ResponseEntity<?> gatherMore(@RequestParam("startNum") int startNum){
-		List<Map<String,Object>> listMore=gatherService.gatherMore(startNum);
+	public ResponseEntity<?> gatherListAllMore(@RequestParam("startNum") int startNum){
+		List<Map<String,Object>> listMore=gatherService.gatherMoreAll(startNum);
 		log.debug("listMore={}",listMore);
 		return ResponseEntity.ok(listMore);
 	}
 	
-	@GetMapping("/checkLatest")
+	@GetMapping("/gatherListNewest")
+	@ResponseBody
+	public ResponseEntity<?> gatherListNewestMore(@RequestParam("startNum") int startNum){
+		List<Map<String,Object>> listMore=gatherService.gatherMore(startNum);
+		log.debug("listMore={}",listMore);
+		return ResponseEntity.ok(listMore);
+	}
+	@GetMapping("/gatherListLatestMore")
+	@ResponseBody
+	public ResponseEntity<?> gatherListLatestMore(@RequestParam("startNum") int startNum){
+		List<Map<String,Object>> listMore=gatherService.gatherLatestMore(startNum);
+		log.debug("listMore={}",listMore);
+		return ResponseEntity.ok(listMore);
+	}
+	
+	@GetMapping("/getLatestList")
 	@ResponseBody
 	public ResponseEntity<?> checkLatest(){
 		List<Map<String,Object>> LatestList=gatherService.getLatestList();
@@ -272,10 +292,10 @@ public class GatherController {
 		model.addAttribute("check",check);
 	}
 	
-	@GetMapping("/checkNewest")
+	@GetMapping("/gatherAllList")
 	@ResponseBody
 	public ResponseEntity<?> checkNewest(){
-		List<Map<String,Object>> NewestList=gatherService.getGatherList();
+		List<Map<String,Object>> NewestList=gatherService.gatherAllList();
 		log.debug("NewestList={}",NewestList);
 		return ResponseEntity.ok(NewestList);
 	}

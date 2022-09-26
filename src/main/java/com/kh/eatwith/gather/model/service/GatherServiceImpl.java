@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,5 +131,21 @@ public class GatherServiceImpl implements GatherService{
 	@Override
 	public Integer checkAttendance(Map<String, Object> param) {
 		return gatherDao.checkAttendance(param);
+	}
+	@Override
+	public Integer gatherEnd(int no) {
+		return gatherDao.gatherEnd(no);
+	}
+	@Override
+	public List<Map<String, Object>> gatherAllList() {
+		return gatherDao.gatherAllList();
+	}
+	@Override
+	public List<Map<String, Object>> gatherMoreAll(int startNum) {
+		return gatherDao.gatherMoreAll(startNum);
+	}
+	@Override
+	public List<Map<String, Object>> gatherLatestMore(int startNum) {
+		return gatherDao.gatherLatestMore(startNum);
 	}
 }
