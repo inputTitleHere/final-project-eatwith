@@ -25,7 +25,7 @@
 </head>
 <body bgcolor="#F0EBEC">
 	<div id="container">
-		<form name="gatherEnrollFrm" method="post"
+		<form class="form" name="gatherEnrollFrm" method="post"
 			action="${pageContext.request.contextPath}/gather/gatherEnroll">
 			<table>
 				<tbody>
@@ -187,12 +187,6 @@
 								※종교 포교, 다단계 활동 유도 / 무료 행사를 포함한 상업적 목적 / 데이트,연애목적의 글은<br>작성시
 								서비스 이용이 어려울 수 있습니다.
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td>
-							<div class="notice">※모임 생성시 500p의 포인트를 사용합니다.</div>
 						</td>
 					</tr>
 					<tr>

@@ -27,7 +27,7 @@
 </head>
 <body bgcolor="#F0EBEC">
 	<div id="container">
-		<form name="gatherUpdateFrm" method="post"
+		<form class="form" name="gatherUpdateFrm" method="post"
 			action="${pageContext.request.contextPath}/gather/gatherUpdate">
 			<table>
 				<tbody>

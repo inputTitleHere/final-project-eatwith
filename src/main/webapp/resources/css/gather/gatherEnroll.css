@@ -10,11 +10,12 @@
 	margin:auto;
 	padding:20px 100px;
 }
-form{
+.form{
     background-color: white;
     margin: 20px;
     padding: 30px;
-    
+	border:2px solid var(--indigo-blue);
+	border-radius:10px;
 }
 th{
     padding-right: 50px;
@@ -27,12 +28,14 @@ td{
 }
 input#title{
     width: 700px;
-    height: 30px;
+    height: 40px;
+    border-radius:10px;
 }
 #gatherContent{
     height: 200px;
     width: 700px;
-    font-size: 15px;
+/*     font-size: 16px; */
+    border-radius:10px;    
 }
 #counter{
     margin-left: 620px;
@@ -49,35 +52,46 @@ input#title{
     margin-right: 100px;
     width: 500px;
     height: 40px;
-    font-size: 20px;
+    font-size: 24px;
+	border-radius:10px; 
+	font-family:var(--short-font);  
 }
 #plus,#minus{
 	background-color: var(--yeon-pink);
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
 	border:0px;
 	font-size:24px;
+	border-radius:10px;
+  	font-family:var(--short-font);
+	font-weight:bold;
 }
 #countMember{
 	font-size:24px;
 	padding-left:20px;
 	padding-right:20px;
+	font-weight:bold;
 }
 #gatherMin,#gatherMax,#gatherTime{
     height: 30px;
+    border-radius:10px;
 }
 input#findStore{
-    height: 30px;
+    height: 40px;
     width:200px;
+    border-radius:10px;
 }
 .openBtn {
     margin-left: 5px;
     height: 27px;
-    border: 0;
+	border-radius:10px;
     background-color: #DC948A;
     color: white;
     padding: 5px 10px;
     cursor: pointer;
+    height:40px;
+    font-weight:bold;
+    
 }
 .modal {
     position: fixed;
@@ -156,7 +170,7 @@ input#findStore{
 	font-weight:bold;	
 }
 li{
-	list-style:none;
+/* 	list-style:none; */
 }
 #ageChk,#genderChk{
 	accent-color:var(--jjin-pink);

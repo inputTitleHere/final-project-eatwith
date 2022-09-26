@@ -28,15 +28,17 @@ h3{
 	left:0;
 	right:0;
 	margin:auto;
-	padding:100px;
+	padding:20px 100px 100px 100px;
 }
 aside {
+	border:2px solid var(--indigo-blue);
+	border-radius:10px;
 	width: 260px;
 	margin-left: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-right: 10px;
-	padding-bottom: 20px;
+ 	padding-bottom: 20px;
 	background-color: white;
 }
 .district-wrapper,.food-wrapper{
@@ -51,6 +53,8 @@ aside {
 	width:45%;
 }
 #content {
+	border:2px solid var(--indigo-blue);
+	border-radius:10px;
 	width: 720px;
 	background-color: white;
 	padding-bottom: 20px;
@@ -61,7 +65,10 @@ aside {
 	float: right;
 }
 #seeSelect {
-	height: 30px;
+	height: 40px;
+	font-size:16px;
+	border-radius:10px;
+	
 }
 #makeGather {
 	margin-left: 520px;
@@ -74,6 +81,7 @@ aside {
 	margin-bottom: 10px;
 	font-size:28px;
 	font-family:var(--short-font);
+	border-radius:10px;
 }
 #seeMore {
 	background-color: #e3e3e3;
@@ -123,6 +131,8 @@ aside {
 	font-size:16px;
 	display:block;
 	min-height:150px;
+	border-radius:10px;
+	border:2px solid var(--lavender-blue);
 }
 div#type, div#locaName{
 	display:flex;
@@ -130,10 +140,12 @@ div#type, div#locaName{
 #moreBtn,#moreLBtn,#moreABtn{
 	background-color: #e3e3e3;
 	width:-webkit-fill-available;
-    height: 36px;
+    height: 50px;
     border: 0px;
-    font-size: 20px;
+    font-size: 24px;
     margin:0 20px;
+    font-weight:bold;
+    border-radius:10px;
 }
 #noMore{
 	margin-left:290px;
@@ -440,9 +452,9 @@ div#type, div#locaName{
 			<c:if test="${lists.size() gt page*9}">
 			<div class="moreZone">
 				<div id="noMore"></div>
-				<button type="button" id="moreBtn" onclick="more()">등록최신순 - 더보기</button>
-				<button type="button" id="moreLBtn" onclick="moreLatest()">마감임박순 - 더보기</button>
-				<button type="button" id="moreABtn" onclick="moreAll()">전체보기 - 더보기</button>
+				<button type="button" id="moreBtn" onclick="more()"><img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25">&nbsp;더보기&nbsp;<img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25"></button>
+				<button type="button" id="moreLBtn" onclick="moreLatest()"><img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25">&nbsp;더보기&nbsp;<img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25"></button>
+				<button type="button" id="moreABtn" onclick="moreAll()"><img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25">&nbsp;더보기&nbsp;<img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25"></button>
 			</div>
 			<script>
 	    	
@@ -489,7 +501,10 @@ div#type, div#locaName{
 							 	//<div id="title">${gather.title}</div>
 							 	//<div id="name">${gather.name}</div>
 					 			//<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaName}</span></div>
-							 	//<div id="meetDate">${gather.meetDate}</div>
+							 	//<div id="meetDate">
+							 	//<fmt:parseDate value="${gather.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+                        		//<fmt:formatDate value="${meetTime}" pattern="MM월dd일 a KK:mm"/>
+							 	//</div>
 					 			//<div>모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
 							 //</div>
 		                    // 글번호 : startNum 이  10단위로 증가되기 때문에 startNum +i (+1은 i는 0부터 시작)

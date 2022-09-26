@@ -37,6 +37,8 @@ table{
     background-color: white;
     margin: 20px;
     padding: 30px;
+   	border:2px solid var(--indigo-blue);
+	border-radius:10px;
 }
 th{
     padding-right: 50px;
@@ -61,10 +63,12 @@ td{
     color: white;
     margin-top: 10px;
     margin-left: 20px;
-    width: 80px;
-    height: 30px;
+    width: 100px;
+    height: 35px;
     font-size: 16px;
     cursor : pointer;
+	border-radius:10px;
+	font-size:18px;    font-weight:bold;
 }
 #gatherOut{
     background-color: #ECC7C5;
@@ -72,10 +76,13 @@ td{
     color: black;
     margin-top: 10px;
     margin-left: 20px;
-    width: 80px;
-    height: 30px;
+    width: 100px;
+    height: 35px;
     font-size: 16px;
     cursor : pointer;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
 }
 #inChat, #writeReview{
     background-color: #DC948A;
@@ -86,6 +93,7 @@ td{
     width: 500px;
     height: 50px;
     font-size: 20px;
+	border-radius:10px;
 }
 #gatherUpdate,#gatherDelete{
     background-color: #DC948A;
@@ -96,6 +104,7 @@ td{
     width: 200px;
     height: 40px;
     font-size: 16px;
+  	border-radius:10px;
 }
 #title{
 	font-size:24px;
@@ -336,7 +345,7 @@ td{
 		    const genderRestriction = document.querySelector('#genderRestriction').value;
 		    
 		    console.log(genderRestriction);
-	    	if(confirm("모임 참여시 200포인트가 차감됩니다.")){
+	    	if(confirm("모임에 참여하시겠습니까?")){
 	        	if(loginMember==${gather.userNo}){
 	        		alert('이미 참가한 모임입니다.');
 	        	}
