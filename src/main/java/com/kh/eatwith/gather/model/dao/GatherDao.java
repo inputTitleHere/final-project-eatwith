@@ -22,7 +22,7 @@ public interface GatherDao {
 
 	@Insert("insert all "
 			+ "into gather values(seq_gather_no.nextval,#{restaurantNo},#{title},#{count},#{meetDate},#{foodCode},#{districtCode},#{content},#{userNo},#{ageRestrictionTop},#{ageRestrictionBottom},#{genderRestriction})"
-			+ "into member_gather values(#{userNo},seq_gather_no.nextval,default) select*from dual")
+			+ "into member_gather values(#{userNo},seq_gather_no.nextval,default,default) select*from dual")
 	@SelectKey(
 			statement = "select seq_gather_no.currval from dual", 
 			before = false, 

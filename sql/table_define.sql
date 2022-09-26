@@ -362,6 +362,9 @@ from
         left join (select no,name from restaurant) r on g.restaurant_no=r.no
 where g.no=27
 order by g.no desc;
+
+alter table member_gather modify checked number default '0' not null;
+commit;
 -- 신유경 END
 
 -- 임규완 START
