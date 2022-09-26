@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public interface GatherDao {
 
 	@Insert("insert all "
 			+ "into gather values(seq_gather_no.nextval,#{restaurantNo},#{title},#{count},#{meetDate},#{foodCode},#{districtCode},#{content},#{userNo},#{ageRestrictionTop},#{ageRestrictionBottom},#{genderRestriction})"
-			+ "into member_gather values(#{userNo},seq_gather_no.nextval,default) select*from dual")
+			+ "into member_gather values(#{userNo},seq_gather_no.nextval,default,default) select*from dual")
 	@SelectKey(
 			statement = "select seq_gather_no.currval from dual", 
 			before = false, 
@@ -86,6 +87,16 @@ public interface GatherDao {
 	List<Map<String, Object>> gatherMore(int page);
 
 	List<Map<String, Object>> getLatestList();
+	
+	List<Map<String, Object>> checkLeader(int gatherNo);
+	@Update("update member_gather set checked='1' where user_no=#{userNo} and gather_no=#{gNo}")
+	int checkLeaderIn(Map<String, Object> param);
+	
+	@Update("update member_gather set checked='0' where user_no=#{userNo} and gather_no=#{gNo}")
+	int checkLeaderOut(Map<String, Object> param);
+
+	@Select("select * from member_gather where user_no=#{loginId} and gather_no=#{gatherNo} and checked='1' ")
+	Integer checkAttendance(Map<String, Object> param);
 
 	List<CustomMap> getRestaurantGatherings(Map<String, Object> no);
 

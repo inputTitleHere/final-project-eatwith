@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,5 +61,12 @@ public interface GatherService {
 
 	List<CustomMap> getJoinedGather(int userNo);
 
+	List<Map<String, Object>> checkLeader(int gatherNo);
+
+	int checkLeaderIn(Map<String, Object> param);
+
+	int checkLeaderOut(Map<String, Object> param);
+
+	Integer checkAttendance(Map<String, Object> param);
 
 }
