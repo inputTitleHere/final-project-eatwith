@@ -50,4 +50,15 @@ public interface GatherService {
 
 	List<Map<String, Object>> getLatestList();
 
+	List<CustomMap> getRestaurantGathering(Map<String, Object> params);
+
+	List<CustomMap> getGatherByOwnerNo(int no);
+
+	List<CustomMap> getPastGatherByOwnerNo(Map<String, Integer> params);
+
+	List<CustomMap> getJoinedPastGather(Map<String, Integer> params);
+
+	List<CustomMap> getJoinedGather(int userNo);
+
+
 }

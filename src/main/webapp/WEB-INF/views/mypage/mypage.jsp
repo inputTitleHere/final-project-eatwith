@@ -30,6 +30,6 @@ window.addEventListener('load',()=>{
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bundle/mypage.js"></script>
 </body>
 </html>

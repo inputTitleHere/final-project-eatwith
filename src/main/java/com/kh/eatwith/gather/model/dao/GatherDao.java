@@ -87,6 +87,16 @@ public interface GatherDao {
 
 	List<Map<String, Object>> getLatestList();
 
+	List<CustomMap> getRestaurantGatherings(Map<String, Object> no);
+
+	List<CustomMap> getGatherByOwnerNo(int no);
+
+	List<CustomMap> getPastGatherByOwnserNo(Map<String, Integer> params, RowBounds rb);
+
+	List<CustomMap> getJoinedGather(int userNo);
+
+	List<CustomMap> getJoinedPastGather(Map<String, Integer> params, RowBounds rb);
+
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 
 }

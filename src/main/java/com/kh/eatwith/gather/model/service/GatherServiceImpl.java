@@ -114,4 +114,38 @@ public class GatherServiceImpl implements GatherService{
 	public List<Map<String, Object>> getLatestList() {
 		return gatherDao.getLatestList();
 	}
+	
+	@Override
+	public List<CustomMap> getRestaurantGathering(Map<String, Object> no) {
+		return gatherDao.getRestaurantGatherings(no);
+	}
+	@Override
+	public List<CustomMap> getGatherByOwnerNo(int no) {
+		return gatherDao.getGatherByOwnerNo(no);
+	}
+	@Override
+	public List<CustomMap> getPastGatherByOwnerNo(Map<String, Integer> params) {
+		int limit = params.get("limit");
+		int offset = (params.get("cPage")-1)*limit;
+		RowBounds rb = new RowBounds(offset, limit);
+		return gatherDao.getPastGatherByOwnserNo(params, rb); 
+		
+	}
+	
+	
+	@Override
+	public List<CustomMap> getJoinedGather(int userNo) {
+		return gatherDao.getJoinedGather(userNo);
+	}
+	
+	@Override
+	public List<CustomMap> getJoinedPastGather(Map<String, Integer> params) {
+		int limit = params.get("limit");
+		int offset = (params.get("cPage")-1)*limit;
+		RowBounds rb = new RowBounds(offset, limit);
+		return gatherDao.getJoinedPastGather(params, rb); 
+	
+	}
+	
+	
 }
