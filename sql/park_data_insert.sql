@@ -2,8 +2,9 @@ select * from member;
 select * from restaurant where name='할머니가래 떡볶이';
 select * from district;
 select * from food_type;
+select * from restaurant where no ='3010000-101-2017-00400';
 select * from review where restaurant_no ='3010000-101-2017-00400';
-select * from review_image;
+select * from review_image where restaurant_no = '3110000-101-2022-00129';
 select * from food_type;
 select * from favorite_restaurant;
 select f.type from restaurant r left join food_type f on r.food_code = f.code where r.no='3020000-101-2018-00337';
@@ -41,7 +42,7 @@ values(SEQ_GATHER_NO.nextval, '3030000-101-1985-03463', '기력 보충하고싶�
 insert into gather 
 values(SEQ_GATHER_NO.nextval, '3010000-101-2017-00400', '쌀국수!!!', 3, to_date('2022-09-05 18:00','YYYY-MM-DD hh24:mi'), '009', '3010000', '베트남 여행 대신에 쌀국수라도 먹어요', 151, null, null, 'F');
 
-select * from gather;
+select * from review;
 
 insert into review
 values(SEQ_REVIEW_NO.nextval, 49, '3010000-101-2017-00400', 4, 5, 3, 3, '맛있어요. 가격이 조금 아쉽지만 종업원이 친절해요', 143);
@@ -81,6 +82,8 @@ select * from (select r.*, m.name as writer from review r join member m on r.use
 select * from gather where no = 61;
 select * from member_gather where gather_no = 61;
 select * from review;
+select * from review_image;
+
 select count(*) from favorite_restaurant where restaurant_no = '3010000-101-2017-00400';
 insert into favorite_restaurant values (148,'3010000-101-2017-00400');
 delete from favorite_restaurant where user_no = 148 and restaurant_no = '3010000-101-2017-00400';

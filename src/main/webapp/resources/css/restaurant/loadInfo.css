@@ -1,0 +1,208 @@
+*{
+    font:var(--our-font);
+}
+body {
+	background-color: #F0EBEC;
+}
+h1 {
+	font-size: 40px; 
+	font-weight: bold;
+	margin-top: 0;
+}
+#ul1{
+	margin: 0;
+}
+#info1 {
+/* 	background-color: white; */
+/* 	margin: 30px 350px; */
+	height: auto;
+	border-spacing: 20px;
+}
+#info2 {
+/* 	background-color: white; */
+/* 	margin: 30px 350px; */
+	height: auto;
+	border-spacing: 20px;
+}
+#like-restaurant {
+	background-color: white; 
+	border: 0 solid white; 
+	font-size: 60px; 
+	cursor: pointer;
+}
+#restInfo1 {
+	border-left: 1px solid gray;
+}
+#restImg{
+	display: flex;
+}
+#reviewSummary {
+	text-align: center;
+}
+#lastDiv {
+	padding: 20px;
+	margin: 20px auto;
+	width: 900px;
+	border: 2px solid #3a3c68;
+	border-radius: 10px;
+	background-color: white;
+	position: relative;
+}
+#gather {
+	font-size: 30px;
+	margin-bottom: 20px;
+	margin-left: 30px;
+	font-family: "Happiness-Sans-Title";
+}
+#addReview{
+	display: flex; 
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	justify-content: space-between; 
+	white-space: normal;
+}
+#addGather{
+	display: flex; 
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	justify-content: space-between; 
+	white-space: normal;
+}
+#loadInfoFrm{
+/* 	border-left: 10px; */
+	padding: 20px;
+	margin: 20px auto;
+	width: 900px;
+	border: 2px solid #3a3c68;
+	border-radius: 10px;
+	background-color: white;
+	position: relative;
+}
+p {
+	font-size: 30px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+	font-family: "Happiness-Sans-Title";
+	margin-top: 0;
+}
+#favTag{
+	font-size: 30px;
+	margin-bottom: 20px;
+	font-family: "Happiness-Sans-Title";
+	margin-top: 0;
+}
+hr {
+	width: 99%;
+	margin: 15px 0;
+}
+#info1 #loadInfoFrm section {
+	border-spacing: 20px;
+}
+.inner-star::before{
+	color: #3a3c68;
+}
+.outer-star {
+	position: relative;
+	display: inline-block;
+	color: #CCCCCC;
+}
+.inner-star {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.outer-star::before, .inner-star::before {
+	content: '\f005 \f005 \f005 \f005 \f005';
+	font-family: 'Font Awesome 5 free';
+	font-weight: 900;
+}
+#img{
+	width: 150px;
+	height: 150px;
+}
+#reviewDiv{
+	width: 40%; 
+	padding: 5px 15px;
+}
+#moreReviewList{
+/* 	display: flex;  */
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	justify-content: space-between; 
+	white-space: normal;
+}
+#moreGatherList{
+	display: flex; 
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	justify-content: space-between; 
+	white-space: normal;
+}
+#gatherDiv{
+	background-color: #F1F1F1; 
+	width: 20%; 
+	padding: 5px 15px;
+	border: 2px solid #81a6d3;
+	border-radius: 10px;
+}
+#reviewStar{
+	color: #3a3c68;
+	padding: 10px 0;
+}
+
+#btnMenuMoreDiv{
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+#btnMenuMore{
+	width: 100%;
+	border: 0;
+	cursor: pointer;
+	height: 50px;
+	font-size: 20px;
+}
+#btnMenuCloseDiv{
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+#btnMenuClose{
+	width: 100%;
+	border: 0;
+	cursor: pointer;
+	height: 50px;
+	font-size: 20px;
+}
+#writer{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
+#inner-star::before {
+/* 	color: #81a6d3; */
+	color: #3a3c68;
+}
+#outer-star {
+	position: relative;
+	display: inline-block;
+	color: #cccccc;
+}
+#inner-star {
+  	position: absolute;
+  	left: 0;
+  	top: 0;
+  	width: 0%;
+  	overflow: hidden;
+  	white-space: nowrap;
+}
+#outer-star::before, #inner-star::before {
+  	content: "\f005 \f005 \f005 \f005 \f005";
+  	font-family: "Font Awesome 5 free";
+  	font-weight: 900;
+  	font-size: 50px;
+}
