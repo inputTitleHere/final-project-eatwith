@@ -69,9 +69,9 @@ public class ReviewController extends HttpServlet {
 			if(!upFile.isEmpty()) {
 				log.debug("사진이 1개라도 있음 !!!!!!!!!!!!!!!!");
 				//서버컴퓨터에 저장
-	//			String saveDirectory=application.getRealPath("/resources/upload/review");
-//				log.debug("saveDirectory={}",saveDirectory);
-				String saveDirectory = "C:\\Workspaces\\spring_workspace\\final-project-eatwith\\src\\main\\webapp\\resources\\upload\\review";
+				String saveDirectory=application.getRealPath("/resources/upload/review");
+				log.debug("saveDirectory={}",saveDirectory);
+//				String saveDirectory = "C:\\Workspaces\\spring_workspace\\final-project-eatwith\\src\\main\\webapp\\resources\\upload\\review";
 				String renamedFilename = EatWithUtils.getRenamedFilename(upFile.getOriginalFilename());
 				log.debug("renamedFilename={}",renamedFilename);
 				File destFile = new File(saveDirectory,renamedFilename);
@@ -86,7 +86,7 @@ public class ReviewController extends HttpServlet {
 		int result = reviewService.insertReview(review);
 		log.debug("review = {}",review);
 		redirectAttr.addFlashAttribute("msg","리뷰를 성공적으로 등록했습니다.");
-		return "redirect:restaurant/loadInfo?no="+review.getRestaurantNo();
+		return "redirect:/restaurant/loadInfo?no="+review.getRestaurantNo();
 	}
 	
 	@GetMapping("/getBestReviews")

@@ -119,4 +119,10 @@
 	    (select * from gather where meet_date>(sysdate+9/24)) g
 		order by meet_date asc
 	</select>
+	
+	<select id="checkLeader" resultType="CustomMap">
+		select mg.user_no,mg.gather_no,mg.enroll_at,mg.checked, m.name , m.born_at,m.gender
+		from member_gather mg join member m on mg.user_no=m.no
+		where mg.gather_no=#{gatherNo}
+	</select>
 </mapper>

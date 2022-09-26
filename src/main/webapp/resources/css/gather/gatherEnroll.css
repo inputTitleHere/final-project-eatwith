@@ -161,4 +161,5 @@ li{
 #ageChk,#genderChk{
 	accent-color:var(--jjin-pink);
 	transform:scale(1.5);
+	background-color: rgba(0, 0, 0, 0.6);
 }
