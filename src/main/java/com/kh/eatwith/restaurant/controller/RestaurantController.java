@@ -1,11 +1,12 @@
 package com.kh.eatwith.restaurant.controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.eatwith.common.typehandler.EatWithUtils;
 import com.kh.eatwith.district.model.dto.District;
 import com.kh.eatwith.district.model.service.DistrictService;
 import com.kh.eatwith.favorite.model.service.FavoriteRestaurantService;
@@ -30,6 +32,7 @@ import com.kh.eatwith.gather.model.service.GatherService;
 import com.kh.eatwith.member.model.service.MemberService;
 import com.kh.eatwith.restaurant.model.dto.Restaurant;
 import com.kh.eatwith.restaurant.model.service.RestaurantService;
+import com.kh.eatwith.review.model.dto.Attachment;
 import com.kh.eatwith.review.model.dto.Review;
 import com.kh.eatwith.review.model.service.ReviewService;
 
@@ -100,7 +103,10 @@ public class RestaurantController {
 		log.debug("restaurant = {}", restaurant);
 		
 		List<Review> reviews = reviewService.selectOneReview(no);
+		List<Attachment> attachs = reviewService.selectAttachByResNo(restaurant.getNo());
+		
 		log.debug("reviews = {}", reviews);
+		log.debug("attachs = {}", attachs);
 
 		double totalAvg;
 		double totalTasteAvg;
@@ -123,6 +129,7 @@ public class RestaurantController {
 			totalTasteAvg = (double) sumTaste / reviews.size();
 			totalPriceAvg = (double) sumPrice / reviews.size();
 			totalServiceAvg = (double) sumService / reviews.size();
+//			totalAvg = ((double) totalTasteAvg + totalPriceAvg + totalServiceAvg) / reviews.size();
 		} else {
 			totalAvg = 0.0;
 			totalTasteAvg = 0.0;
@@ -150,6 +157,7 @@ public class RestaurantController {
 		model.addAttribute("foodType", foodType);
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute("reviews", reviews);
+		model.addAttribute("attachs", attachs);
 		model.addAttribute("totalAvg", totalAvg);
 		model.addAttribute("totalTasteAvg", totalTasteAvg);
 		model.addAttribute("totalPriceAvg", totalPriceAvg);

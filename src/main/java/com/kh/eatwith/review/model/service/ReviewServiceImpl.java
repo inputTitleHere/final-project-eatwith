@@ -63,4 +63,9 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<String> findName(int userNo) {
 		return reviewDao.findName(userNo);
 	}
+	
+	@Override
+	public List<Attachment> selectAttachByResNo(String no) {
+		return reviewDao.selectAttachByResNo(no);
+	}
 }
