@@ -26,7 +26,6 @@ public class Member {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	protected LocalDate enrollAt;
 	protected Role role;
-	protected int point;
 	protected int bornAt; // age -> bornAt으로 변경하였습니다(DB변경했습니다)(백)
 	protected Gender gender;
 	protected LocalDate deletedAt;

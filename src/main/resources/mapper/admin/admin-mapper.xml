@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.eatwith.admin.model.dao.AdminDao">
+
+<!-- 	
+	평점이 높은 식당들 순번으로 구함
+	select
+	r.name,
+	s.score
+	from restaurant r
+	join (<![CDATA[select sum(overall + taste + service + price)/4]]> as score, restaurant_no
+	from((select avg(overall_score) overall,avg(taste_score) taste,
+	    	avg(service_score) service, avg(price_score) price, restaurant_no
+	    	from review rv group by restaurant_no)) group by restaurant_no) s
+			on r.no = s.restaurant_no -->
+			
+<select id="selectRestaurant" resultType="TestMap">
+select
+round(avg(overall_score),2) overall,
+round(avg(service_score),2) service,
+round(avg(taste_score),2) taste,
+round(avg(price_score),2) price
+from review
+</select>
+
+<select id="selectGather" resultType="TestMap">
+select
+	to_date(meet_date,'YYYY-MM-DD') as day,
+	count(*) as count
+from
+	gather group by to_date(meet_date,'YYYY-MM-DD')
+	order by to_date(meet_date,'YYYY-MM-DD')
+</select>
+
+<select id="selectMember" resultType="TestMap">
+select
+	count(*) as count,
+	to_date(enrolled_at,'YYYY-MM-DD') as day 
+from
+	member group by to_date(enrolled_at, 'YYYY-MM-DD')
+</select>
+
+<select id="selectGatherYes" resultType="int">
+	select count(*)
+	from
+	(select * from member_gather mg
+	left join gather g on mg.gather_no = g.no
+	where <![CDATA[g.meet_date > sysdate-1)]]>
+</select>
+
+<select id="selectGatherTo" resultType="int">
+select count(*)
+from
+(select * from member_gather mg
+left join gather g on mg.gather_no = g.no
+where <![CDATA[g.meet_date > sysdate)]]>
+</select>
+
+<select id="selectGatherNow" resultType="int">
+select count(*)
+from
+(select * from gather
+where <![CDATA[meet_date > sysdate)]]>
+</select>
+
+<select id="selectGatherRatio" resultType="TestMap">
+	select
+	d.name name,
+	count(d.name) num
+	from gather g
+	left join district d
+	on g.district_code = d.code
+	group by d.name
+</select>
+
+</mapper>
+

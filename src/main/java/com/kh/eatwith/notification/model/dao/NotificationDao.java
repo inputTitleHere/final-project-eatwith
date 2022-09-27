@@ -15,7 +15,7 @@ public interface NotificationDao {
 
 	int insertNotification(Map<String, Object> toSend);
 	
-	@Select("select * from notification where user_no=#{no} and deleted_at is null")
+	@Select("select * from notification where user_no=#{no} and deleted_at is null order by no desc")
 	List<Notification> getNotificationsByUserNo(int no);
 
 	@Update("update notification set read_at=sysdate where no=#{no}")
@@ -23,4 +23,7 @@ public interface NotificationDao {
 
 	@Delete("update notification set deleted_at=sysdate where no=#{no}")
 	int deleteNotification(int no);
+
+	@Select("select count(*) from notification where user_no=#{no} and deleted_at is null and read_at is null")
+	int getNotificationCount(int no);
 }

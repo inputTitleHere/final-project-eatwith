@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <!-- 권한체크용, form(후에 header.jsp) -->
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
@@ -30,9 +29,10 @@
 			<div class="common-container">
 				<img id="logo-image" src='${pageContext.request.contextPath}/resources/image/eatwith-banner.png'
 					alt="MemberEnrollHeader.jsx확인 바람" height='100px' onclick='location.href="${pageContext.request.contextPath}/"' />
-				<form id="searchform" action="${pageContext.request.contextPath}/" method="POST">
-					<button class="btn-search" type="submit">공백</button>
-					<input type="text" name="searchKeyword" placeholder="검색 바 임시" value="" />
+				<form id="searchform" action="${pageContext.request.contextPath}/search/searchResult" method="GET">
+					<button class="btn-search" type="button" onclick = "search()">검색</button>
+					<input type="text" name="searchWord" placeholder="검색 바 임시" value = '' id="searchWord"/>
+					<input type="hidden" name="searchType" value = "recent" id="searchWord"/>
 				</form>
 			</div>
 
@@ -61,9 +61,12 @@
 					<img id="notice-image" src='${pageContext.request.contextPath}/resources/image/notification_img.png'
 						alt="" onclick='location.href="${pageContext.request.contextPath}/"' />			
 					<ul>
-						<li><a href="${pageContext.request.contextPath}/">공지사항</a></li>
+						<li><a href="${pageContext.request.contextPath}/notice/noticeList">공지사항</a></li>
 						<sec:authorize access="hasRole('USER')">
-							<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
+							<li>
+								<a href="${pageContext.request.contextPath}/mypage">마이페이지<span id="notification-count"></span>
+								</a>
+							</li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ADMIN')">
 							<li><a href="${pageContext.request.contextPath}/member/memberEnroll">관리자페이지</a></li>
@@ -78,4 +81,34 @@
 				</div>
 			</sec:authorize>
 		</div>
+		
+		<sec:authorize access="hasRole('USER')">
+			<script>
+				window.addEventListener('load',()=>{
+					// load notification count;
+					$.ajax({
+						url:'${pageContext.request.contextPath}/notification/getNotificationCount',
+						method:"GET",
+						success(response){
+							console.log(response);
+							const notiCnt = document.querySelector("#notification-count");
+							notiCnt.innerHTML = response;
+						},
+						error:console.log
+					})
+				})
+			</script>
+		</sec:authorize>
+	
+		<script>
+		
+	 	const search=()=>{
+//    		const searchBar = document.querySelector("#searchBar").value;
+//    		document.querySelector("#searchWord").value = searchBar;
+//    		console.log(searchWord);
+//   		console.log('1234');
+    		document.querySelector('#searchform').submit();
+    	}
+		</script>
+		
 	</header>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -26,6 +26,9 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
+*{
+	font-family:var(--our-font);
+}
 #container{
     display: flex;
     justify-content: center;
@@ -33,13 +36,19 @@
     font-size: 18px;
 	left:0;
 	right:0;
-	margin:auto;
-	padding:100px;
+margin:20px auto;
+padding:0px;
 }
 table{
     background-color: white;
     margin: 20px;
     padding: 30px;
+   	border:4px solid var(--indigo-blue);
+	border-radius:10px;
+	min-height:800px;
+}
+tbody{
+	display:block;
 }
 th{
     padding-right: 50px;
@@ -64,18 +73,24 @@ td{
     color: white;
     margin-top: 10px;
     margin-left: 20px;
-    width: 80px;
-    height: 30px;
-    font-size: 16px;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
     cursor : pointer;
+    border:0;
+	border-radius:10px;
 }
 #name{
 	font-weight:bold;
 	padding-left:20px;
+	font-size:24px;
+}
+#gender,#age{
+	font-size:24px;
 }
 #expl{
 	padding-left:20px;
-	font-size:16px;
+	font-size:20px;
 }
 #count{
 	font-weight:bold;
@@ -86,14 +101,17 @@ td{
     color: black;
     margin-top: 10px;
     margin-left: 20px;
-    width: 80px;
-    height: 30px;
-    font-size: 16px;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
     cursor : pointer;
+    border:0;
+	border-radius:10px;
 }
 #title{
 	font-size:30px;
 	font-weight:bold;
+	font-family:var(--short-font);
 }
 </style>
 </head>
@@ -110,7 +128,7 @@ td{
             		</td>
             	</tr>
             	<tr>
-            		<td id="expl">실제 모임에 참여했을 경우 체크 해주세요. 모임장이 체크시 회원은 리뷰 작성이 가능합니다.</td>
+            		<td id="expl">실제 모임에 참여했을 경우 체크 해주세요.<br>모임장이 체크시 회원은 리뷰 작성이 가능합니다.</td>
             	</tr>
                	<c:if test="${not empty check}">
                		<c:forEach items="${check}" var="check" varStatus="status">

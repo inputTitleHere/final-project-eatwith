@@ -17,8 +17,23 @@
  -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/root.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member-enroll/member-enroll.css"/>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member-enroll/member-enroll.css"/>  --%>
 <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+
+<style type="text/css">
+.image-wrapper{
+  min-width: 1024px;
+  width: 100vw;
+  height: 800px;
+  position: absolute;
+  background-image: linear-gradient(to bottom,#ffffff00 50%,var(--yeon-pink)),url('${pageContext.request.contextPath }/resources/image/background/member-enroll.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  z-index: -1;
+}
+</style>
+
 </head>
 <body>
 <div class="header">
@@ -28,7 +43,7 @@
 <div id="content-wrapper">
   <h1>신규 회원 가입</h1>
   
-  <div id="form-wrapper"></div>
+  <div id="content-root"></div>
   
 </div>  
 

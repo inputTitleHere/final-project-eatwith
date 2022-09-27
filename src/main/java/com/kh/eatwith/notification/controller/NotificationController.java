@@ -50,6 +50,14 @@ public class NotificationController {
 		log.debug("notifications = {}",notifications);
 		return ResponseEntity.ok(notifications);
 	}
+	@GetMapping("/getNotificationCount")
+	public ResponseEntity<?> getNotificationCount(){
+		Object MemberObj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int no = ((MemberSecurity)MemberObj).getNo();
+		int result = notificationService.getNotificationCount(no);
+		
+		return ResponseEntity.ok(result);
+	}
 	
 	@PostMapping("/readNotification")
 	public ResponseEntity<?> readNotification(@RequestParam int no){

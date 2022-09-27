@@ -1,0 +1,354 @@
+/* sass -w .\scss\memberEnroll\member-enroll.scss  ..\src\main\webapp\resources\css\member-enroll\member-enroll.css */
+
+
+/********** header **********/
+section#search-container{
+	background-color: #ECC7C5;
+	padding: 10px 10px;
+	width: 60%;
+	margin: 0 auto;
+	margin-top:50px;
+	margin-bottom:50px;
+	border-radius: 10px;
+}
+
+
+div#search-info{
+	height: 200px;
+	width: 100%;
+}
+
+/** 공통 **/
+p#search-info-title{
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+p#search-info-searchWord{
+	margin-left : 10px;
+	margin-bottom: 10px;
+}
+
+p.search-info-searchType{
+	display : inline-block;
+	text-decoration : none;
+	margin-top: 0px;
+	margin-bottom: 30px;
+	float: right;
+	padding-right:20px;
+}
+
+img#star{
+	padding-left:5px;
+	padding-right:5px;
+}
+
+tbody{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/** 리뷰 **/
+tr#reviewList-title{
+	width:100%;
+	height:150px;
+}
+tr.reviewList-data{
+	background-color: #DC948A;
+	margin: 20px;
+	padding :10px;
+	border-radius: 10px;
+	display:flex;
+	flex-wrap: wrap;
+	width: 27%;
+}
+tr.reviewList-data td{
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	padding: 5px;
+}
+
+tr.reviewList-data td:nth-child(n+2){
+	background-color: #F0EBEC;
+}
+
+tr.reviewList-data td:nth-child(2){
+	border-radius: 5px 5px 0px 0px;
+}
+
+tr.reviewList-data td:nth-child(9){
+	border-radius: 0px 0px 5px 5px;
+}
+
+tr.reviewList-data td#restaurantname{
+	justify-content: center;
+	padding: 5px;
+	font-weight:bold;
+}
+
+tr.reviewList-data td#username{
+	justify-content: right;
+	padding: 5px;
+}
+tr.reviewList-data td#content{
+	justify-content:center;
+}
+
+td#adress{
+	    overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: small;
+        color: gray;
+}
+
+/** 모임 **/
+tr#gatherList-title{
+	width:100%;
+	height:100px;
+}
+tr.gatherList-data{
+	background-color: #DC948A;
+	margin: 20px;
+	padding :10px;
+	border-radius: 10px;
+	display:flex;
+	flex-wrap: wrap;
+	width: 27%;
+}
+tr.gatherList-data td{
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	padding: 5px;
+}
+
+tr.gatherList-data td:nth-child(n+2){
+	background-color: #F0EBEC;
+}
+
+tr.gatherList-data td:nth-child(2){
+	border-radius: 5px 5px 0px 0px;
+}
+
+tr.gatherList-data td:nth-child(9){
+	border-radius: 0px 0px 5px 5px;
+}
+
+th{
+	display: block;
+}
+tr.gatherList-data td#restaurantname{
+	justify-content: center;
+	padding: 5px;
+	font-weight:bold;
+}
+
+tr.gatherList-data td#username{
+	justify-content: right;
+	padding: 5px;
+}
+tr.gatherList-data td#content{
+	justify-content:center;
+}
+
+td#adress{
+	    overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: small;
+        color: gray;
+}
+
+
+/** 식당 **/
+tr#restaurantList-title{
+	width:100%;
+	height:150px;
+}
+tr.restaurantList-data{
+	background-color: #DC948A;
+	margin: 20px;
+	padding :10px;
+	border-radius: 10px;
+	display:flex;
+	flex-wrap: wrap;
+	width: 43%;
+}
+tr.restaurantList-data td{
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	padding: 5px;
+	text-overflow: ellipsis;
+}
+
+tr.restaurantList-data td:nth-child(n+2){
+	background-color: #F0EBEC;
+}
+
+tr.restaurantList-data td:nth-child(2){
+	border-radius: 5px 5px 0px 0px;
+}
+
+tr.restaurantList-data td:nth-child(9){
+	border-radius: 0px 0px 5px 5px;
+}
+
+tr.restaurantList-data td#restaurantname{
+	justify-content: center;
+	padding: 5px;
+	font-weight:bold;
+}
+
+tr.restaurantList-data td#username{
+	justify-content: right;
+	padding: 5px;
+}
+tr.restaurantList-data td#menu-tag{
+    display: flex;
+    width: 450px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+    word-break: normal;
+}
+
+tr.restaurantList-data td#hours{
+    display: flex;
+    width: 450px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+    word-break: normal;
+}
+
+
+td#adress{
+	    overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: small;
+        color: gray;
+}
+
+button#review-basic-more, button#gather-basic-more{
+	width:100%;
+	background-color: #F0EBEC;
+	border: 0px;
+	border-radius: 3px;
+	color: #3A3C68;
+	font-weight: bolder;
+	height: 40px;
+}
+button#restaurant-basic-more{
+	width:100%;
+	background-color: #F0EBEC;
+	border: 0px;
+	border-radius: 3px;
+	color: #3A3C68;
+	font-weight: bolder;
+	height: 40px;
+}
+p#search-info-title{
+	font-weight: bolder;
+	font-size: 30px;
+	padding: 10px;
+	background-color: #F0EBEC;
+	border-radius: 3px;
+	margin: 0px 0px 0px 0px;
+}
+P#search-info-searchWord{
+	font-weight: bolder;
+	font-size: 15px;
+	color: white;
+	padding: 20px;
+	background-color: #C85E5E;
+	width : 20%;
+}
+a{
+	 text-decoration: none;
+	 font-family: fantasy;
+ 	font-weight: bolder;
+}
+th#reviewList-title{
+font-size: 20px;
+padding-bottom: 20px;
+border-bottom: 4px solid white;
+border-radius: 3px;
+
+}
+th#gatherList-title{
+	font-size: 20px;
+padding-bottom: 20px;
+padding-top: 90px;
+border-bottom: 4px solid white;
+border-radius: 3px;
+width:100%;
+}
+th#restaurantList-title{
+font-size: 20px;
+padding-bottom: 20px;
+padding-top: 90px;
+border-bottom: 4px solid white;
+border-radius: 3px;
+width:100%;
+}
+
+tr.more-restaurant:hover{	
+  transform: scale(1.01);
+  transition-duration: 0.2s;
+}
+
+tr.more-review:hover{	
+  transform: scale(1.01);
+  transition-duration: 0.2s;
+}
+
+tr.more-gather:hover{	
+  transform: scale(1.01);
+  transition-duration: 0.2s;
+}
+
+
+tr.more-restaurant td{	
+ float:right;
+ padding: 10px;
+ font-weight: bolder;
+}
+
+tr.more-review td{	
+float:right;	
+ padding: 10px;
+ font-weight: bolder;
+}
+
+tr.more-gather td{	
+float:right;
+ padding: 10px;
+ font-weight: bolder;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

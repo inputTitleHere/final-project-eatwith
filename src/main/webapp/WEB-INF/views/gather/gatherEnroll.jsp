@@ -106,7 +106,7 @@
 					           		const html=response.reduce((merge,item)=>{
 					           			const {no,name,districtName,type,foodCode,districtCode}=item;
 					           			return merge+`
-					           			<li>
+					           			<li id="Res">
 					           				<div class="modal-restaurant">
 					           					<span class="modal-restaurant-title">\${name}</span>
 					           					<span class="modal-restaurant-category"><span class="modal-restaurant-district">\${districtName}</span>
