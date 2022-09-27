@@ -102,7 +102,7 @@ public interface GatherDao {
 
 	List<CustomMap> getGatherByOwnerNo(int no);
 
-	List<CustomMap> getPastGatherByOwnserNo(Map<String, Integer> params, RowBounds rb);
+	List<CustomMap> getPastGatherByOwnerNo(Map<String, Integer> params, RowBounds rb);
 
 	List<CustomMap> getJoinedGather(int userNo);
 

@@ -388,10 +388,13 @@ public class GatherController {
 	@ResponseBody
 	public ResponseEntity<?> getMyGatherPast(@CookieValue(value="no") Cookie cookie, @RequestParam int cPage){
 		int userNo = Integer.parseInt(cookie.getValue());
+		log.debug("cPage = {}",cPage);
+		
 		Map<String, Integer> params = new HashMap<String, Integer>();
 		params.put("no", userNo);
 		params.put("cPage", cPage);
 		params.put("limit",8);
+		
 		List<CustomMap> myPastGather = gatherService.getPastGatherByOwnerNo(params);
 		
 		
@@ -413,7 +416,7 @@ public class GatherController {
 		int userNo = Integer.parseInt(cookie.getValue());
 		Map<String, Integer> params = new HashMap<String, Integer>();
 		params.put("cPage", cPage);
-		params.put("limit", 8);
+		params.put("limit", 9);
 		params.put("no", userNo);
 		List<CustomMap> joinedPastGather = gatherService.getJoinedPastGather(params);
 		

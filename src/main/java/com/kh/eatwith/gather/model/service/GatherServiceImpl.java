@@ -129,7 +129,7 @@ public class GatherServiceImpl implements GatherService{
 		int limit = params.get("limit");
 		int offset = (params.get("cPage")-1)*limit;
 		RowBounds rb = new RowBounds(offset, limit);
-		return gatherDao.getPastGatherByOwnserNo(params, rb); 
+		return gatherDao.getPastGatherByOwnerNo(params, rb); 
 		
 	}
 	

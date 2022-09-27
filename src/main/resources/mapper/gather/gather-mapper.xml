@@ -92,7 +92,7 @@
 		where user_no=#{no} and meet_date &gt; sysdate
 	</select>
 	
-	<select id="getPastGatherByOwnserNo" resultType="CustomMap">
+	<select id="getPastGatherByOwnerNo" resultType="CustomMap">
 		select 
 	    g.*,
 	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,

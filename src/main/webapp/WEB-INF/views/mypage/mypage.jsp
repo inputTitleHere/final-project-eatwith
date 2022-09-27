@@ -14,19 +14,8 @@
 </jsp:include>
 
 
-<div class="content-root"></div>
+<div id="content-root"></div>
 
-<script>
-window.addEventListener('load',()=>{
-	fetch('${pageContext.request.contextPath}/mypage/currentUser')
-		.then((response)=>response.json())
-		.then((data)=>{
-			console.log(data);
-		})
-})
-
-
-</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
