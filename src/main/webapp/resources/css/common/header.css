@@ -33,7 +33,7 @@ header{
 
 div.login-container{
 	 width: 400px;
-	 margin-top:25px;
+	 margin-top:40px;
 	 flex-direction: column;
 }
 div.common-container{
@@ -51,10 +51,10 @@ div.nonlogin-container{
 	vertical-align : middle;
 }
 
-/* .header-container div.common-container img{
+.header-container div.common-container img{
 	height: 100px;
  	margin:0;
-} */
+}
 
 .header-container div.common-container form{
 	padding-top:20px;
@@ -121,14 +121,14 @@ div.nonlogin-container{
 .login-container ul{
 	margin-top : 15px;
 	padding-left : 10px;
+	margin-bottom: 5px;
 }
 
 span#userInfo{
-	width: 180px;
-	font-size: 12px;
-	vertical-align : middle;
+	width: fit-content;
+	font-size: 20px;
+	text-align: right;
 	  float: right;
-	  margin-left: 210px;
 	  color: #3A3C68;
 	  
 }
@@ -138,7 +138,6 @@ span#userInfo{
 	font-size : 20px;
 	cursor: pointer;
 	text-decoration : none;
-	position:relative;
 }
 
 .login-container button{
@@ -167,21 +166,3 @@ span#userInfo{
     -ms-transform: scale(1.1,1.1);
     transform: scale(1.1,1.1);
 }
-
-.login-container form{
-	margin:0px 0px 0px 10px;
-}
-
-#notification-count{
-	display:block;
-	background-color:var(--red);
-	padding:3px;
-	border-radius:5px;
-	color:white;
-	position:absolute;
-	right:-20px;
-	top:-10px;
-}
-
-
-

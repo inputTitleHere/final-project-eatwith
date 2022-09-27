@@ -1,0 +1,66 @@
+/* sass -w .\scss\memberEnroll\member-enroll.scss  ..\src\main\webapp\resources\css\member-enroll\member-enroll.css */
+
+
+/********** header **********/
+body{
+	width:100%;
+	background-color: rgb(240, 235, 236);
+}
+section{
+    position: relative;
+    width: 800px;
+    height: 500px;
+    border: 4px solid #3a3c68;
+    border-radius: 10px;
+    background-color: #fefefe;
+    margin: 20px auto;
+    padding: 10px;
+}
+ul{
+	  list-style:none;
+}
+ul#notice-info{
+	display: flex;
+}
+
+ul#notice-info li{
+	margin: 0px 20px; 
+}
+
+ul#notice-info:nth-child(1){
+	text-align: right;
+	margin-right: 30px;
+}
+li{
+	text-decoration: none;
+}
+
+div.notice-view{
+    width: 800px;
+    height: 500px;
+}
+div.notice-contents{
+	width: 90%;
+    height: 300px;
+    border-top: 3px solid #3a3c68;
+    border-bottom: 3px solid #3a3c68;
+    background-color: #fefefe;
+    margin: 20px auto;
+    padding: 10px;
+}
+div.btn{
+	float: right;
+	padding-right: 30px;
+}
+ul#pre-next li{
+	margin: 3px;
+}
+.btn-btn{
+	border:0;
+	outline:0;
+	padding:8px;
+	background-color:var(--lavender-blue);
+	border-radius: 4px;
+}
+
+

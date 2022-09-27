@@ -22,32 +22,22 @@
 				<form id="searchform" action="${pageContext.request.contextPath}/search/searchResult" method="GET">
 					<input type="text" name="searchWord" placeholder="검색 바 임시" value = '' id="searchWord"/>
 					<button class="btn-search" type="button" onclick = "search()">검색</button>
-					<input type="hidden" name="searchType" value = "recent" id="searchWord"/>
+					<input type="hidden" name="searchType" value = "recent" id="searchType"/>
 				</form>
 			</div>
 
-			<!-- 비 로그인 시 제공 메뉴 
-				 1) 공지사항 : 페이지 연결 x
-				 2) 로그인 : 로그인 창으로 연결
-				 3) 회원가입 : 회원가입 페이지로 연결-->
 			<sec:authorize access="isAnonymous()">
 				<div class="nonlogin-container">
 				<ul>
-					<li><a href="${pageContext.request.contextPath}/">공지사항</a></li>
+					<li><a href="${pageContext.request.contextPath}/notice/noticeList">공지사항</a></li>
 					<li><a href="${pageContext.request.contextPath}/member/memberLogin">로그인</a></li>
 					<li><a href="${pageContext.request.contextPath}/member/memberEnroll">회원가입</a></li>
 				</ul>
 				</div>
 			</sec:authorize>
 
-			<!-- 로그인 시 제공 메뉴 
-				 1) 유저 이름 노출
-				 2) 공지사항 : 페이지 연결 x
-				 3) 마이페이지 / 관리자 페이지 : 페이지 연결 x
-				 4) 로그아웃 : 메인으로 redirect-->
 			<sec:authorize access="isAuthenticated()">
 				<div class="login-container">
-					<span id="userInfo"> <sec:authentication property="principal.name" />님, 안녕하세요 </span>	
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/notice/noticeList">공지사항</a></li>
 						<sec:authorize access="hasRole('USER')">
@@ -66,6 +56,7 @@
 							</form>						
 						</li>
 					</ul>
+					<span id="userInfo"> <sec:authentication property="principal.name" />님, 안녕하세요 </span>	
 				</div>
 			</sec:authorize>
 		</div>

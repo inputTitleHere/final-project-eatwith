@@ -58,19 +58,15 @@ public class NoticeController {
 	@GetMapping("/noticeList")
 	public void noticeList(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
 		
-		//공지사항 List 영역 01 _ 5개 단위로 목록 나누기 위한 param 생성
-		Map<String, Integer> param = new HashedMap();
-		int limit = 5;
+		Map<String, Integer> param = new HashMap();
+		int limit = 10;
 		param.put("cPage", cPage);
 		param.put("limit", limit);
 		
-		//공지사항 List 영역 02 _ 공지사항 DB 내, 제목 등 가져오기
 		List<Notice> list = noticeService.selectNoticeList(param);
 		log.debug("list = {}", list);
 		model.addAttribute("list", noticeService.selectNoticeList(param));
-		
-		//페이지 바 영역
-		// * 이미 만들어두신 거 있어서 5개 기준으로 재 사용하였습니다.
+
 		int totalContent = noticeService.getTotalContent();
 		log.debug("totalContent = {}", totalContent);
 		String url = request.getRequestURI();
@@ -99,51 +95,13 @@ public class NoticeController {
 		
 		return "redirect:/notice/noticeList";
 	}
-	
 
-	// 수정, 안되면 하단 코드로 진행
-//	@GetMapping("/noticeDetail")
-//	public void noticeDetail(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
-//		
-//		//공지사항 List 영역 01 _ 5개 단위로 목록 나누기 위한 param 생성
-//		Map<String, Integer> param = new HashedMap();
-//		int limit = 5;
-//		param.put("cPage", cPage);
-//		param.put("limit", limit);
-//		
-//		//공지사항 List 영역 02 _ 공지사항 DB 내, 제목 등 가져오기
-//		List<Notice> list = noticeService.selectNoticeList(param);
-//		log.debug("list = {}", list);
-//		model.addAttribute("list", noticeService.selectNoticeList(param));
-//		
-//		//페이지 바 영역
-//		// * 이미 만들어두신 거 있어서 5개 기준으로 재 사용하였습니다.
-//		int totalContent = noticeService.getTotalContent();
-//		log.debug("totalContent = {}", totalContent);
-//		String url = request.getRequestURI();
-//		String pagebar = EatWithUtils.getPagebar(cPage, limit, totalContent, url);
-//		model.addAttribute("pagebar", pagebar);
-//	}
-	
-	// 수정 전 원본
-//	@GetMapping("/noticeDetail")
-//	public void noticeDetail(@RequestParam int noticeNo, Model model) {
-//		// notice - Attachment
-//		Notice notice = noticeService.selectOneNotice(noticeNo);
-//		log.debug("notice = {}", notice);
-//		// 게시글 조회 알림.
-////		noticeService.sendNotice(notice);
-//		model.addAttribute("notice", notice);
-//	}
-	
-	// 수정 중
 	@GetMapping("/noticeDetail")
 	public void noticeDetail(@RequestParam int noticeNo, Model model) {
-		// notice - Attachment
+		
 		Notice notice = noticeService.selectOneNotice(noticeNo);
 		log.debug("notice = {}", notice);
-		// 게시글 조회 알림.
-//		noticeService.sendNotice(notice);
+		
 		model.addAttribute("notice", notice);
 		
 		Map<String, Integer> param = new HashedMap();
@@ -153,24 +111,6 @@ public class NoticeController {
 		model.addAttribute("list", noticeService.selectNoticeDetail(param));
 	}
 	
-	
-	/**
-	 * 
-	 * Resource
-	 * 다음 구현체들의 추상화레이어를 제공한다.
-	 * 
-	 * - 웹상 자원 UrlResource
-	 * - classpath 자원 ClassPathResource
-	 * - 서버컴퓨터 자원 FileSystemResource
-	 * - ServletContext (web root) 자원 ServletContextResource
-	 * - 입출력 자원 InputStreamResource
-	 * - 이진데이터 자원 ByteArrayResource
-	 * @throws IOException 
-	 * 
-	 * @ResponseBody - 핸들러의 반환된 자바객체를 응답메세지 바디에 직접 출력하는 경우
-	 * 
-	 *  
-	 */
 	
 	@GetMapping("/noticeUpdate")
 	public void noticeUpdate(@RequestParam int noticeNo, Model model) {
@@ -206,41 +146,4 @@ public class NoticeController {
 						
 		return "redirect:/notice/noticeList";
 	}
-	
-	
-//	// 썸머노트 : 사진 이미지
-//	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
-//	@ResponseBody
-//	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
-//		JsonObject jsonObject = new JsonObject();
-//		
-//        /*
-//		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
-//		 */
-//		
-//		// 내부경로로 저장
-//		String contextRoot = application.getRealPath("/");
-//		String fileRoot = contextRoot+"/resources/upload/notice";
-//		
-//		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-//		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-//		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-//		
-//		File targetFile = new File(fileRoot + savedFileName);	
-//		try {
-//			InputStream fileStream = multipartFile.getInputStream();
-//			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-//			jsonObject.addProperty("url", "/summernote/resources/upload/notice/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
-//			jsonObject.addProperty("responseCode", "success");
-//				
-//		} catch (IOException e) {
-//			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-//			jsonObject.addProperty("responseCode", "error");
-//			e.printStackTrace();
-//		}
-//		String a = jsonObject.toString();
-//		return a;
-//	}
-//	
-	
 }
