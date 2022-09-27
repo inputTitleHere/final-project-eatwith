@@ -246,7 +246,7 @@ public class GatherController {
 		int gatherEnrolledCount = gatherService.countGatherMem(gatherNo);
 		title = String.format("[%s]모임에 새로운 참여자가 들어왔습니다!", gather.getTitle());
 		content = String.format("[%s]모임에 새로운 참가자가 들어왔습니다!\n" + "모임 일시 : [%s]\n" + "참가현황 : ( %d / %d )",
-				gather.getTitle(), gatherDate, gatherEnrolledCount, gather.getCount());
+				gather.getTitle(), gatherDate, gatherEnrolledCount, gather.getCount()+1);
 		Notification ownerNote = Notification.builder().userNo(ownerNo).gatherNo(gatherNo)
 				.restaurantNo(gather.getRestaurantNo()).type(NotificationType.J).title(title).content(content).build();
 		/**
@@ -369,6 +369,10 @@ public class GatherController {
 		param.put("gNo",gNo);
 		param.put("userNo", userNo);
 		int inresult=gatherService.checkLeaderIn(param);
+		// userNo : 어떤 유저가
+		// gNo : 모임명 
+		
+		
 		log.debug("inresult={}",inresult);
 		
 		return ResponseEntity.ok(inresult);
