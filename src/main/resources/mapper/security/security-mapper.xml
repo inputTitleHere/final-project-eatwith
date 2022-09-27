@@ -9,7 +9,7 @@
   	from
   		member
   	where
-  		id = #{username}
+  		id = #{username} and deleted_at is null
   </select>
   <resultMap type="memberSecurity" id="memberAuthMap">
   	<id column="no" property="no"/>	

@@ -101,4 +101,9 @@ public class MemberServiceImpl implements MemberService {
 	public String selectOneNameByNo(int userNo) {
 		return memberDao.selectOneNameByNo(userNo);
 	}
+	
+	@Override
+	public int memberQuit(int userNo) {
+		return memberDao.memberQuit(userNo);
+	}
 }

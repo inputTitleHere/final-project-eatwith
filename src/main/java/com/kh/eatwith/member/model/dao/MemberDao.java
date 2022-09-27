@@ -59,4 +59,9 @@ public interface MemberDao {
 	@Select("select m.name from review r join member m on r.user_no = m.no where r.user_no = #{userNo}")
 	String selectOneNameByNo(int userNo);
 
+	@Update("update member set deleted_at = sysdate where no=#{userNo}")
+	int memberQuit(int userNo);
+
+	
+	
 }

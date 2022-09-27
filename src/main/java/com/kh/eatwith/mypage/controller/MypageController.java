@@ -96,7 +96,7 @@ public class MypageController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping({"","/","/myfavs","/mygather","/enrolledGather","/userinfo","/password"})
+	@GetMapping({"","/","/myfavs","/mygather","/enrolledGather","/userinfo","/password","/secede"})
 	public String mypage() {
 		return "mypage/mypage";
 	}
