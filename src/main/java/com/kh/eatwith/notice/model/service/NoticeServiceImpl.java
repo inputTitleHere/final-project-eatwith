@@ -6,14 +6,12 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.eatwith.notice.model.dao.NoticeDao;
 import com.kh.eatwith.notice.model.dto.Notice;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.security.o3logon.a;
 
 @Transactional(rollbackFor = Exception.class)
 @Service

@@ -13,9 +13,6 @@ import com.kh.eatwith.review.model.dto.Review;
 
 public interface SearchService {
 
-//	List<Gather> selectGatherSearch(Map<String, Integer> param);
-
-	// 일반 검색
 		List<TestMap> selectGatherSearch(Map<String, Object> param);
 	
 		List<TestMap> selectReviewSearch(Map<String, Object> param);
@@ -28,21 +25,10 @@ public interface SearchService {
 	
 		int getTotalRestaurant(Map<String, Object> param);
 	
-	
-
-//	List<CustomMap> selectGatherTest(Map<String, Object> param);
-//
-//	List<CustomMap> selectReviewTest(Map<String, Object> param);
-//
-//	List<TestMap> selectRestaurantTest(Map<String, Object> param);
-//
-//		
-	// 상세 검색(1) : 필터 데이터
 		List<CustomMap> selectDistrictList();
 	
 		List<CustomMap> selectFoodTypeList();
 		
-	// 상세 검색(2) : 결과 데이터
 		List<TestMap> selectGatherPersonal(Map<String, Object> param);
 	
 		List<TestMap> selectRestaurantPersonal(Map<String, Object> param);

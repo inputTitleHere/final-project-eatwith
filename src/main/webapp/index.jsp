@@ -9,7 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <title>같이먹을래</title>
-  <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/image/favicon.ico">
 </head>
 <body>
 

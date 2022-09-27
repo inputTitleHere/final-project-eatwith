@@ -1,5 +1,6 @@
 package com.kh.eatwith.common;
 
+
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
@@ -23,6 +24,7 @@ public class CustomMap extends HashMap<String, Object> {
 			
 			value = ((java.sql.Timestamp) value).toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
 		}
+
 		
 		return super.put(JdbcUtils.convertUnderscoreNameToPropertyName(key), value);
 	}
