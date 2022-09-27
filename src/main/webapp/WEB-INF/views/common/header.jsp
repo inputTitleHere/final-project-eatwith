@@ -41,7 +41,7 @@
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/notice/noticeList">공지사항</a></li>
 						<sec:authorize access="hasRole('USER')">
-							<li>
+							<li class="mypage">
 								<a href="${pageContext.request.contextPath}/mypage">마이페이지<span id="notification-count"></span>
 								</a>
 							</li>
