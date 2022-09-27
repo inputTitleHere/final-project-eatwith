@@ -23,6 +23,9 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
+*{
+	font-family:var(--our-font);
+}
 #container{
     display: flex;
     justify-content: center;
@@ -31,25 +34,26 @@
 	left:0;
 	right:0;
 	margin:auto;
-	padding:100px;
+	margin:20px auto;
+	padding:0px;
 }
 table{
     background-color: white;
     margin: 20px;
     padding: 30px;
-   	border:2px solid var(--indigo-blue);
+   	border:4px solid var(--indigo-blue);
 	border-radius:10px;
 }
 th{
     padding-right: 50px;
     padding-bottom: 20px;
     width: 100px;
-    font-size:18px;
+    font-size:20px;
 }
 td{
     padding-bottom: 20px;
     width: 745px;
-    font-size:18px;
+    font-size:20px;
     
 }
 #gatherTitle{
@@ -94,6 +98,7 @@ td{
     height: 50px;
     font-size: 20px;
 	border-radius:10px;
+	cursor : pointer;
 }
 #gatherUpdate,#gatherDelete{
     background-color: #DC948A;
@@ -105,6 +110,19 @@ td{
     height: 40px;
     font-size: 16px;
   	border-radius:10px;
+  	cursor : pointer;
+}
+#gatherDeleteA{
+    background-color: #DC948A;
+    border: 0;
+    color: white;
+    margin-top: 10px;
+    margin-left: 40px;
+    width: 500px;
+    height: 40px;
+    font-size: 16px;
+  	border-radius:10px;
+    cursor : pointer;
 }
 #title{
 	font-size:24px;
@@ -228,14 +246,13 @@ td{
                         	<sec:authentication property="principal.no" var="loginMember"/>
                         	<input type="hidden" name="userNo" id="login" value="${loginMember}"/>
                         	</sec:authorize>
-
         				</form>
                     </td>
                 </tr>
                 <tr>
                     <th>모임 시간</th>
                     <td><fmt:parseDate value="${gather.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-                        <fmt:formatDate value="${meetTime}" pattern="MM월dd일 a KK:mm"/>
+                        <fmt:formatDate value="${meetTime}" pattern="MM월 dd일 E요일 a hh:mm"/>
                     </td>
                 </tr>
                 <tr>
@@ -285,6 +302,9 @@ td{
                         <button type="button" id="gatherUpdate" onclick="location.href='<%=request.getContextPath()%>/gather/gatherUpdate?no=${gather.no}';">수정</button>
                          <button type="button" id="gatherDelete" onclick="deleteGather()">삭제</button>
                     </c:if>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <button type="button" id="gatherDeleteA" onclick="deleteGather()">삭제</button>
                     </sec:authorize>
                     </td>
                 </tr>
@@ -386,6 +406,10 @@ td{
 		    const loginMember=document.querySelector('#loginMember').value;
 		    
 		    if(confirm("참여를 취소하시겠습니까?")){
+	        	if(loginMember==${gather.userNo}){
+	        		alert('모임장은 참여 취소가 불가능합니다. 모임을 원치 않으시면 삭제해주세요.');
+	        	}
+	        	else{
 	       		$.ajax({
 	       			url:"${pageContext.request.contextPath}/gather/cancelGather",
 	       			method:"POST",
@@ -402,7 +426,7 @@ td{
 	       			error:console.log
 	       		})
 		    }
-	    }
+	    }}
 	    </sec:authorize>
         const deleteGather=()=>{
         	if(confirm("정말 모임을 삭제하시겠습니까?")){

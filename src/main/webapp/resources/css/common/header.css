@@ -13,6 +13,11 @@ header{
 	position: sticky;
 	top: 0;
 	z-index: 10;
+	margin:0 auto;
+	font-family:var(--short-font);
+}
+body{
+	margin:0px;
 }
 
 .header-container{
@@ -97,6 +102,8 @@ header{
 .login-container *{
 	display: inline-block;
 	vertical-align : middle;
+	font-family:var(--short-font);
+	
 }
 
 .login-container img{
