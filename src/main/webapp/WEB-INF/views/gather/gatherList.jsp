@@ -31,7 +31,7 @@ h3{
 	padding:20px 100px 100px 100px;
 }
 aside {
-	border:2px solid var(--indigo-blue);
+	border:4px solid var(--indigo-blue);
 	border-radius:10px;
 	width: 260px;
 	margin-left: 10px;
@@ -53,7 +53,7 @@ aside {
 	width:45%;
 }
 #content {
-	border:2px solid var(--indigo-blue);
+	border:4px solid var(--indigo-blue);
 	border-radius:10px;
 	width: 720px;
 	background-color: white;

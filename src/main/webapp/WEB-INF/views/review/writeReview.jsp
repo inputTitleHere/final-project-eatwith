@@ -36,7 +36,7 @@ aside{
     background-color: white;
     white-space: normal;
     height:fit-content;
-   	border:2px solid var(--indigo-blue);
+   	border:4px solid var(--indigo-blue);
 	border-radius:10px;
 }
 #review{
@@ -48,7 +48,7 @@ aside{
 	padding-right: 20px;
 	margin-right: 10px;
 	padding:30px;
-   	border:2px solid var(--indigo-blue);
+   	border:4px solid var(--indigo-blue);
 	border-radius:10px;
 }
 #makegather{
