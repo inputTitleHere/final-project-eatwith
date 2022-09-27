@@ -1,13 +1,12 @@
 package com.kh.eatwith.restaurant.controller;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.eatwith.common.typehandler.EatWithUtils;
 import com.kh.eatwith.district.model.dto.District;
 import com.kh.eatwith.district.model.service.DistrictService;
 import com.kh.eatwith.favorite.model.service.FavoriteRestaurantService;
@@ -129,7 +128,6 @@ public class RestaurantController {
 			totalTasteAvg = (double) sumTaste / reviews.size();
 			totalPriceAvg = (double) sumPrice / reviews.size();
 			totalServiceAvg = (double) sumService / reviews.size();
-//			totalAvg = ((double) totalTasteAvg + totalPriceAvg + totalServiceAvg) / reviews.size();
 		} else {
 			totalAvg = 0.0;
 			totalTasteAvg = 0.0;
@@ -198,6 +196,26 @@ public class RestaurantController {
 		log.debug("cancelResult = {}", result);
 		
 		return ResponseEntity.ok(result);
+	}
+	
+	//delete from review where user_no = #{userNo}, restaurant_no = #{restaurantNo}
+	
+	@DeleteMapping("/deleteReview")
+	@ResponseBody
+	public ResponseEntity<?> deleteReview(int userNo, String restaurantNo, HttpSession session, int loginMemberNo){
+		Map<String, Object> param = new HashMap<>();
+		param.put("userNo", userNo);
+		param.put("restaurantNo", restaurantNo);
+		
+		loginMemberNo = (int) session.getAttribute("no");
+		List<Review> list = new ArrayList<>();
+		if(userNo == loginMemberNo) {
+			list = reviewService.deleteReviewInRest(param);
+			return ResponseEntity.ok(list);
+		} else {
+			return ResponseEntity.ok(null);
+		}
+		
 	}
 	
 	private boolean isAuthenticated() {

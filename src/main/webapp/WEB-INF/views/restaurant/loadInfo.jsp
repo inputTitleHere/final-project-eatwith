@@ -22,31 +22,35 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/restaurant/loadInfo.css" />
 
+
 </head>
 <body>
+	<div>
+		<%@ include file="/WEB-INF/views/restaurant/map.jsp" %>
+	</div>
 	<section id="info1">
 		<form id="loadInfoFrm">
 			<section>
-				<div style="display: flex; justify-content: space-between">
+				<div id="loadDiv">
 					<div>
 						<h1>${restaurant.name} </h1>
 						<div>
 							[${district.name}][${restaurant.getDong().trim()}]<br/>
 							[${foodType.type}][${restaurant.naverFoodType}]<br/><br/>
 							
-							
+							<fmt:formatNumber value="${totalAvg}" pattern=".0"/>점
 							<div class='RatingStar'>
 						        <div class='RatingScore'>
-						            ${reviews.size()}명의 평가 : (평균)&nbsp;&nbsp;<span style="font-size: 35px; font-weight: bold;">${totalAvg}점  </span> <div class='outer-star'><div class='inner-star'></div></div>
+						            ${reviews.size()}명의 평가 : (평균)&nbsp;&nbsp;<span id="totalAvg"><fmt:formatNumber value="${totalAvg}" pattern=".0"/>점 </span> <div class='outer-star'><div class='inner-star'></div></div>
 						        </div>
 						    </div>
 						</div>
 					</div>
-						<div style="border-left: 1px solid gray; border-spacing: 500px; display: flex; flex-direction:column; justify-content: flex-start;">
+						<div id="favDiv">
 							<p id="favTag">&emsp;이 가게 찜하기&emsp;</p>
-							<div style="text-align: center;">
+							<div class="textCenter">
 								<sec:authorize access="isAnonymous()">
-								<input type="button" value="♡" id="like-restaurant"	onclick="like()"/>
+								<div id="addImg"><img src="${pageContext.request.contextPath}/resources/image/empty.png" onclick="like()" id="like-restaurant"/></div>	
 								<script>
 								const like = () => {
 									alert("로그인 후 이용해주세요.");
@@ -56,14 +60,11 @@
 								<sec:authorize access="isAuthenticated()">
 								<sec:authentication property="principal.no" var="loginMember"/>
 								
-									<input type="button" value="♡" id="like-restaurant" />
-									<input type="hidden" name="loginMember" id="hiddenMemberNo" value="${loginMember}"/>
-									<div style="font-size: 60px; display: none;" id="fav">
-										${loginMember}
+									<div id="addImg">
+										<img src="#" id="like-restaurant"/>
 									</div>
-<!-- 									<div style="display: none;" id="cancelFav"> -->
-<!-- 										찜취소 -->
-<!-- 									</div> -->
+									<input type="hidden" name="loginMember" id="hiddenMemberNo" value="${loginMember}"/>
+									<div id="fav">${loginMember}</div>
 								</sec:authorize>
 							</div>
 						</div>
@@ -100,7 +101,7 @@
 						<div id="btnMenuMoreDiv"><span><input type="button" value="메뉴 더보기" id="btnMenuMore"/></span></div>
 						<div id="moreMenuList"></div>
 						
-						<div id="btnMenuCloseDiv"><span><input type="button" value="접기" id="btnMenuClose" style="display: none"/></span></div>
+						<div id="btnMenuCloseDiv"><span><input type="button" value="접기" id="btnMenuClose"/></span></div>
 						<div id="closeMenuList"></div>
 					</c:if>
 				
@@ -108,12 +109,11 @@
 			<br />
 			<section>
 				<div>
-					<p style="margin-top: 70px;">대표사진</p>
+					<p id="imgP">대표사진</p>
 					<hr />
-					<div style="text-align: center;">
+					<div class="textCenter">
 						<c:if test="${attachs.size() eq '0'}">
-	<!-- 						<span style="text-align: center; font-size: 20px;">아직 등록된 사진이 없습니다 :(</span> -->
-							<span style="text-align: center; font-size: 20px;">등록된 사진이 없습니다 :( </span>
+							<span class="nothingAdd">등록된 사진이 없습니다 :( </span>
 						</c:if>
 						<c:if test="${attachs.size() ne '0'}">
 							<div id="restImg">
@@ -130,21 +130,21 @@
 				<div>
 					<p>가게리뷰</p>
 					<hr />
-					<div id="reviewSummary">
+					<div class="textCenter">
 						<c:if test="${reviews.size() eq '0'}">
-							<span style="text-align: center; font-size: 20px;">등록된 리뷰가 없습니다 :(</span>
+							<span class="nothingAdd">등록된 리뷰가 없습니다 :(</span>
 						</c:if>
 						<c:if test="${reviews.size() ne '0'}">
-							<p style="margin-left: 0;"><c:out value="${reviews.size()}명의 방문자 리뷰"/><br /></p>
-						    <div id="RatingStar">
-						      <div id="RatingScore">
-						        <span style="font-weight: bold; font-size: 30px;">${totalAvg} 점&emsp;</span><div id="outer-star"><div id="inner-star"></div></div>
+							<p><c:out value="${reviews.size()}명의 방문자 리뷰"/><br /></p>
+						    <div class="RatingStar">
+						      <div class="RatingScore">
+						        <span id="totalAvg2"> <fmt:formatNumber value="${totalAvg}" pattern=".0"/>점&emsp;</span><div class="outer-star" style="font-size: 50px;"><div class="inner-star" style="font-size: 50px;"></div></div>
 						      </div>
 						    </div>
 							<br /><br />
 						
-							<div style="padding: 10px 0;">
-								맛 : <fmt:formatNumber value="${totalTasteAvg} " pattern=".0"/><span id="reviewStar">★</span>&emsp;&emsp; 가격 : <fmt:formatNumber value="${totalPriceAvg}" pattern=".0"/><span id="reviewStar">★</span>&emsp;&emsp; 서비스 : <fmt:formatNumber value="${totalServiceAvg}" pattern=".0"/><span id="reviewStar">★</span>
+							<div class="reDiv">
+								맛 : <fmt:formatNumber value="${totalTasteAvg}" pattern=".0"/><span id="reviewStar">★</span>&emsp;&emsp; 가격 : <fmt:formatNumber value="${totalPriceAvg}" pattern=".0"/><span id="reviewStar">★</span>&emsp;&emsp; 서비스 : <fmt:formatNumber value="${totalServiceAvg}" pattern=".0"/><span id="reviewStar">★</span>
 							</div>
 						</c:if>
 					</div>
@@ -152,7 +152,7 @@
 					<div id="addReview">
 						<c:forEach var="review" items="${reviews}" begin="0" end="1">
 							<div id="reviewDiv">
-								<span id="writer"><c:out value="${review.writer}"/></span>
+								<span class="writer"><c:out value="${review.writer}"/></span>
 								<div>
 									<c:if test="${review.overallScore eq '5'}">
 									<span id="reviewStar">★★★★★</span>
@@ -173,8 +173,16 @@
 									<span>☆☆☆☆☆</span>
 									</c:if>
 								</div>
+								
+<%-- 								<sec:authorize access="isAuthenticated()"> --%>
+<%-- 								<sec:authentication property="principal" var="loginMemberr"> --%>
+<%-- 								<c:if test="${review.writer eq loginMemberr.name}"> --%>
+<!-- 								<div><button id="deleteReivew" onclick="deleteReview()">삭제</button></div> -->
+<%-- 								</c:if> --%>
+<%-- 								</sec:authentication> --%>
+<%-- 								</sec:authorize> --%>
 							
-								<div style="padding: 10px 0;">
+								<div class="reDiv">
 									맛<span id="reviewStar">★</span><c:out value="${review.tasteScore}"/>&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span><c:out value="${review.priceScore}"/>&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span><c:out value="${review.serviceScore}"/><br />								
 								</div>
 								<c:out value="${review.content}" /><br />
@@ -182,68 +190,79 @@
 						</c:forEach>
 					</div>
 					<br />
-					<c:if test="${reviews.size() > 2}">
-						<input type="button" value="리뷰더보기" id="btnReviewMore"/>
-						<div id="moreReviewList"></div>
-						<input type="button" value="접기" id="btnReviewClose" style="display: none"/>
-						<div id="closeReviewList"></div>
-					</c:if>
 				</div>
+
+				<c:if test="${reviews.size() > 2}">						
+					<div id="btnReviewMoreDiv"><span><input type="button" value="리뷰더보기" id="btnReviewMore"/></span></div>
+					<div id="moreReviewList"></div>
+					<div id="btnReviewCloseDiv"><span><input type="button" value="접기" id="btnReviewClose"/></span></div>
+					<div id="closeReviewList"></div>
+				</c:if>
+
 			</section>
 		</form>
 	</section>
-
-	<div>
-		<%@ include file="/WEB-INF/views/restaurant/map.jsp" %>
-	</div>
-	
+	<br />
 	<section id="info2">
 		<div id="lastDiv">
-			<div> <!-- style="border-bottom: 1px solid gray; margin-bottom: 10px;" -->
+			<div>
 				<p id="gather">이 가게의 모임</p>
 			</div>
 			<hr />
 			<div id="addGather">
-				<c:forEach var="gathers" items="${gathers}" begin="0" end="3">
+				<c:forEach var="gathers" items="${gathers}" begin="0" end="2">
 					<div id="gatherDiv">
-						<c:out value="${gathers.title}" /><br />
-						<c:out value="${restaurant.name}" /><br />
-						<c:out value="${foodType.type}" /><br />
-						<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-						<fmt:formatDate value="${meetTime}" pattern="MM월dd일 a HH:mm"/><br />
-						<c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /><br />
-						
-						<c:if test="${gathers.ageRestrictionTop eq '0'}">
-							<c:out value="누구나 참여 가능합니다." /><br />
-						</c:if>
-						<c:if test="${gathers.ageRestrictionTop ne '0'}">
-							<c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/><br />
-						</c:if>
-						
-						<c:choose>
-							<c:when test="${gathers.genderRestriction eq 'M' }">
-								<c:out value="성별제한 : 남성만"/>
-							</c:when>
-							
-							<c:when test="${gathers.genderRestriction eq 'F' }">
-								<c:out value="성별제한 : 여성만"/>
-							</c:when>
-							
-							<c:otherwise>
-								<c:out value="성별제한 : 남녀무관" /><br />
-							</c:otherwise>
-						</c:choose>
-						<button type="button" onClick="location.href=`${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}`">모임 페이지로 가기</button>
+						<div id="gaDiv">
+							<div>
+								<span class="writer"><c:out value="${gathers.title}"/></span><br />
+							</div>
+							<div>
+								<span id="district"><c:out value="${district.name}"/></span><span id="food-type"><c:out value="${foodType.type}" /></span><br />
+							</div>
+							<div>
+								<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+								<span><fmt:formatDate value="${meetTime}" pattern="MM월dd일 a hh:mm"/></span><br />							
+							</div>
+							<div>
+								<span><c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /></span><br />
+							</div>
+							<div>
+								<c:if test="${gathers.ageRestrictionTop eq '0'}">
+									<span><c:out value="누구나 참여 가능합니다." /></span><br />
+								</c:if>
+								<c:if test="${gathers.ageRestrictionTop ne '0'}">
+									<span><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
+								</c:if>							
+							</div>
+							<div>
+								<c:choose>
+									<c:when test="${gathers.genderRestriction eq 'M' }">
+										<span><c:out value="성별제한 : 남성만"/></span><br />
+									</c:when>
+									
+									<c:when test="${gathers.genderRestriction eq 'F' }">
+										<span><c:out value="성별제한 : 여성만"/></span><br />
+									</c:when>
+									
+									<c:otherwise>
+										<span><c:out value="성별제한 : 남녀무관" /></span><br />
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div>
+							<input type="button" id="btnGoGatherDetail" value="모임 페이지로 가기" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'" >						
+						</div>
 					</div>
 				</c:forEach>
 			</div>
 			<br />
-				<c:if test="${gathers.size() > 4}">
-					<input type="button" value="모임더보기" id="btnGatherMore"/>
-					<div id="moreGatherList"></div><br />
-					<input type="button" value="접기" id="btnGatherClose" style="display: none"/>
-					<div id="closeGatherList"></div><br />
-				</c:if>			
+			<c:if test="${gathers.size() > 4}">
+				<div id="btnGatherMoreDiv"><span><input type="button" value="모임더보기" id="btnGatherMore"/></span></div>
+				<div id="moreGatherList"></div><br />
+				<div id="btnGatherCloseDiv"><span><input type="button" value="접기" id="btnGatherClose"/></span></div>
+				<div id="closeGatherList"></div><br />
+			</c:if>			
 		</div>
 	</section>
 	<div style="display: none;">
@@ -251,32 +270,25 @@
 	</div>
 	
 	<script>
-	const ratings = {RatingScore: `${totalAvg}`}; 
-    const totalRating = 5;
-    const table = document.querySelector('.RatingStar');
-    function rateIt() {
-        for (rating in ratings) {
-            const ratingPercentage = ratings[rating] / totalRating * 100;
-            const ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
-            const star = table.querySelector(`.\${rating} .inner-star`); 
-            star.style.width = ratingRounded;
-        }
-    }
-    rateIt();
-    
-    const ratings2 = { RatingScore: `${totalAvg}` };
-    const totalRating2 = 5;
-    const table2 = document.querySelector("#RatingStar");
-    function rateIt2() {
-      for (rating2 in ratings2) {
-        ratingPercentage2 = (ratings2[rating2] / totalRating2) * 100;
-        ratingRounded2 = Math.round(ratingPercentage2 / 10) * 10 + "%";
-        star2 = table2.querySelector(`#\${rating} #inner-star`);
-        star2.style.width = ratingRounded2;
-      }
-    }
-    rateIt2();
-    
+	console.log(${loginMember});
+	if(${reviews.size() != 0}){
+		const ratings = {RatingScore: `${totalAvg}`}; 
+	    const totalRating = 5;
+	    const table = document.querySelectorAll('.RatingStar');
+	    function rateIt() {
+	        for (rating in ratings) {
+	            const ratingPercentage = ratings[rating] / totalRating * 100;
+	            const ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
+	            const star1 = table[0].querySelector(`.\${rating} .inner-star`); 
+	            const star2 = table[1].querySelector(`.\${rating} .inner-star`); 
+	            star1.style.width = ratingRounded;
+	            star2.style.width = ratingRounded;
+	        }
+	    }
+	    rateIt();
+		
+	}
+  
 	window.addEventListener('load', ()=> {
 		const userNo = ${loginMember ne null} ? document.querySelector("#hiddenMemberNo").value : 0;
 		const restaurantNo = '${restaurant.no}';
@@ -288,15 +300,18 @@
 				console.log(response);
 				if(response){
 					document.querySelector("#faved").checked = true;
-					document.querySelector("#like-restaurant").value = '❤';
-					document.querySelector("#like-restaurant").style="background-color: white; border: 0 solid white; font-size: 60px; cursor: pointer; color: #EE4949;"
+					newImg = document.querySelector("#like-restaurant");
+					newImg.src = '${pageContext.request.contextPath}/resources/image/fill.png';
+				} else{
+					document.querySelector("#faved").checked = false;
+					newImg = document.querySelector("#like-restaurant");
+					newImg.src = '${pageContext.request.contextPath}/resources/image/empty.png';
 				}
 			},
 			error:console.log
 		})
 		
 	});
-	
 
 	document.querySelector("#like-restaurant").addEventListener('click', ()=>{
 		
@@ -312,11 +327,11 @@
 			data:{"userNo":userNo, "restaurantNo":restaurantNo, "fav":fav},
 			success(response){
 				if(fav){
-					document.querySelector("#like-restaurant").value = '♡';
-					document.querySelector("#like-restaurant").style="background-color: white; border: 0 solid white; font-size: 60px; cursor: pointer;"
+					const newImg = document.querySelector("#like-restaurant");
+					newImg.src = '${pageContext.request.contextPath}/resources/image/empty.png';
 				} else {
-					document.querySelector("#like-restaurant").value = '❤';
-					document.querySelector("#like-restaurant").style="background-color: white; border: 0 solid white; font-size: 60px; cursor: pointer; color: #EE4949;"
+					const newImg = document.querySelector("#like-restaurant");
+					newImg.src = '${pageContext.request.contextPath}/resources/image/fill.png';
 				}
 				favBtn.checked=!fav;
 			},
@@ -341,7 +356,6 @@
 	})
 	
 	if(${menuList.size() > 10}){
-		
 		// 메뉴
 		const moreMenuList = document.querySelector("#moreMenuList");
 		const btnMenuMore = document.querySelector("#btnMenuMore");
@@ -375,7 +389,7 @@
 			moreReviewList.innerHTML = `<div id="addReview">
 				<c:forEach var="review" items="${reviews}" begin="2">
 				<div id="reviewDiv">
-					<span id="writer"><c:out value="${review.writer}"/></span>
+					<span class="writer""><c:out value="${review.writer}"/></span>
 					<div>
 						<c:if test="${review.overallScore eq '5'}">
 						<span id="reviewStar">★★★★★</span>
@@ -397,12 +411,11 @@
 						</c:if>
 					</div>
 				
-					<div style="padding: 10px 0;">
+					<div class="reDiv">
 						맛<span id="reviewStar">★</span><c:out value="${review.tasteScore}"/>&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span><c:out value="${review.priceScore}"/>&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span><c:out value="${review.serviceScore}"/><br />								
 					</div>
 					<c:out value="${review.content}" /><br />
 				</div>
-				<br />
 			</c:forEach>
 		</div><br />`;
 			btnReviewMore.style.display="none";
@@ -415,7 +428,24 @@
 		})
 	}
 
-	if(${gathers.size() > 4}){
+	function deleteReview(e){
+		e.preventDefault();
+		
+		const loginMemberName = $(loginMemberr).value();
+		const userNo = document.querySelector(".writer").value();
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/restaurant/deleteReview",
+			method:"DELETE",
+			data:{"loginMemberName":loginMemberName, "userNo":userNo},
+			success(response){
+				console.log(response)
+			},
+			error:console.log
+		});
+	}
+	
+	if(${gathers.size() > 2}){
 		//모임
 		const moreGatherList = document.querySelector("#moreGatherList");
 		const btnGatherMore = document.querySelector("#btnGatherMore");
@@ -424,35 +454,49 @@
 		
 		document.querySelector("#btnGatherMore").addEventListener('click', (e) => {
 			moreGatherList.innerHTML = `<div id="addGather">
-				<c:forEach var="gathers" items="${gathers}" begin="4">
+				<c:forEach var="gathers" items="${gathers}" begin="3">
 				<div id="gatherDiv">
-					<c:out value="${gathers.title}" /><br />
-					<c:out value="${restaurant.name}" /><br />
-					<c:out value="${foodType.type}" /><br />
-					<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-					<fmt:formatDate value="${meetTime}" pattern="MM월dd일 HH:mm"/><br />
-					<c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /><br />
-					
-					<c:if test="${gathers.ageRestrictionTop eq '0'}">
-						<c:out value="누구나 참여 가능합니다." /><br />
-					</c:if>
-					<c:if test="${gathers.ageRestrictionTop ne '0'}">
-						<c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/><br />
-					</c:if>
-					
-					<c:choose>
-						<c:when test="${gathers.genderRestriction eq 'M' }">
-							<c:out value="성별제한 : 남성만"/>
-						</c:when>
-						
-						<c:when test="${gathers.genderRestriction eq 'F' }">
-							<c:out value="성별제한 : 여성만"/>
-						</c:when>
-						
-						<c:otherwise>
-							<c:out value="성별제한 : 남녀무관" /><br />
-						</c:otherwise>
-					</c:choose>
+					<div id="gaDiv">
+						<div>
+							<span class="writer"><c:out value="${gathers.title}"/></span><br />
+						</div>
+						<div>
+							<span id="district"><c:out value="${district.name}"/></span><span id="food-type"><c:out value="${foodType.type}" /></span><br />
+						</div>
+						<div>
+							<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+							<span><fmt:formatDate value="${meetTime}" pattern="MM월dd일 a hh:mm"/></span><br />							
+						</div>
+						<div>
+							<span><c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /></span><br />
+						</div>
+						<div>
+							<c:if test="${gathers.ageRestrictionTop eq '0'}">
+								<span><c:out value="누구나 참여 가능합니다." /></span><br />
+							</c:if>
+							<c:if test="${gathers.ageRestrictionTop ne '0'}">
+								<span><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
+							</c:if>							
+						</div>
+						<div>
+							<c:choose>
+								<c:when test="${gathers.genderRestriction eq 'M' }">
+									<span><c:out value="성별제한 : 남성만"/></span><br />
+								</c:when>
+								
+								<c:when test="${gathers.genderRestriction eq 'F' }">
+									<span><c:out value="성별제한 : 여성만"/></span><br />
+								</c:when>
+								
+								<c:otherwise>
+									<span><c:out value="성별제한 : 남녀무관" /></span><br />
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+					<div>
+						<input type="button" id="btnGoGatherDetail" value="모임 페이지로 가기" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'" >						
+					</div>
 				</div>
 			</c:forEach>
 		</div>`;
@@ -464,8 +508,8 @@
 			moreGatherList.innerHTML = ``;
 			btnGatherMore.style.display="inline";
 			btnGatherClose.style.display="none";
-		})
-	}	
+		});
+	};
 	</script>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>

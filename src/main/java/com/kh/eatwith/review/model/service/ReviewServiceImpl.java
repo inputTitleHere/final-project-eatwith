@@ -68,4 +68,9 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<Attachment> selectAttachByResNo(String no) {
 		return reviewDao.selectAttachByResNo(no);
 	}
+	
+	@Override
+	public List<Review> deleteReviewInRest(Map<String, Object> param) {
+		return reviewDao.deleteReviewInRest(param);
+	}
 }

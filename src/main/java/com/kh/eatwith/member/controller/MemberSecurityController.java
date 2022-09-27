@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -177,9 +178,20 @@ public class MemberSecurityController {
 
 		return "redirect:" + location;
 	}
-
+	
+	@GetMapping("/memberFind")
+	public void memberFind() {
+		
+	}
+	
+	@PostMapping("/memberFind")
+	public String memberFind(Model model) {
+		
+		return "redirect:member/memberFind";
+	}
+	
 	@GetMapping("/memberFindId")
-	public String memberFind(String name, String phone) {
+	public String memberFindId(String name, String phone) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("name", name);
 		map.put("phone", phone);
@@ -189,7 +201,7 @@ public class MemberSecurityController {
 
 	@GetMapping("/memberFindById")
 	@ResponseBody
-	public ResponseEntity<?> memberFindId(@RequestParam String name, @RequestParam String phone) {
+	public ResponseEntity<?> memberFindById(@RequestParam String name, @RequestParam String phone) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("name", name);
 		map.put("phone", phone);
@@ -201,7 +213,7 @@ public class MemberSecurityController {
 	}
 			 
 	@GetMapping("/memberResetPw")
-	public String memberReset(String id, String name, String email) {
+	public String memberResetPw(String id, String name, String email) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("name", name);
