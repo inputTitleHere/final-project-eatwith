@@ -7,7 +7,7 @@
   <insert id="insertNotification">
   	insert into notification(no,user_no,content,sent_at,gather_no,restaurant_no,type,title)
   	<foreach collection="toSend" item="notification" separator="union all">
-  		select seq_notification_no.nextval, #{notification.userNo},#{notification.content},sysdate,#{notification.gatherNo},#{notification.restaurantNo},#{notification.type},#{notification.title} from dual
+  		select get_notification_seq, #{notification.userNo},#{notification.content},sysdate,#{notification.gatherNo},#{notification.restaurantNo},#{notification.type},#{notification.title} from dual
   	</foreach>
   </insert>
   

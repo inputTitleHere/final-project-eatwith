@@ -12,12 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.eatwith.common.CustomMap;
-import com.kh.eatwith.favorite.model.dto.FavoriteRestaurant;
 import com.kh.eatwith.favorite.model.service.FavoriteRestaurantService;
 import com.kh.eatwith.member.model.dto.MemberSecurity;
 
@@ -55,7 +54,26 @@ public class FavoriteRestaurantController {
 		return ResponseEntity.ok(result);
 	}
 	
-	
+	@PostMapping("/toggleFavoriteRestaurant")
+	public ResponseEntity<?> toggleFavoriteRestaurant(@RequestParam String restaurantNo, @RequestParam boolean setTo){
+		Object MemberObj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		log.debug("memberObj = {}",MemberObj);
+		int no = ((MemberSecurity)MemberObj).getNo();
+		log.debug("Restaurant No = {}",restaurantNo);
+		log.debug("setTo={}",setTo);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("restaurantNo", restaurantNo);
+		param.put("userNo", no);
+		int result=0;
+		if(setTo) {
+			result = favoriteRestaurantService.addFav(param);
+		} else {
+			result = favoriteRestaurantService.cancelFav(param);
+		}
+		
+		return ResponseEntity.ok(null);
+	}
 	
 	
 	

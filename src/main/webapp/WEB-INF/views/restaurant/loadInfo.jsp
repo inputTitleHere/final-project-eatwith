@@ -251,32 +251,23 @@
 	</div>
 	
 	<script>
-	const ratings = {RatingScore: `${totalAvg}`}; 
-    const totalRating = 5;
-    const table = document.querySelector('.RatingStar');
-    function rateIt() {
-        for (rating in ratings) {
-            const ratingPercentage = ratings[rating] / totalRating * 100;
-            const ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
-            const star = table.querySelector(`.\${rating} .inner-star`); 
-            star.style.width = ratingRounded;
-        }
-    }
-    rateIt();
-    
-    const ratings2 = { RatingScore: `${totalAvg}` };
-    const totalRating2 = 5;
-    const table2 = document.querySelector("#RatingStar");
-    function rateIt2() {
-      for (rating2 in ratings2) {
-        ratingPercentage2 = (ratings2[rating2] / totalRating2) * 100;
-        ratingRounded2 = Math.round(ratingPercentage2 / 10) * 10 + "%";
-        star2 = table2.querySelector(`#\${rating} #inner-star`);
-        star2.style.width = ratingRounded2;
-      }
-    }
-    rateIt2();
-    
+	if(${reviews.size() != 0}){
+	      const ratings = {RatingScore: `${totalAvg}`}; 
+	       const totalRating = 5;
+	       const table = document.querySelectorAll('.RatingStar');
+	       function rateIt() {
+	           for (rating in ratings) {
+	               const ratingPercentage = ratings[rating] / totalRating * 100;
+	               const ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
+	               const star1 = table[0].querySelector(`.\${rating} .inner-star`); 
+	               const star2 = table[1].querySelector(`.\${rating} .inner-star`); 
+	               star1.style.width = ratingRounded;
+	               star2.style.width = ratingRounded;
+	           }
+	       }
+	       rateIt();
+	      
+	   }
 	window.addEventListener('load', ()=> {
 		const userNo = ${loginMember ne null} ? document.querySelector("#hiddenMemberNo").value : 0;
 		const restaurantNo = '${restaurant.no}';
