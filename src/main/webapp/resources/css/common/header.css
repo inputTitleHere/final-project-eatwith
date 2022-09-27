@@ -138,6 +138,7 @@ span#userInfo{
 	font-size : 20px;
 	cursor: pointer;
 	text-decoration : none;
+	position:relative;
 }
 
 .login-container button{
@@ -166,3 +167,21 @@ span#userInfo{
     -ms-transform: scale(1.1,1.1);
     transform: scale(1.1,1.1);
 }
+
+.login-container form{
+	margin:0px 0px 0px 10px;
+}
+
+#notification-count{
+	display:block;
+	background-color:var(--red);
+	padding:3px;
+	border-radius:5px;
+	color:white;
+	position:absolute;
+	right:-20px;
+	top:-10px;
+}
+
+
+

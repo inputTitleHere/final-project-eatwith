@@ -51,7 +51,10 @@
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/notice/noticeList">공지사항</a></li>
 						<sec:authorize access="hasRole('USER')">
-							<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
+							<li>
+								<a href="${pageContext.request.contextPath}/mypage">마이페이지<span id="notification-count"></span>
+								</a>
+							</li>
 						</sec:authorize>
 						<sec:authorize access="hasRole('ADMIN')">
 							<li><a href="${pageContext.request.contextPath}/admin/adminPage">관리자페이지</a></li>
@@ -67,7 +70,26 @@
 			</sec:authorize>
 		</div>
 		
+		<sec:authorize access="hasRole('USER')">
+			<script>
+				window.addEventListener('load',()=>{
+					// load notification count;
+					$.ajax({
+						url:'${pageContext.request.contextPath}/notification/getNotificationCount',
+						method:"GET",
+						success(response){
+							console.log(response);
+							const notiCnt = document.querySelector("#notification-count");
+							notiCnt.innerHTML = response;
+						},
+						error:console.log
+					})
+				})
+			</script>
+		</sec:authorize>
+	
 		<script>
+		
 	 	const search=()=>{
     		document.querySelector('#searchform').submit();
     	}
