@@ -18,6 +18,9 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 <style>
+*{
+	font-family:var(--our-font);
+}
 h3{
 	margin:0.5em 0;
 }
@@ -176,6 +179,9 @@ div#type, div#locaName{
 }
 #count{
 	margin:8px 0;
+}
+input[type=checkbox],input[type=radio]{
+	accent-color:#EE4949;
 }
 </style>
 </head>
@@ -441,7 +447,7 @@ div#type, div#locaName{
 					 	<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaname}</span></div>
 					 	<div id="meetDate">
 					 	<fmt:parseDate value="${gather.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-                        <fmt:formatDate value="${meetTime}" pattern="MM월dd일 a KK:mm"/>
+                        <fmt:formatDate value="${meetTime}" pattern="MM월 dd일 E a hh:mm"/>
 					 	</div>
 					 	<div id="count">모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
 					 </div>
