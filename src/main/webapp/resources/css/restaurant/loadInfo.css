@@ -10,10 +10,10 @@ h1 {
 	margin-top: 0;
 }
 .ul1{
-	margin: 10px;
+	margin: 0 10px;
 }
 .ul1 li {
-	margin: 20px 0;
+	margin: 5px 0;
 }
 #info1, #info2 {
 	height: auto;
@@ -36,6 +36,9 @@ h1 {
 }
 #restImg{
 	display: flex;
+}
+#restImg img{
+	margin: 0 10px;
 }
 #lastDiv {
 	padding: 20px;
@@ -75,7 +78,7 @@ h1 {
 	border-radius: 10px;
 	background-color: white;
 	position: relative;
-	padding-bottom: 50px;
+	padding-bottom: 30px;
 }
 p {
 	font-size: 30px;
@@ -142,7 +145,9 @@ hr {
 	color: #3a3c68;
 	padding: 10px 0;
 }
-
+#menuInfo {
+	margin-top: 20px;
+}
 #btnMenuMoreDiv{
 	left: 0;
 	position: absolute;
@@ -154,6 +159,8 @@ hr {
 	cursor: pointer;
 	height: 50px;
 	font-size: 20px;
+	border-radius: 0 0 10px 10px;
+	background-color: #e3e3e3;
 }
 #btnMenuCloseDiv{
 	left: 0;
@@ -167,6 +174,8 @@ hr {
 	cursor: pointer;
 	height: 50px;
 	font-size: 20px;
+	border-radius: 0 0 10px 10px;
+	background-color: #e3e3e3;
 }
 #btnReviewMoreDiv{
 	left: 0;
@@ -268,7 +277,7 @@ hr {
 	border-spacing: 500px; 
 	display: flex; 
 	flex-direction:column; 
-	justify-content: flex-start;
+	justify-content: space-around;
 }
 #addImg{
 	font-size: 60px; 
@@ -277,9 +286,6 @@ hr {
 #fav{
 	font-size: 60px; 
 	display: none;
-}
-#imgP{
-	margin-top: 70px;
 }
 .textCenter{
 	text-align: center;

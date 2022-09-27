@@ -33,4 +33,8 @@ public interface MemberService {
 	int updatePassword(CustomMap param);
 	
 	String selectOneNameByNo(int userNo);
+
+	Member login(Map<String, Object> param);
+
+	int selectNoByName(String userName);
 }

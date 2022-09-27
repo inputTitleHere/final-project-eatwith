@@ -1,80 +1,108 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ page
+	import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@ page import="org.springframework.security.core.Authentication"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="eatwith" />
 </jsp:include>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>가게 정보 페이지</title>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-	<link rel="shortcut icon"
-		href="${pageContext.request.contextPath }/resources/image/favicon.ico">
-	<link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/restaurant/loadInfo.css" />
+<meta charset="UTF-8">
+<title>가게 정보 페이지</title>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+<link rel="stylesheet"
+	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css' />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/root.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/restaurant/loadInfo.css" />
 
 
 </head>
 <body>
 	<div>
-		<%@ include file="/WEB-INF/views/restaurant/map.jsp" %>
+		<%@ include file="/WEB-INF/views/restaurant/map.jsp"%>
 	</div>
 	<section id="info1">
 		<form id="loadInfoFrm">
 			<section>
 				<div id="loadDiv">
 					<div>
-						<h1>${restaurant.name} </h1>
+						<h1>${restaurant.name}</h1>
 						<div>
-							[${district.name}][${restaurant.getDong().trim()}]<br/>
-							[${foodType.type}][${restaurant.naverFoodType}]<br/><br/>
+							[${district.name}][${restaurant.getDong().trim()}]<br />
+							[${foodType.type}][${restaurant.naverFoodType}]<br />
+							<br />
 							<div class='RatingStar'>
-						        <div class='RatingScore'>
-						            ${reviews.size()}명의 평가 : (평균)&nbsp;&nbsp;<span id="totalAvg">${totalAvg}점 </span><div class='outer-star'><div class='inner-star'></div></div>
-						        </div>
-						    </div>
+								<div class='RatingScore'>
+									${reviews.size()}명의 평가 : (평균)&nbsp;&nbsp;<span id="totalAvg">${totalAvg}점
+									</span>
+									<div class='outer-star'>
+										<div class='inner-star'></div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-						<div id="favDiv">
-							<p id="favTag">&emsp;이 가게 찜하기&emsp;</p>
-							<div class="textCenter">
-								<sec:authorize access="isAnonymous()">
-								<div id="addImg"><img src="${pageContext.request.contextPath}/resources/image/empty.png" onclick="like()" id="like-restaurant"/></div>	
+					<div id="favDiv">
+						<p id="favTag">&emsp;이 가게 찜하기&emsp;</p>
+						<div class="textCenter">
+							<sec:authorize access="isAnonymous()">
+								<div id="addImg">
+									<img
+										src="${pageContext.request.contextPath}/resources/image/empty.png"
+										onclick="like()" id="like-restaurant" />
+								</div>
 								<script>
 								const like = () => {
 									alert("로그인 후 이용해주세요.");
 								}
 								</script>
-								</sec:authorize>
-								<sec:authorize access="isAuthenticated()">
-								<sec:authentication property="principal.no" var="loginMember"/>
-								
-									<div id="addImg">
-										<img src="#" id="like-restaurant"/>
-									</div>
-									<input type="hidden" name="loginMember" id="hiddenMemberNo" value="${loginMember}"/>
-									<div id="fav">${loginMember}</div>
-								</sec:authorize>
-							</div>
+							</sec:authorize>
+							<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal.no" var="loginMember" />
+
+								<div id="addImg">
+									<img src="#" id="like-restaurant" />
+								</div>
+								<input type="hidden" name="loginMember" id="hiddenMemberNo"
+									value="${loginMember}" />
+								<div id="fav">${loginMember}</div>
+							</sec:authorize>
 						</div>
+					</div>
 				</div>
 			</section>
 			<hr />
 			<section>
 				<div>
 					<p>가게 정보</p>
-					<div>🚩 &nbsp;&nbsp;<span id="restInfo1">&nbsp; ${restaurant.address}</span></div><br/>
-					<div>📞 &nbsp;&nbsp;<span id="restInfo1">&nbsp; ${restaurant.phone}</span></div><br/>
-					<div>💖 &nbsp;&nbsp;<span id="restInfo1">&nbsp; 이 식당을 ${favCount}명의 사용자가 찜했습니다.</span></div><br/>
+					<div>
+						🚩 &nbsp;&nbsp;<span id="restInfo1">&nbsp;
+							${restaurant.address}</span>
+					</div>
+					<br />
+					<div>
+						📞 &nbsp;&nbsp;<span id="restInfo1">&nbsp;
+							${restaurant.phone}</span>
+					</div>
+					<br />
+					<div>
+						💖 &nbsp;&nbsp;<span id="restInfo1">&nbsp; 이 식당을
+							${favCount}명의 사용자가 찜했습니다.</span>
+					</div>
+					<br />
 				</div>
 			</section>
 			<hr />
@@ -87,7 +115,8 @@
 						</c:forEach>
 					</ul>
 				</div>
-				<div>
+
+				<div id="menuInfo">
 					<p>메뉴정보</p>
 					<ul class="ul1">
 						<c:forEach var="menuList" items="${menuList}" begin="0" end="9">
@@ -95,16 +124,23 @@
 						</c:forEach>
 					</ul>
 				</div>
-					<c:if test="${menuList.size() > 10}">
-						<div id="btnMenuMoreDiv"><span><input type="button" value="메뉴 더보기" id="btnMenuMore"/></span></div>
-						<div id="moreMenuList"></div>
-						
-						<div id="btnMenuCloseDiv"><span><input type="button" value="접기" id="btnMenuClose"/></span></div>
-						<div id="closeMenuList"></div>
-					</c:if>
-				
+				<c:if test="${menuList.size() > 10}">
+					<div id="btnMenuMoreDiv">
+						<span><input type="button" value="메뉴 더보기" id="btnMenuMore" /></span>
+					</div>
+					<div id="moreMenuList"></div>
+
+					<div id="btnMenuCloseDiv">
+						<span><input type="button" value="접기" id="btnMenuClose" /></span>
+					</div>
+					<div id="closeMenuList"></div>
+				</c:if>
 			</section>
 			<br />
+		</form>
+	</section>
+	<section id="info1">
+		<div id="loadInfoFrm">
 			<section>
 				<div>
 					<p id="imgP">대표사진</p>
@@ -116,7 +152,9 @@
 						<c:if test="${attachs.size() ne '0'}">
 							<div id="restImg">
 								<c:forEach var="attach" items="${attachs}">
-									<c:out value="<img src='${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}' id='img'/>" escapeXml="false"/>
+									<c:out
+										value="<img src='${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}' id='img'/>"
+										escapeXml="false" />
 								</c:forEach>
 							</div>
 						</c:if>
@@ -133,74 +171,129 @@
 							<span class="nothingAdd">등록된 리뷰가 없습니다 :(</span>
 						</c:if>
 						<c:if test="${reviews.size() ne '0'}">
-							<p><c:out value="${reviews.size()}명의 방문자 리뷰"/><br /></p>
-						    <div class="RatingStar">
-						      <div class="RatingScore">
-						        <span id="totalAvg2"> <fmt:formatNumber value="${totalAvg}" pattern=".0"/>점&emsp;</span><div class="outer-star" style="font-size: 50px;"><div class="inner-star" style="font-size: 50px;"></div></div>
-						      </div>
-						    </div>
-							<br /><br />
-						
+							<p>
+								<c:out value="${reviews.size()}명의 방문자 리뷰" />
+								<br />
+							</p>
+							<div class="RatingStar">
+								<div class="RatingScore">
+									<span id="totalAvg2"> <fmt:formatNumber
+											value="${totalAvg}" pattern=".0" />점&emsp;
+									</span>
+									<div class="outer-star" style="font-size: 50px;">
+										<div class="inner-star" style="font-size: 50px;"></div>
+									</div>
+								</div>
+							</div>
+							<br />
+							<br />
+
 							<div class="reDiv">
-								맛 : <fmt:formatNumber value="${totalTasteAvg}" pattern=".0"/><span id="reviewStar">★</span>&emsp;&emsp; 가격 : <fmt:formatNumber value="${totalPriceAvg}" pattern=".0"/><span id="reviewStar">★</span>&emsp;&emsp; 서비스 : <fmt:formatNumber value="${totalServiceAvg}" pattern=".0"/><span id="reviewStar">★</span>
+								맛 :
+								<fmt:formatNumber value="${totalTasteAvg}" pattern=".0" />
+								<span id="reviewStar">★</span>&emsp;&emsp; 가격 :
+								<fmt:formatNumber value="${totalPriceAvg}" pattern=".0" />
+								<span id="reviewStar">★</span>&emsp;&emsp; 서비스 :
+								<fmt:formatNumber value="${totalServiceAvg}" pattern=".0" />
+								<span id="reviewStar">★</span>
 							</div>
 						</c:if>
 					</div>
 					<hr />
 					<div id="addReview">
-						<c:forEach var="review" items="${reviews}" begin="0" end="1">
+						<c:forEach var="review" items="${reviews}" begin="0" end="1" varStatus="status">
 							<div id="reviewDiv">
-								<span class="writer"><c:out value="${review.writer}"/></span>
+								
+								<span class="writer"><c:out value="${review.writer}" /></span>
 								<div>
 									<c:if test="${review.overallScore eq '5'}">
-									<span id="reviewStar">★★★★★</span>
+										<span id="reviewStar">★★★★★</span>
 									</c:if>
 									<c:if test="${review.overallScore eq '4'}">
-									<span id="reviewStar">★★★★</span><span>☆</span>
+										<span id="reviewStar">★★★★</span>
+										<span>☆</span>
 									</c:if>
 									<c:if test="${review.overallScore eq '3'}">
-									<span id="reviewStar">★★★</span><span>☆☆</span>
+										<span id="reviewStar">★★★</span>
+										<span>☆☆</span>
 									</c:if>
 									<c:if test="${review.overallScore eq '2'}">
-									<span id="reviewStar">★★</span><span>☆☆☆</span>
+										<span id="reviewStar">★★</span>
+										<span>☆☆☆</span>
 									</c:if>
 									<c:if test="${review.overallScore eq '1'}">
-									<span id="reviewStar">★</span><span>☆☆☆☆</span>
+										<span id="reviewStar">★</span>
+										<span>☆☆☆☆</span>
 									</c:if>
 									<c:if test="${review.overallScore eq '0'}">
-									<span>☆☆☆☆☆</span>
+										<span>☆☆☆☆☆</span>
 									</c:if>
+
+									<div>
+										<c:forEach var="attach" items="${attachs}">
+											<c:if test="${review.no eq attach.reviewNo}">
+												<img
+													src="${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}"
+													id="like-restaurant" />
+											</c:if>
+										</c:forEach>
+									</div>
+
+
+									<sec:authorize access="isAuthenticated()">
+										<sec:authentication property="principal" var="loginMember" />
+										<c:if test="${review.userNo eq loginMember.no}">
+											<input type="hidden" id="loginMemberNo" name="loginMemberNo" value="${loginMember.no}"/>
+											<input type="hidden" id="loginMemberWriter" name="loginMemberWriter" value="${loginMember.name}"/>
+											<button type="button" id="deleteBtn" onclick="deleteReview(${review.no})">삭제</button>
+										</c:if>
+									</sec:authorize>
+
+
 								</div>
-								
-<%-- 								<sec:authorize access="isAuthenticated()"> --%>
-<%-- 								<sec:authentication property="principal" var="loginMemberr"> --%>
-<%-- 								<c:if test="${review.writer eq loginMemberr.name}"> --%>
-<!-- 								<div><button id="deleteReivew" onclick="deleteReview()">삭제</button></div> -->
-<%-- 								</c:if> --%>
-<%-- 								</sec:authentication> --%>
-<%-- 								</sec:authorize> --%>
-							
 								<div class="reDiv">
-									맛<span id="reviewStar">★</span><c:out value="${review.tasteScore}"/>&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span><c:out value="${review.priceScore}"/>&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span><c:out value="${review.serviceScore}"/><br />								
+									맛<span id="reviewStar">★</span>
+									<c:out value="${review.tasteScore}" />
+									&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span>
+									<c:out value="${review.priceScore}" />
+									&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span>
+									<c:out value="${review.serviceScore}" />
+									<br />
 								</div>
-								<c:out value="${review.content}" /><br />
+								<c:out value="${review.content}" />
+								<br />
+								<%-- 								<c:out value="<img src='${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}' id='img'/>" escapeXml="false"/> --%>
+								<c:forEach var="attachs" items="${attachs}">
+									<script>
+										console.log(${attachs.reviewNo});
+										</script>
+									<c:if test="${'review.no' eq 'attach.reviewNo'}">
+										<c:out
+											value="<img src='${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}'/>"
+											escapeXml="false" />
+									</c:if>
+								</c:forEach>
+								<c:out value="${revAttach}" />
 							</div>
 						</c:forEach>
 					</div>
 					<br />
 				</div>
 
-				<c:if test="${reviews.size() > 2}">						
-					<div id="btnReviewMoreDiv"><span><input type="button" value="리뷰더보기" id="btnReviewMore"/></span></div>
+				<c:if test="${reviews.size() > 2}">
+					<div id="btnReviewMoreDiv">
+						<span><input type="button" value="리뷰더보기" id="btnReviewMore" /></span>
+					</div>
 					<div id="moreReviewList"></div>
-					<div id="btnReviewCloseDiv"><span><input type="button" value="접기" id="btnReviewClose"/></span></div>
+					<div id="btnReviewCloseDiv">
+						<span><input type="button" value="접기" id="btnReviewClose" /></span>
+					</div>
 					<div id="closeReviewList"></div>
 				</c:if>
 
 			</section>
-		</form>
+		</div>
 	</section>
-	<br />
 	<section id="info2">
 		<div id="lastDiv">
 			<div>
@@ -209,41 +302,51 @@
 			<hr />
 			<div id="addGather">
 				<c:forEach var="gathers" items="${gathers}" begin="0" end="2">
-					<div id="gatherDiv" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'">
+					<div id="gatherDiv"
+						onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gathers.no}'">
 						<div id="gaDiv">
 							<div>
-								<span class="writer"><c:out value="${gathers.title}"/></span><br />
+								<span class="writer"><c:out value="${gathers.title}" /></span><br />
 							</div>
 							<div>
-								<span id="district"><c:out value="${district.name}"/></span><span id="food-type"><c:out value="${foodType.type}" /></span><br />
+								<span id="district"><c:out value="${district.name}" /></span><span
+									id="food-type"><c:out value="${foodType.type}" /></span><br />
 							</div>
 							<div>
-								<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-								<span><fmt:formatDate value="${meetTime}" pattern="MM월dd일 a hh:mm"/></span><br />							
+								<fmt:parseDate value="${gathers.meetDate}" var="meetTime"
+									pattern="yyyy-MM-dd'T'HH:mm" />
+								<span><fmt:formatDate value="${meetTime}"
+										pattern="MM월dd일 a hh:mm" /></span><br />
 							</div>
 							<div>
-								<span><c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /></span><br />
+								<span><c:out
+										value="모임인원 ( ${memGather} / ${gathers.count+1} )" /></span><br />
 							</div>
 							<div>
 								<c:if test="${gathers.ageRestrictionTop eq '0'}">
-									
+
 								</c:if>
 								<c:if test="${gathers.ageRestrictionTop ne '0'}">
-									<span class="res"><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
-								</c:if>							
+									<span class="res"><c:out
+											value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살" /></span>
+									<br />
+								</c:if>
 							</div>
 							<div>
 								<c:choose>
 									<c:when test="${gathers.genderRestriction eq 'M' }">
-										<span class="res"><c:out value="성별제한 : 남성만"/></span><br />
+										<span class="res"><c:out value="성별제한 : 남성만" /></span>
+										<br />
 									</c:when>
-									
+
 									<c:when test="${gathers.genderRestriction eq 'F' }">
-										<span class="res"><c:out value="성별제한 : 여성만"/></span><br />
+										<span class="res"><c:out value="성별제한 : 여성만" /></span>
+										<br />
 									</c:when>
-									
+
 									<c:otherwise>
-										<span class="res"><c:out value="성별제한 : 남녀무관" /></span><br />
+										<span class="res"><c:out value="성별제한 : 남녀무관" /></span>
+										<br />
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -252,19 +355,25 @@
 				</c:forEach>
 			</div>
 			<c:if test="${gathers.size() > 4}">
-				<div id="btnGatherMoreDiv"><span><input type="button" value="모임더보기" id="btnGatherMore"/></span></div>
-				<div id="moreGatherList"></div><br />
-				<div id="btnGatherCloseDiv"><span><input type="button" value="접기" id="btnGatherClose"/></span></div>
-				<div id="closeGatherList"></div><br />
-			</c:if>			
+				<div id="btnGatherMoreDiv">
+					<span><input type="button" value="모임더보기" id="btnGatherMore" /></span>
+				</div>
+				<div id="moreGatherList"></div>
+				<br />
+				<div id="btnGatherCloseDiv">
+					<span><input type="button" value="접기" id="btnGatherClose" /></span>
+				</div>
+				<div id="closeGatherList"></div>
+				<br />
+			</c:if>
 		</div>
 	</section>
 	<div style="display: none;">
 		<input type="checkbox" id="faved">
+		<input type="hidden" value="${restaurant.no}" name="restaurantNo"/>
 	</div>
-	
+
 	<script>
-	console.log(${loginMember});
 	if(${reviews.size() != 0}){
 		const ratings = {RatingScore: `${totalAvg}`}; 
 	    const totalRating = 5;
@@ -421,18 +530,17 @@
 		})
 	}
 
-	function deleteReview(e){
-		e.preventDefault();
-		
-		const loginMemberName = $(loginMemberr).value();
-		const userNo = document.querySelector(".writer").value();
-		
+
+	
+	function deleteReview(no){
+		console.log(no);
 		$.ajax({
 			url:"${pageContext.request.contextPath}/restaurant/deleteReview",
-			method:"DELETE",
-			data:{"loginMemberName":loginMemberName, "userNo":userNo},
+			method:"get",
+			data:{"no":no},
 			success(response){
-				console.log(response)
+				console.log(response);
+				
 			},
 			error:console.log
 		});
@@ -501,6 +609,6 @@
 		});
 	};
 	</script>
-	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

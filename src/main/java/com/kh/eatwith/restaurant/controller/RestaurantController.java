@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -15,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,7 +117,7 @@ public class RestaurantController {
 			sumTaste += (double) review.getTasteScore();
 			sumPrice += (double) review.getPriceScore();
 			sumService += (double) review.getServiceScore();
-			
+//			System.out.println(review.getUserNo());
 		}
 
 		if(reviews.size() != 0) {
@@ -134,8 +131,6 @@ public class RestaurantController {
 			totalPriceAvg = 0.0;
 			totalServiceAvg = 0.0;
 		}
-		System.out.println(String.format("%.1f", totalAvg));
-//		totalAvg = Math.round(totalAvg * 100) / 100;
 		
 		District district = districtService.findNameByCode(restaurant.getDistrictCode());
 		FoodType foodType = foodtypeService.findTypeByCode(restaurant.getFoodCode());
@@ -202,22 +197,17 @@ public class RestaurantController {
 	
 	//delete from review where user_no = #{userNo}, restaurant_no = #{restaurantNo}
 	
-	@DeleteMapping("/deleteReview")
+	// 리뷰에 고유번호 있음 no
+	
+	@GetMapping("/deleteReview")
 	@ResponseBody
-	public ResponseEntity<?> deleteReview(int userNo, String restaurantNo, HttpSession session, int loginMemberNo){
-		Map<String, Object> param = new HashMap<>();
-		param.put("userNo", userNo);
-		param.put("restaurantNo", restaurantNo);
+	public ResponseEntity<?> deleteReview(@RequestParam int no){
 		
-		loginMemberNo = (int) session.getAttribute("no");
-		List<Review> list = new ArrayList<>();
-		if(userNo == loginMemberNo) {
-			list = reviewService.deleteReviewInRest(param);
-			return ResponseEntity.ok(list);
-		} else {
-			return ResponseEntity.ok(null);
-		}
+		int result = reviewService.deleteReviewInRest(no);
+		log.debug("result = {}", result);
 		
+		return ResponseEntity.ok(result);
+//		return ResponseEntity.ok(null);
 	}
 	
 	private boolean isAuthenticated() {

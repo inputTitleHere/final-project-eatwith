@@ -23,6 +23,8 @@ public interface ReviewService {
 
 	List<Attachment> selectAttachByResNo(String no);
 
-	List<Review> deleteReviewInRest(Map<String, Object> param);
+	int deleteReviewInRest(int no);
+
+//	Attachment selectAttach(int no);
 
 }
