@@ -369,6 +369,10 @@ public class GatherController {
 		param.put("gNo",gNo);
 		param.put("userNo", userNo);
 		int inresult=gatherService.checkLeaderIn(param);
+		// userNo : 어떤 유저가
+		// gNo : 모임명 
+		
+		
 		log.debug("inresult={}",inresult);
 		
 		return ResponseEntity.ok(inresult);
