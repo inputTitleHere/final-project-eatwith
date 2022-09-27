@@ -32,5 +32,9 @@ public class NotificationServiceImpl implements NotificationService {
 	public int deleteNotification(int no) {
 		return notificationDao.deleteNotification(no);
 	}
+	@Override
+	public int getNotificationCount(int no) {
+		return notificationDao.getNotificationCount(no);
+	}
 	
 }

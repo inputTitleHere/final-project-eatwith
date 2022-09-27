@@ -15,4 +15,6 @@ public interface NotificationService {
 
 	int deleteNotification(int no);
 
+	int getNotificationCount(int no);
+
 }

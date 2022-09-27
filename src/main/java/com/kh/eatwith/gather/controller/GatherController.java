@@ -246,7 +246,7 @@ public class GatherController {
 		int gatherEnrolledCount = gatherService.countGatherMem(gatherNo);
 		title = String.format("[%s]모임에 새로운 참여자가 들어왔습니다!", gather.getTitle());
 		content = String.format("[%s]모임에 새로운 참가자가 들어왔습니다!\n" + "모임 일시 : [%s]\n" + "참가현황 : ( %d / %d )",
-				gather.getTitle(), gatherDate, gatherEnrolledCount, gather.getCount());
+				gather.getTitle(), gatherDate, gatherEnrolledCount, gather.getCount()+1);
 		Notification ownerNote = Notification.builder().userNo(ownerNo).gatherNo(gatherNo)
 				.restaurantNo(gather.getRestaurantNo()).type(NotificationType.J).title(title).content(content).build();
 		/**

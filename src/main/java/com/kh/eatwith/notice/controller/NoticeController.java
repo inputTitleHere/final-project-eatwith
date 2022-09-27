@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.JsonObject;
 import com.kh.eatwith.common.typehandler.EatWithUtils;
 import com.kh.eatwith.notice.model.dto.Notice;
 import com.kh.eatwith.notice.model.service.NoticeService;
