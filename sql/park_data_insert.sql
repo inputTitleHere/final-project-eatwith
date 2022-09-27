@@ -76,15 +76,19 @@ select
 from
     review r join restaurant rest on r.restaurant_no = rest.no left join review_image ri on r.no=ri.review_no
 where
-    rest.no='3010000-101-2017-00400';
+    rest.no='3010000-101-2017-00400';3100000-101-2022-00087
 
+select * from (select r.*, m.name as writer from review r join member m on r.user_no = m.no)
+where restaurant_no = '3100000-101-2022-00087';
+select * from gather where restaurant_no = '3100000-101-2022-00087' order by no desc;
 select * from (select r.*, m.name as writer from review r join member m on r.user_no = m.no) where restaurant_no = '3010000-101-2017-00400';
 select * from gather where no = 61;
 select * from member_gather where gather_no = 61;
-select * from review;
 select * from restaurant where name like '%메종드%';
+select * from member where name = '먹짱';
+select * from review;
 select * from review_image;
-select * from review_image order by no desc;
+select * from review r left join review_image img on r.no = img.review_no where r.no = 66;
 select * from favorite_restaurant where user_no = 148;
 select count(*) from favorite_restaurant where restaurant_no = '3010000-101-2017-00400';
 insert into favorite_restaurant values (148,'3010000-101-2017-00400');

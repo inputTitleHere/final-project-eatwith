@@ -62,6 +62,11 @@ public interface MemberDao {
 	@Update("update member set deleted_at = sysdate where no=#{userNo}")
 	int memberQuit(int userNo);
 
+	@Select("select * from member id=#{id} and password = #{password}")
+	Member login(Map<String, Object> param);
+
+	@Select("select no from member where name = #{name}")
+	int selectNoByName(String name);
 	
 	
 }

@@ -41,10 +41,13 @@ public interface ReviewDao {
 	@Select("select name from (select * from review r join member m on r.user_no = m.no) where user_no = #{userNo}")
 	List<String> findName(int userNo);
 
-	@Select("select * from review_image where restaurant_no = #{restaurantNo} order by no desc")
+	@Select("select * from review_image where restaurant_no = #{restaurantNo}")
 	List<Attachment> selectAttachByResNo(String no);
 
-	@Delete("delete from review where user_no = #{userNo} and restaurant_no = #{restaurantNo}")
-	List<Review> deleteReviewInRest(Map<String, Object> param);
+	@Delete("delete from review where no = #{no}")
+	int deleteReviewInRest(int no);
+
+//	@Select("select * from review r left join review_image img on r.no = img.review_no where r.no = {reviewNo}")
+//	Attachment selectAttach(int no);
 
 }

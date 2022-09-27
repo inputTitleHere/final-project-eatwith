@@ -76,8 +76,8 @@ public interface GatherDao {
 	@Select("select * from member where no=#{no}")
 	Member getMemberNo(String loginId);
 
-	@Select("select * from gather where restaurant_no = #{restaurantNo}")
-	List<Gather> selectReviewByRestaurantNo(String no);
+	@Select("select * from gather where restaurant_no = #{restaurantNo} order by no desc")
+	List<Gather> selectReviewByRestaurantNo(String rno);
 
 	List<CustomMap> getNewestGatherings(Map<String, Object> params);
 

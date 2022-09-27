@@ -106,4 +106,14 @@ public class MemberServiceImpl implements MemberService {
 	public int memberQuit(int userNo) {
 		return memberDao.memberQuit(userNo);
 	}
+	
+	@Override
+	public Member login(Map<String, Object> param) {
+		return memberDao.login(param);
+	}
+
+	@Override
+	public int selectNoByName(String userName) {
+		return memberDao.selectNoByName(userName);
+	}
 }

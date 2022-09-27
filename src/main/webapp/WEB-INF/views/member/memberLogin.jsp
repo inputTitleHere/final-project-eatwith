@@ -34,12 +34,13 @@
 		</div>
 		<form:form
 			action="${pageContext.request.contextPath}/member/memberLogin"
-			method="post">
+			method="post"
+			id="loginFrm">
 			<div class="divInFrm">
-				<input type="text" name="id" class="inputInfo" placeholder="아이디" required> 
+				<input type="text" name="id" class="inputInfo" id="memberId" placeholder="아이디" required> 
 			</div>
 			<div class="divInFrm">
-				<input type="password" name="password" class="inputInfo" placeholder="비밀번호" required>
+				<input type="password" name="password" class="inputInfo" id="password" placeholder="비밀번호" required>
 			</div>
 			<div>
 				<div id="rememId">
@@ -57,12 +58,35 @@
 		</div>
 		
 		<div>
-			<p id="noMem" style="">아직 같이먹을래 회원이 아니신가요?</p>
+			<p id="noMem">아직 같이먹을래 회원이 아니신가요?</p>
 			<p id="benefit">회원가입을 하시면 더 많은 정보와 혜택을 받으실 수 있습니다.</p>
 			<br />
 			<input type="button" value="회원가입하기" id="enroll" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll'"/>
 		</div>
 	</section>
+	
+	<script>
+	document.querySelector("#loginBtn").addEventListener('submit', (e) => {
+		e.preventDefault();
+		const memberId = document.querySelector("#id").value;
+		const password = document.querySelector("#pwd").value;
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/memberLogin",
+			method:"POST",
+			data:{"memberId":memberId, "password":password},
+			success(response){
+				console.log(response);
+				if(!response){
+					alert("아이디 또는 비밀번호를 확인해주세요.")
+				}
+			},
+			error:console.log
+		})
+
+	})
+	
+	</script>
 	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>

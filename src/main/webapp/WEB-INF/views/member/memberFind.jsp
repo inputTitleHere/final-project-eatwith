@@ -56,10 +56,16 @@
 			data:{"name":name, "phone":phone},
 			success(response){
 				console.log(response);
-				const {id} = response;
-				findId.innerHTML = `
-				<span>회원님의 아이디는 \${id} 입니다.</span>
-				`;
+				if(!`${password}`){
+					findId.innerHTML = `
+					<span>존재하지 않는 회원입니다.</span>
+					`;
+				} else{
+					const {id} = response;
+					findId.innerHTML = `
+					<span>회원님의 아이디는 \${id} 입니다.</span>
+					`;
+				}
 			},
 			error:console.log
 		});
@@ -107,10 +113,22 @@
 			data:{"id":id, "name":name2, "email":email},
 			success(response){
 				console.log(response);
-				const {password} = response;
-				resetPw.innerHTML = `
-				<span>회원님의 임시 비밀번호는 \${password} 입니다.</span>
-				`;
+				if(!{email}){
+					resetPw.innerHTML = `
+					<span>존재하지 않는 회원입니다.</span>
+					`;
+				} else{
+					
+					const {password} = response;
+					resetPw.innerHTML = `
+					<span>회원님의 임시 비밀번호는 \${password} 입니다.</span>
+					`;
+				}
+
+				
+// 				resetPw.innerHTML = `
+// 				<span>회원님의 임시 비밀번호는 \${password} 입니다.</span>
+// 				`;
 			},
 			error:console.log
 		});

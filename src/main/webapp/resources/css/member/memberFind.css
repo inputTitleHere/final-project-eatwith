@@ -5,6 +5,9 @@ body {
 	background-color: #F0EBEC;
 	text-align: center;
 }
+input{
+	border-radius: 10px;
+}
 h2 {
 	border-bottom: 1px gray solid;
 	padding-bottom: 10px;
@@ -35,8 +38,8 @@ table{
 	background-color: #3A3C68;
 	color: white;
 	font-size: 20px;
-/* 	font-weight: bold; */
 	padding: 1px 0;
+	border: 0 solid #3a3c68
 }
 #findId span {
 	color: red;
