@@ -41,7 +41,7 @@ public interface ReviewDao {
 	@Select("select name from (select * from review r join member m on r.user_no = m.no) where user_no = #{userNo}")
 	List<String> findName(int userNo);
 
-	@Select("select * from review_image where restaurant_no = #{restaurantNo}")
+	@Select("select * from review_image where restaurant_no = #{restaurantNo} order by no desc")
 	List<Attachment> selectAttachByResNo(String no);
 
 	@Delete("delete from review where user_no = #{userNo} and restaurant_no = #{restaurantNo}")

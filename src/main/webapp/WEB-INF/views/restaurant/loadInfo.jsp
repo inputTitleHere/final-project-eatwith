@@ -37,11 +37,9 @@
 						<div>
 							[${district.name}][${restaurant.getDong().trim()}]<br/>
 							[${foodType.type}][${restaurant.naverFoodType}]<br/><br/>
-							
-							<fmt:formatNumber value="${totalAvg}" pattern=".0"/>점
 							<div class='RatingStar'>
 						        <div class='RatingScore'>
-						            ${reviews.size()}명의 평가 : (평균)&nbsp;&nbsp;<span id="totalAvg"><fmt:formatNumber value="${totalAvg}" pattern=".0"/>점 </span> <div class='outer-star'><div class='inner-star'></div></div>
+						            ${reviews.size()}명의 평가 : (평균)&nbsp;&nbsp;<span id="totalAvg">${totalAvg}점 </span><div class='outer-star'><div class='inner-star'></div></div>
 						        </div>
 						    </div>
 						</div>
@@ -83,7 +81,7 @@
 			<section>
 				<div>
 					<p>영업시간</p>
-					<ul>
+					<ul class="ul1">
 						<c:forEach var="whlist" items="${whlist}">
 							<li><c:out value="${whlist}" /></li>
 						</c:forEach>
@@ -91,7 +89,7 @@
 				</div>
 				<div>
 					<p>메뉴정보</p>
-					<ul id="ul1">
+					<ul class="ul1">
 						<c:forEach var="menuList" items="${menuList}" begin="0" end="9">
 							<li><c:out value="${menuList}" /></li>
 						</c:forEach>
@@ -211,7 +209,7 @@
 			<hr />
 			<div id="addGather">
 				<c:forEach var="gathers" items="${gathers}" begin="0" end="2">
-					<div id="gatherDiv">
+					<div id="gatherDiv" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'">
 						<div id="gaDiv">
 							<div>
 								<span class="writer"><c:out value="${gathers.title}"/></span><br />
@@ -228,35 +226,31 @@
 							</div>
 							<div>
 								<c:if test="${gathers.ageRestrictionTop eq '0'}">
-									<span><c:out value="누구나 참여 가능합니다." /></span><br />
+									
 								</c:if>
 								<c:if test="${gathers.ageRestrictionTop ne '0'}">
-									<span><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
+									<span class="res"><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
 								</c:if>							
 							</div>
 							<div>
 								<c:choose>
 									<c:when test="${gathers.genderRestriction eq 'M' }">
-										<span><c:out value="성별제한 : 남성만"/></span><br />
+										<span class="res"><c:out value="성별제한 : 남성만"/></span><br />
 									</c:when>
 									
 									<c:when test="${gathers.genderRestriction eq 'F' }">
-										<span><c:out value="성별제한 : 여성만"/></span><br />
+										<span class="res"><c:out value="성별제한 : 여성만"/></span><br />
 									</c:when>
 									
 									<c:otherwise>
-										<span><c:out value="성별제한 : 남녀무관" /></span><br />
+										<span class="res"><c:out value="성별제한 : 남녀무관" /></span><br />
 									</c:otherwise>
 								</c:choose>
 							</div>
 						</div>
-						<div>
-							<input type="button" id="btnGoGatherDetail" value="모임 페이지로 가기" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'" >						
-						</div>
 					</div>
 				</c:forEach>
 			</div>
-			<br />
 			<c:if test="${gathers.size() > 4}">
 				<div id="btnGatherMoreDiv"><span><input type="button" value="모임더보기" id="btnGatherMore"/></span></div>
 				<div id="moreGatherList"></div><br />
@@ -362,8 +356,8 @@
 		const btnMenuClose = document.querySelector("#btnMenuClose");
 		
 		document.querySelector("#btnMenuMore").addEventListener('click', (e) => {
-			moreMenuList.innerHTML = `<ul id="ul1">
-				<c:forEach var="menuList" items="${menuList}" begin="0" end="9">
+			moreMenuList.innerHTML = `<ul class="ul1">
+				<c:forEach var="menuList" items="${menuList}" begin="10">
 				<li><c:out value="${menuList}" /></li>
 			</c:forEach>
 		</ul>`;
@@ -454,7 +448,7 @@
 		document.querySelector("#btnGatherMore").addEventListener('click', (e) => {
 			moreGatherList.innerHTML = `<div id="addGather">
 				<c:forEach var="gathers" items="${gathers}" begin="3">
-				<div id="gatherDiv">
+				<div id="gatherDiv" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'">
 					<div id="gaDiv">
 						<div>
 							<span class="writer"><c:out value="${gathers.title}"/></span><br />
@@ -471,30 +465,27 @@
 						</div>
 						<div>
 							<c:if test="${gathers.ageRestrictionTop eq '0'}">
-								<span><c:out value="누구나 참여 가능합니다." /></span><br />
+								
 							</c:if>
 							<c:if test="${gathers.ageRestrictionTop ne '0'}">
-								<span><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
+								<span class="res"><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
 							</c:if>							
 						</div>
 						<div>
 							<c:choose>
 								<c:when test="${gathers.genderRestriction eq 'M' }">
-									<span><c:out value="성별제한 : 남성만"/></span><br />
+									<span class="res"><c:out value="성별제한 : 남성만"/></span><br />
 								</c:when>
 								
 								<c:when test="${gathers.genderRestriction eq 'F' }">
-									<span><c:out value="성별제한 : 여성만"/></span><br />
+									<span class="res"><c:out value="성별제한 : 여성만"/></span><br />
 								</c:when>
 								
 								<c:otherwise>
-									<span><c:out value="성별제한 : 남녀무관" /></span><br />
+									<span class="res"><c:out value="성별제한 : 남녀무관" /></span><br />
 								</c:otherwise>
 							</c:choose>
 						</div>
-					</div>
-					<div>
-						<input type="button" id="btnGoGatherDetail" value="모임 페이지로 가기" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'" >						
 					</div>
 				</div>
 			</c:forEach>

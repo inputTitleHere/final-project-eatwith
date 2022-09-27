@@ -9,8 +9,11 @@ h1 {
 	font-weight: bold;
 	margin-top: 0;
 }
-#ul1{
-	margin: 0;
+.ul1{
+	margin: 10px;
+}
+.ul1 li {
+	margin: 20px 0;
 }
 #info1, #info2 {
 	height: auto;
@@ -131,6 +134,9 @@ hr {
 	border: 2px solid #81a6d3;
 	border-radius: 10px;
 	margin: 5px;
+	position: relative;
+/* 	min-height: 250px; */
+	cursor: pointer;
 }
 #reviewStar{
 	color: #3a3c68;
@@ -206,6 +212,7 @@ hr {
 	left: 0;
 	position: absolute;
 	width: 100%;
+	bottom: 0;
 }
 #btnGatherClose{
 	display: none;
@@ -249,6 +256,8 @@ hr {
 	background-color: #dc948a; 
 	border-bottom-left-radius: 7px; 
 	border-bottom-right-radius: 7px;
+	position: absolute;
+	bottom: 0;
 }
 #totalAvg{
 	font-size: 35px; 
@@ -297,6 +306,10 @@ hr {
 }
 #gaDiv div {
 	margin-bottom: 10px; 
+}
+.res{
+	border-left: 3px solid #3a3c68;
+    padding-left: 5px;
 }
 #district{
 	padding-right: 5px;

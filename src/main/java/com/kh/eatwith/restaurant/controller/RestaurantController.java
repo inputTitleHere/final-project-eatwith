@@ -134,6 +134,8 @@ public class RestaurantController {
 			totalPriceAvg = 0.0;
 			totalServiceAvg = 0.0;
 		}
+		System.out.println(String.format("%.1f", totalAvg));
+//		totalAvg = Math.round(totalAvg * 100) / 100;
 		
 		District district = districtService.findNameByCode(restaurant.getDistrictCode());
 		FoodType foodType = foodtypeService.findTypeByCode(restaurant.getFoodCode());
@@ -156,7 +158,7 @@ public class RestaurantController {
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("attachs", attachs);
-		model.addAttribute("totalAvg", totalAvg);
+		model.addAttribute("totalAvg", String.format("%.1f", totalAvg));
 		model.addAttribute("totalTasteAvg", totalTasteAvg);
 		model.addAttribute("totalPriceAvg", totalPriceAvg);
 		model.addAttribute("totalServiceAvg", totalServiceAvg);
