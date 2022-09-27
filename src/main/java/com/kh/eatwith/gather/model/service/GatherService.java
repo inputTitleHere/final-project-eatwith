@@ -68,4 +68,5 @@ public interface GatherService {
 
 	List<Map<String, Object>> gatherLatestMore(int startNum);
 
+	Member getMemberInfo(String loginId);
 }

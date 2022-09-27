@@ -34,7 +34,7 @@ input#title{
 #gatherContent{
     height: 200px;
     width: 700px;
-/*     font-size: 16px; */
+    font-size: 16px;
     border-radius:10px;    
 }
 #counter{
@@ -85,6 +85,7 @@ input#findStore{
     margin-left: 5px;
     height: 27px;
 	border-radius:10px;
+	border:0;
     background-color: #DC948A;
     color: white;
     padding: 5px 10px;
@@ -111,10 +112,11 @@ input#findStore{
 .modalBox {
     position: absolute;
     background-color: #F0EBEC;
-    width: 500px;
+    width: 510px;
     height: 300px;
     padding: 15px;
     overflow: auto;
+    border-radius:10px;
 }
 .modalBox::-webkit-scrollbar{
     display: none;
@@ -125,10 +127,10 @@ input#findStore{
     border: 0;
     background-color: #F0EBEC;
     margin: 0 auto;
-    margin-left: 475px;
+    margin-left: 485px;
 }
 .modalBox div{
-	display:flex;
+	display:block;
 	align-item:center;
 	justify-content:space-between;
 }
@@ -144,18 +146,42 @@ input#findStore{
 #pilsu{
 	color:#EE4949;
 }
+div.modal-restaurant{
+	display:fixed;
+	align-items:center;
+	flex-wrap : wrap;
+}
 .modal-restaurant-title{
 	position:relative;
-	width:160px;
+	width:180px;
 	font-size:18px;
 	font-weight:bold;
 	overflow:hidden;
 }
+ul:before, ul:after {
+    text-align: center;
+    display: block;
+    border: 1px solid black;
+    border-bottom: 0;
+    width: 48%;
+}
+ul,li{
+	display:list-item;
+	list-style-position:inside; 
+	list-style-type:none;
+	clear:both;
+    margin-left: 0;
+    padding-left: 10px;
+}
 .modal-restaurant-district{
+	margin-left:20px;
 	width:80px;
 }
+.modal-restaurant-category{
+	position:absolute;
+	left:270px;
+}
 .modal-restaurant-type{
-	margin-left:10px;
 	width:100px;
 }
 .selectRestaurant{
@@ -164,13 +190,17 @@ input#findStore{
 	background-color:var(--jjin-pink);
 	color:white;
 	border:0;
+	position:absolute;
+	left:460px;
+	border-radius:10px;
 }
 #storeName{
 	font-size:18px;
 	font-weight:bold;	
 }
 li{
-/* 	list-style:none; */
+ 	list-style:none; 
+ 	width:480px;
 }
 #ageChk,#genderChk{
 	accent-color:var(--jjin-pink);

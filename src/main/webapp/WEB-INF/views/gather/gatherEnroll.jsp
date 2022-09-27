@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -25,7 +25,7 @@
 </head>
 <body bgcolor="#F0EBEC">
 	<div id="container">
-		<form class="form" name="gatherEnrollFrm" method="post"
+		<form class="form" id="gatherEnrollFrm" name="gatherEnrollFrm" method="post"
 			action="${pageContext.request.contextPath}/gather/gatherEnroll">
 			<table>
 				<tbody>
@@ -33,14 +33,14 @@
 						<th>모임 제목<span id="pilsu">*</span>
 						</th>
 						<td><input type="text" name="title" id="title"
-							placeholder="모임 제목을 입력해 주세요."></td>
+							placeholder="모임 제목을 입력해 주세요." required></td>
 					</tr>
 					<tr>
 						<th>모임 장소<span id="pilsu">*</span>
 						</th>
 						<td><input type="hidden" id="restaurantNo"
-							name="restaurantNo" /> <input type="hidden" id="foodCode"
-							name="foodCode" /> <input type="hidden" id="districtCode"
+							name="restaurantNo"/> <input type="hidden" id="foodCode"
+							name="foodCode"/> <input type="hidden" id="districtCode"
 							name="districtCode" /> <input type="text" id="findStore"
 							name="findStore" placeholder="가게 이름을 입력해주세요.">
 						<button type="button" class="openBtn">검색</button>
@@ -66,7 +66,7 @@
 							const restaurantType=document.querySelector('#storeCategory');
 							const foodCode=document.querySelector('#foodCode');
 							const districtCode=document.querySelector('#districtCode');
-							
+							console.log("가게이름 "+name);
 							restaurantName.innerHTML=name;
 							restaurantDistrict.innerHTML=districtName;
 							restaurantType.innerHTML=type;
@@ -80,9 +80,14 @@
 							districtCode.value=e.target.dataset.districtCode;
 							
 							document.querySelector(".modal").classList.add("hidden");
+					        document.querySelector("#ageChk").style.visibility="inherit";
+					        document.querySelector("#genderChk").style.visibility="inherit";
 						}
 					      const open = () => {
 					        document.querySelector(".modal").classList.remove("hidden");
+					        document.querySelector("#ageChk").style.visibility="hidden";
+					        document.querySelector("#genderChk").style.visibility="hidden";
+
 					        const searchString = document.querySelector('#findStore').value;
 					        if(searchString==""){
 					        	alert('검색어를 입력 후 검색해주세요.');
@@ -104,8 +109,8 @@
 					           			<li>
 					           				<div class="modal-restaurant">
 					           					<span class="modal-restaurant-title">\${name}</span>
-					           					<span class="modal-restaurant-district">\${districtName}</span>
-					        					| <span class="modal-restaurant-type">\${type}</span>
+					           					<span class="modal-restaurant-category"><span class="modal-restaurant-district">\${districtName}</span>
+					        					| <span class="modal-restaurant-type">\${type}</span></span>
 					           					<button type="button" class="selectRestaurant" data-name=\${name} data-district-name=\${districtName} data-type=\${type} data-food-code=\${foodCode} data-district-code=\${districtCode} onclick="setRestaurant(event)" value=\${no}>선택</button>
 					           				</div>
 					       					<hr />
@@ -124,6 +129,8 @@
 
 					    const close = () => {
 					        document.querySelector(".modal").classList.add("hidden");
+					        document.querySelector("#ageChk").style.visibility="inherit";
+					        document.querySelector("#genderChk").style.visibility="inherit";
 					    }
 
 					    document.querySelector(".openBtn").addEventListener("click", open);
@@ -191,7 +198,7 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td><input type="submit" id="gatherSubmit" onclick="chkAge"
+						<td><input type="submit" id="gatherSubmit" 
 							value="등록"></td>
 					</tr>
 				</tbody>
@@ -201,6 +208,8 @@
 						<sec:authentication property="principal.no" var="loginMember"/>
 						<input type="hidden" name="userNo" id="userNo" value="${loginMember}" />
 						<input type="hidden" name="count" id="count" />
+						<input type="hidden" name="writerAge" id="writerAge" value="${2023-member.bornAt}" />
+						<input type="hidden" name="writerGender" id="writerGender" value="${member.gender}" />
 						
 						</th>
 					</tr>
@@ -209,7 +218,58 @@
 		</form>
 	</div>
 	<script type="text/javascript"
-		src="/eatwith/resources/js/gather/gatherEnroll.js"></script>
+		src="/eatwith/resources/js/gather/gather.js">
+    //유효성검사
+	document.getElementById("count").value=1;
+
+    const chkForm=(e)=>{
+    	e.preventDefault();
+        const checkedGenderRestriction=document.querySelector('#ageChk').checked;
+        console.log(checkedGenderRestriction);
+        var gatherMin=document.querySelector('#gatherMin').value;
+        var gatherMax=document.querySelector('#gatherMax').value;
+        const frm=document.gatherEnrollFrm;
+        console.log("실행됨");
+        
+        if(frm.title.value==""){
+            alert("제목을 작성해주세요.");
+            frm.title.focus();
+            return false;
+        }
+               
+        if(frm.content.value==""){
+            alert("내용을 작성해주세요.");
+            frm.gatherContent.focus();
+            return false;
+        }
+        //나이설정문제
+        if(!checkedGenderRestriction){
+            if(gatherMin>gatherMax){
+                alert("나이 제한을 올바르게 입력해주세요.");
+                console.log("min"+gatherMin);
+                console.log("max"+gatherMax);
+                frm.gatherMin.focus();
+                return false;
+
+            }
+            if(gatherMin>=wAge||gatherMax<=wAge){
+            	console.log("나이제한");
+            	alert("나이 제한에 본인의 나이가 포함되지 않습니다.");
+            	frm.gatherMin.focus();
+            	return false;
+            }
+        }
+
+
+        //모임 장소선택
+        if(chkRestaurant==0){
+        	alert("모임 음식점 장소를 정해주세요.");
+        	return false;
+        }
+        frm.submit();
+    }
+    document.querySelector('#gatherEnrollFrm').addEventListener('submit',chkForm);
+	</script>
 		    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		
 </body>

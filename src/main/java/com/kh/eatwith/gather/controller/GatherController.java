@@ -60,14 +60,23 @@ public class GatherController {
 	FavoriteRestaurantService favoriteRestaurantService;
 	
 	@GetMapping("/gatherEnroll")
-	public void gatherEnroll() {}
+	public void gatherEnroll(Principal principal,Model model) {
+		if(isAuthenticated()) {
+			String loginId=principal.getName();
+			log.debug("loginId={}",loginId);
+			Member member=gatherService.getMemberInfo(loginId);//모임장 정보
+			log.debug("member={}",member);
+			model.addAttribute("member",member);
+			
+		}
+	}
 	
 	@PostMapping("/gatherEnroll")
 	public String gatherEnroll(Gather gather, MemberGather memberGather, RedirectAttributes redirectAttr) {
 		log.debug("gather = {}",gather);
 		log.debug("memberGather ={}",memberGather);
 		int result=gatherService.gatherEnroll(gather); // selectkey으로 신규생셩 no를 받아왔음했음. -- 백승윤
-		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");
+		redirectAttr.addFlashAttribute("msg","모임이 등록되었습니다.");		
 		
 		// 백승윤 2022/09/20 모임 등록시 가게 찜한 사람에게 알림 보내기
 		String restaurantNo = gather.getRestaurantNo();
@@ -166,9 +175,16 @@ public class GatherController {
 	}
 	
 	@GetMapping("/gatherUpdate")
-	public String gatherUpdate(@RequestParam int no, Model model) {
+	public String gatherUpdate(Principal principal,@RequestParam int no, Model model) {
 		Gather gatherO=gatherService.selectOneGather(no);
 		Map<String,Object> gather = gatherService.selectOneGatherInfo(no);
+		if(isAuthenticated()) {
+			String loginId=principal.getName();
+			log.debug("loginId={}",loginId);
+			Member member=gatherService.getMemberInfo(loginId);//모임장 정보
+			log.debug("member={}",member);
+			model.addAttribute("member",member);
+		}
 		model.addAttribute("gatherO",gatherO);
 		model.addAttribute("gather",gather);
 		log.debug("gatherO = {}",gatherO);

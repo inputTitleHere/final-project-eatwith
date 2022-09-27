@@ -471,6 +471,7 @@ div#type, div#locaName{
         function selectAll(selectAll){
             const checkboxes = document.getElementsByName('location');
             checkboxes.forEach((checkbox)=>{
+                location.href="${pageContext.request.contextPath}/gather/gatherList";
                 checkbox.checked=selectAll.checked;
             })
         }

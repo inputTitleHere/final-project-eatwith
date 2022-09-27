@@ -107,6 +107,8 @@ public interface GatherDao {
 	List<Map<String, Object>> gatherMoreAll(int page);
 
 	List<Map<String, Object>> gatherLatestMore(int page);
+	@Select("select * from member where no=#{loginId}")
+	Member getMemberInfo(String loginId);
 
 	//@Select("select count(*) as count from member_gather where gather_no=#{no} and user_no=#{loginMember}")
 

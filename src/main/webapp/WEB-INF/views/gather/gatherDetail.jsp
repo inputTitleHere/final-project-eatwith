@@ -109,6 +109,7 @@ td{
 #title{
 	font-size:24px;
 	font-weight:bold;
+	font-family:var(--short-font);
 }
 .gatherRes{
 	padding: 5px 0px 5px 0px;
@@ -212,9 +213,9 @@ td{
                     	    document.getElementById("gatherOut").style.display="none";
                     	}
                     	else{
-                    	    document.getElementById("gatherIn2").style.display="none";
-                    	    document.getElementById("gatherOut").style.display="none";
                     	    document.querySelector("#ended").innerHTML='[참여불가] 이미 지난 모임입니다.';
+                    	    document.getElementById("gatherIn2").style.visibility="hidden";
+                    	    document.getElementById("gatherOut").style.display="none";
                     	}
                         </script>
                        	</sec:authorize>
@@ -308,10 +309,10 @@ td{
 				success(response){
 					console.log(response);
 					if(response==0){
-	       		        document.getElementById("gatherIn").style.display="inline";
+	       		        document.getElementById("gatherIn2").style.display="inline";
 	       		        document.getElementById("gatherOut").style.display="none";
 					}else{
-                    document.getElementById("gatherIn").style.display="none";
+                    document.getElementById("gatherIn2").style.display="none";
                     document.getElementById("gatherOut").style.display="inline";
 					}
 				},
@@ -331,9 +332,9 @@ td{
        			},
        			success(response){
        				console.log(response);
-                       document.getElementById("gatherIn").style.display="none";
+                       document.getElementById("gatherIn2").style.display="none";
                        document.getElementById("gatherOut").style.display="inline";
-                       document.querySelector('#countNow').innerText=${count+1};
+                       document.querySelector('#countNow').innerHTML=${count+1};
        			},
        			error:console.log
        		})
@@ -394,7 +395,7 @@ td{
 	       			},
 	       			success(response){
 	       				console.log(response);
-		       		        document.getElementById("gatherIn").style.display="inline";
+		       		        document.getElementById("gatherIn2").style.display="inline";
 		       		        document.getElementById("gatherOut").style.display="none";
 	                        document.querySelector('#countNow').innerText=${count-1};
 	       			},

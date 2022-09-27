@@ -148,4 +148,8 @@ public class GatherServiceImpl implements GatherService{
 	public List<Map<String, Object>> gatherLatestMore(int startNum) {
 		return gatherDao.gatherLatestMore(startNum);
 	}
+	@Override
+	public Member getMemberInfo(String loginId) {
+		return gatherDao.getMemberInfo(loginId);
+	}
 }
