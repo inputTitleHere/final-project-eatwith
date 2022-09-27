@@ -13,14 +13,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>공지사항-목록</title>
 			<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css" />
+			<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/notice/noticeList.css" />
 			<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/image/favicon.ico">
 			<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-			<style>
-			/*
-				1) 부트스트랩 쓸거면 후에 적용 (Ajax..?)
-				2) CSS 파일은 따로 설정
-			*/
-			</style>
 	</head>
 <c:if test="${not empty msg}">
 <script>
@@ -31,17 +26,18 @@
 		<!-- header include -->
 		<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	
-		<!-- 공지사항 : section 내, table + button + pagebar 구성
-					1) table : 가로형 사진 게시판으로, DB 에 저장된 첫번째 이미지 노출(이미지 없을 시, 기본 사진 노출)
-					2) button : 사용자 권한 있는 이용자에게만 노출되도록 설정
-					3) pagebar : 만들어 두신 것 사용했습니다.
-						+) table 틀, button 함수 : 수업 때 내용이랑 동일하게 구성되었습니다.
-				-->		
-		<section id="noticeList-container" class="container">
+			<section id="noticeList-container" class="container">
+				<sec:authorize access="hasRole('ADMIN')">			
+					<input type="button" value="새로운 공지 작성하기" id="notice-add" class="button-notice-add"
+						onclick="location.href='${pageContext.request.contextPath}/notice/noticeForm';" />
+				</sec:authorize>
 			<table id="table-noticeList" class="table">
+			<thead>
 				<tr id="table-title" class ="title">
 					<th>공지사항</th>
 				</tr>
+			</thead>
+			<tbody>
 				<c:if test="${empty list}">
 					<tr id="table-data-empty" class ="contents">
 						<td colspan="6" class="text-center">조회된 공지사항이 없습니다.</td>
@@ -49,16 +45,20 @@
 				</c:if>
 				<c:if test="${not empty list}">
 					<c:forEach items="${list}" var="notice">
-						<tr id="table-data" class ="contents" data-no="${notice.noticeNo}">
-							<td>${notice.noticeContents} : 썸네일</td>
-							<td>${notice.noticeTitle}</td>
+						<tr class="table-data" class ="contents" data-no="${notice.noticeNo}">
+							<td>${notice.noticeNo}</td>
+							<td>제목 : ${notice.noticeTitle}</td>
+						<c:if test="${empty notice.updatedAt}">
 							<td>${notice.noticeDate}</td>
+						</c:if>
+						<c:if test="${not empty notice.updatedAt}">
+							<td>${notice.updatedAt}</td>
+						</c:if>
 						</tr>
 					</c:forEach>
 				</c:if>
+			</tbody>
 			</table>
-				<input type="button" value="새로운 글 작성" id="notice-add" class="button-notice-add"
-					onclick="location.href='${pageContext.request.contextPath}/notice/noticeForm';" />
 			<nav>${pagebar}</nav>
 		</section>
 		

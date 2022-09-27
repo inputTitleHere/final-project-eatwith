@@ -72,8 +72,8 @@ SELECT
 	rr.naver_food_type type,
 	gc.pop pop,
 	rn.rwn rwn,
-    rv.overall_score overallScore,
-    ri.image_name imageName
+    rv.overall_score overall_score,
+    ri.image_name image_name
 FROM restaurant rr
 	left join review rv on rr.no = rv.restaurant_no
 	left join (select count(*) as pop, restaurant_no

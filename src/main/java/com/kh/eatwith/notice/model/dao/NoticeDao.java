@@ -18,7 +18,7 @@ import com.kh.eatwith.notice.model.dto.Notice;
 @Mapper
 public interface NoticeDao {
 
-	@Select("select * from notice where deleted_at is null")
+	@Select("select * from notice where deleted_at is null order by notice_no desc")
 	List<Notice> selectNoticeList(RowBounds rowBounds);
 
 	@Select("select count(*) from notice where deleted_at is null")

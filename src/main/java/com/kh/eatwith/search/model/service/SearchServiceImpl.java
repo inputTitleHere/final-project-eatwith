@@ -10,12 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.eatwith.search.model.dao.SearchDao;
 import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.common.TestMap;
-import com.kh.eatwith.gather.model.dto.Gather;
-import com.kh.eatwith.restaurant.model.dto.Restaurant;
-import com.kh.eatwith.review.model.dto.Review;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.security.o3logon.a;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
