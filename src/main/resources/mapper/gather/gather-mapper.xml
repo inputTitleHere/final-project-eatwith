@@ -78,7 +78,67 @@
 		where rownum <![CDATA[<=]]>
 		${no}
 	</select>
-
+	
+		<select id="getRestaurantGatherings" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,
+	    (select type from food_type f where g.food_code = f.code) as food_type,
+	    (select name from district d where g.district_code = d.code) as district_name,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as restaurant_name
+		from 
+	    (select * from gather order by no desc) g
+		where  g.restaurant_no = #{no} and meet_date &gt; sysdate
+	</select>
+	
+		<select id="getGatherByOwnerNo" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,
+	    (select type from food_type f where g.food_code = f.code) as food_type,
+	    (select name from district d where g.district_code = d.code) as district_name,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as restaurant_name
+		from 
+	    (select * from gather order by no desc) g
+		where user_no=#{no} and meet_date &gt; sysdate
+	</select>
+	
+	<select id="getPastGatherByOwnerNo" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,
+	    (select type from food_type f where g.food_code = f.code) as food_type,
+	    (select name from district d where g.district_code = d.code) as district_name,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as restaurant_name
+		from 
+	    (select * from gather order by no desc) g
+		where user_no=#{no} and meet_date &lt; sysdate
+	</select>
+	
+	<select id="getJoinedGather" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,
+	    (select type from food_type f where g.food_code = f.code) as food_type,
+	    (select name from district d where g.district_code = d.code) as district_name,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as restaurant_name
+		from 
+	    (select * from gather order by no desc) g
+		where g.no in (select gather_no from member_gather where user_no=#{no}) and meet_date &gt; sysdate
+	</select>
+	
+		<select id="getJoinedPastGather" resultType="CustomMap">
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,
+	    (select type from food_type f where g.food_code = f.code) as food_type,
+	    (select name from district d where g.district_code = d.code) as district_name,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as restaurant_name
+		from 
+	    (select * from gather order by no desc) g
+		where g.no in (select gather_no from member_gather where user_no=#{no}) and meet_date &lt; sysdate
+	</select>
+	
 	<select id="getGatherByLocation" resultType="CustomMap">
 		select
 		g.*,

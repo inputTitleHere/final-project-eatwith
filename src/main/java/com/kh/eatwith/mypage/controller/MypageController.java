@@ -43,10 +43,10 @@ public class MypageController {
 	@Autowired
 	DistrictService districtService;
 	
-	@GetMapping()
-	public String mypage(HttpServletResponse response) {
-		return "mypage/mypage";
-	}
+//	@GetMapping()
+//	public String mypage(HttpServletResponse response) {
+//		return "mypage/mypage";
+//	}
 	
 	@GetMapping("/currentUser")
 	@ResponseBody
@@ -95,5 +95,11 @@ public class MypageController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping({"","/","/myfavs","/mygather","/enrolledGather","/userinfo","/password"})
+	public String mypage() {
+		return "mypage/mypage";
+	}
+	
 	
 }
