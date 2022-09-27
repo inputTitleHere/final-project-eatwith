@@ -122,12 +122,6 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td>
-							<div class="notice">※모임 생성시 500p의 포인트를 사용합니다.</div>
-						</td>
-					</tr>
-					<tr>
-						<th></th>
 						<td><input type="submit" id="gatherSubmit" 
 							value="수정"></td>
 					</tr>
