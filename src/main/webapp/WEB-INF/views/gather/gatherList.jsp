@@ -28,15 +28,17 @@ h3{
 	left:0;
 	right:0;
 	margin:auto;
-	padding:100px;
+	padding:20px 100px 100px 100px;
 }
 aside {
+	border:4px solid var(--indigo-blue);
+	border-radius:10px;
 	width: 260px;
 	margin-left: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-right: 10px;
-	padding-bottom: 20px;
+ 	padding-bottom: 20px;
 	background-color: white;
 }
 .district-wrapper,.food-wrapper{
@@ -51,6 +53,8 @@ aside {
 	width:45%;
 }
 #content {
+	border:4px solid var(--indigo-blue);
+	border-radius:10px;
 	width: 720px;
 	background-color: white;
 	padding-bottom: 20px;
@@ -61,7 +65,10 @@ aside {
 	float: right;
 }
 #seeSelect {
-	height: 30px;
+	height: 40px;
+	font-size:16px;
+	border-radius:10px;
+	
 }
 #makeGather {
 	margin-left: 520px;
@@ -74,6 +81,7 @@ aside {
 	margin-bottom: 10px;
 	font-size:28px;
 	font-family:var(--short-font);
+	border-radius:10px;
 }
 #seeMore {
 	background-color: #e3e3e3;
@@ -123,17 +131,21 @@ aside {
 	font-size:16px;
 	display:block;
 	min-height:150px;
+	border-radius:10px;
+	border:2px solid var(--lavender-blue);
 }
 div#type, div#locaName{
 	display:flex;
 }
-#moreBtn,#moreLBtn{
+#moreBtn,#moreLBtn,#moreABtn{
 	background-color: #e3e3e3;
 	width:-webkit-fill-available;
-    height: 36px;
+    height: 50px;
     border: 0px;
-    font-size: 20px;
+    font-size: 24px;
     margin:0 20px;
+    font-weight:bold;
+    border-radius:10px;
 }
 #noMore{
 	margin-left:290px;
@@ -311,8 +323,8 @@ div#type, div#locaName{
 			
 			<h3>모임 정렬</h3>
 			<select name="see" id="seeSelect" onchange="changeSelect()">
-				<option value="all">전체보기</option>
 				<option value="newest">등록최신순 보기</option>
+				<option value="all">전체보기</option>
 				<option value="latest">마감임박순 보기</option>
 			</select>
 			<script>
@@ -321,10 +333,10 @@ div#type, div#locaName{
 				    var addListHtml = ""; 
 					var selectVal=document.getElementById('seeSelect').value;
 					console.log(selectVal);
-					if(selectVal=='newest'||selectVal=='all'){
-						console.log('최신순')
+					if(selectVal=='all'){
+						console.log('전체보기');
 						$.ajax({
-	    				url:"${pageContext.request.contextPath}/gather/checkNewest",
+	    				url:"${pageContext.request.contextPath}/gather/gatherAllList",
 	    				method:"GET",
 	    				data:{
 	    				},
@@ -342,7 +354,9 @@ div#type, div#locaName{
 	    					}
 		                    list.innerHTML+=addListHtml;
 		                	document.querySelector('#noMore').innerHTML="";
-		                	document.querySelector('#moreBtn').style.display="block";
+							document.querySelector('#moreBtn').style.display="none";
+							document.querySelector('#moreLBtn').style.display="none";
+							document.querySelector('#moreABtn').style.display="block";
 		                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
 		                    	tr.addEventListener('click', (e) => {
 		                    		// console.log(e.target); // td
@@ -359,17 +373,25 @@ div#type, div#locaName{
 	    			})
 	    			console.log('list.length '+list.length);
 					}
+					if(selectVal=='newest'){
+						location.href="${pageContext.request.contextPath}/gather/gatherList";
+					}
 					if(selectVal=='latest'){
 						console.log('마감임박순')
 					$.ajax({
-	    				url:"${pageContext.request.contextPath}/gather/checkLatest",
+	    				url:"${pageContext.request.contextPath}/gather/getLatestList",
 	    				method:"GET",
 	    				data:{
 	    				},
     					success(loca){
 	    					console.log(loca);
 	    					list.innerHTML=``;
-	    					for(var i=0;i<loca.length;i++){
+		                	document.querySelector('#noMore').innerHTML="";
+							document.querySelector('#moreBtn').style.display="none";
+							document.querySelector('#moreABtn').style.display="none";
+							document.querySelector('#moreLBtn').style.display="block";
+	    					for(var i=0;i<9;i++){
+	    						
 			                    addListHtml += `<div class="each-items" data-no="`+loca[i].no+`">`;
 		                    addListHtml += `<div id="title">`+ loca[i].title + `</div>`;
 		                    addListHtml += `<div id="name">`+ loca[i].name + `</div>`;
@@ -379,8 +401,7 @@ div#type, div#locaName{
 		                    addListHtml += `</div>`;
 	    					}
 		                    list.innerHTML+=addListHtml;
-		                	document.querySelector('#noMore').innerHTML="더이상 모임이 없습니다.";
-		                	document.querySelector('#moreBtn').style.display="none";
+
 		                    const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
 		                    	tr.addEventListener('click', (e) => {
 		                    		// console.log(e.target); // td
@@ -418,7 +439,10 @@ div#type, div#locaName{
 					 	<div id="title">${gather.title}</div>
 					 	<div id="name">${gather.name}</div>
 					 	<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaname}</span></div>
-					 	<div id="meetDate">${gather.meetDate}</div>
+					 	<div id="meetDate">
+					 	<fmt:parseDate value="${gather.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+                        <fmt:formatDate value="${meetTime}" pattern="MM월dd일 a KK:mm"/>
+					 	</div>
 					 	<div id="count">모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
 					 </div>
 					 </c:forEach>
@@ -428,8 +452,9 @@ div#type, div#locaName{
 			<c:if test="${lists.size() gt page*9}">
 			<div class="moreZone">
 				<div id="noMore"></div>
-				<button type="button" id="moreBtn" onclick="more()" display="block">더보기</button>
-				<button type="button" id="moreLBtn" onclick="moreLatest()">더보기</button>
+				<button type="button" id="moreBtn" onclick="more()"><img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25">&nbsp;더보기&nbsp;<img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25"></button>
+				<button type="button" id="moreLBtn" onclick="moreLatest()"><img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25">&nbsp;더보기&nbsp;<img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25"></button>
+				<button type="button" id="moreABtn" onclick="moreAll()"><img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25">&nbsp;더보기&nbsp;<img src="http://localhost:9090/eatwith/resources/image/misc/chevron_down.svg" alt="아래꺽쇠 이미지 없음" width="25" height="25"></button>
 			</div>
 			<script>
 	    	
@@ -440,10 +465,13 @@ div#type, div#locaName{
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>
+		document.querySelector('#moreBtn').style.display="block";
 		document.querySelector('#moreLBtn').style.display="none";
+		document.querySelector('#moreABtn').style.display="none";
         function selectAll(selectAll){
             const checkboxes = document.getElementsByName('location');
             checkboxes.forEach((checkbox)=>{
+                location.href="${pageContext.request.contextPath}/gather/gatherList";
                 checkbox.checked=selectAll.checked;
             })
         }
@@ -461,9 +489,62 @@ div#type, div#locaName{
 		    var startNum = $(".gather-items .each-items").length;  //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
 		    var addListHtml = "";  
 		    console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
-			console.log("모어버튼");
+			console.log("모어버튼(최신순)");
 			$.ajax({
-				url:"${pageContext.request.contextPath}/gather/gatherListNew",
+				url:"${pageContext.request.contextPath}/gather/gatherListNewest",
+				method:"GET",
+		        data : {"startNum":startNum},
+				success(data){
+					console.log(data);
+		                for(var i=0; i<data.length;i++) {
+		                    var idx = Number(startNum)+Number(i)+1;   
+							 //<div class="each-items" data-no="${gather.no}" >
+							 	//<div id="title">${gather.title}</div>
+							 	//<div id="name">${gather.name}</div>
+					 			//<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaName}</span></div>
+							 	//<div id="meetDate">
+							 	//<fmt:parseDate value="${gather.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+                        		//<fmt:formatDate value="${meetTime}" pattern="MM월dd일 a KK:mm"/>
+							 	//</div>
+					 			//<div>모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
+							 //</div>
+		                    // 글번호 : startNum 이  10단위로 증가되기 때문에 startNum +i (+1은 i는 0부터 시작)
+		                    addListHtml += `<div class="each-items" data-no="`+data[i].no+`">`;
+		                    addListHtml += `<div id="title">`+ data[i].title + `</div>`;
+		                    addListHtml += `<div id="name">`+ data[i].name + `</div>`;
+		                    addListHtml += `<div id="type"><span id="seperate">`+ data[i].type+`</span><span id="seperate2">`+ data[i].locaName+`</span></div>`;
+		                    addListHtml += `<div id="meetDate">`+ data[i].meetDate + `</div>`;
+		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+data[i].nowcount+`</span> / `+`<span id="totalCount">`+(data[i].count+1)+`<span> )</div>`;
+		                    addListHtml += `</div>`;}
+		                if(data.length<=8){
+		                	document.querySelector('#moreBtn').style.display="none";
+		                	document.querySelector('#noMore').innerHTML+="더이상 모임이 없습니다.";
+		                }
+		                $(".gather-items").append(addListHtml);
+		                startNum+=9;
+		                console.log(data.length);
+		                const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+		                	tr.addEventListener('click', (e) => {
+		                		// console.log(e.target); // td
+		                		const tr = e.target.parentElement;
+		                		const no = tr.dataset.no;
+		                		 console.log(no)
+		                		if(no){
+		                			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+		                		}
+		                	});     	
+		                });
+		        	},
+				error:console.log
+			})
+		}
+		function moreAll(){
+		    var startNum = $(".gather-items .each-items").length;  //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
+		    var addListHtml = "";  
+		    console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
+			console.log("모어버튼 (전체)");
+			$.ajax({
+				url:"${pageContext.request.contextPath}/gather/gatherListAll",
 				method:"GET",
 		        data : {"startNum":startNum},
 				success(data){
@@ -486,7 +567,57 @@ div#type, div#locaName{
 		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+data[i].nowcount+`</span> / `+`<span id="totalCount">`+(data[i].count+1)+`<span> )</div>`;
 		                    addListHtml += `</div>`;}
 		                if(data.length<=8){
-		                	document.querySelector('#moreBtn').style.display="none";
+		                	document.querySelector('#moreABtn').style.display="none";
+		                	document.querySelector('#noMore').innerHTML+="더이상 모임이 없습니다.";
+		                }
+		                $(".gather-items").append(addListHtml);
+		                startNum+=9;
+		                console.log(data.length);
+		                const gatherDetail=document.querySelectorAll("div[data-no]").forEach((tr) => {
+		                	tr.addEventListener('click', (e) => {
+		                		// console.log(e.target); // td
+		                		const tr = e.target.parentElement;
+		                		const no = tr.dataset.no;
+		                		 console.log(no)
+		                		if(no){
+		                			location.href = "${pageContext.request.contextPath}/gather/gatherDetail?no=" + no;
+		                		}
+		                	});     	
+		                });
+		        	},
+				error:console.log
+			})
+		}
+		function moreLatest(){
+		    var startNum = $(".gather-items .each-items").length;  //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
+		    var addListHtml = "";  
+		    console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
+			console.log("모어버튼 (마감임박용)");
+			$.ajax({
+				url:"${pageContext.request.contextPath}/gather/gatherListLatestMore",
+				method:"GET",
+		        data : {"startNum":startNum},
+				success(data){
+					console.log(data);
+		                for(var i=0; i<data.length;i++) {
+		                    var idx = Number(startNum)+Number(i)+1;   
+							 //<div class="each-items" data-no="${gather.no}" >
+							 	//<div id="title">${gather.title}</div>
+							 	//<div id="name">${gather.name}</div>
+					 			//<div id="type"><span id="seperate">${gather.type}</span><span id="seperate2">${gather.locaName}</span></div>
+							 	//<div id="meetDate">${gather.meetDate}</div>
+					 			//<div>모임인원 ( <span id="nowCount">${gather.nowcount}</span> / <span id="totalCount">${gather.count+1}</span> )</div>
+							 //</div>
+		                    // 글번호 : startNum 이  10단위로 증가되기 때문에 startNum +i (+1은 i는 0부터 시작)
+		                    addListHtml += `<div class="each-items" data-no="`+data[i].no+`">`;
+		                    addListHtml += `<div id="title">`+ data[i].title + `</div>`;
+		                    addListHtml += `<div id="name">`+ data[i].name + `</div>`;
+		                    addListHtml += `<div id="type"><span id="seperate">`+ data[i].type+`</span><span id="seperate2">`+ data[i].locaName+`</span></div>`;
+		                    addListHtml += `<div id="meetDate">`+ data[i].meetDate + `</div>`;
+		                    addListHtml += `<div id="count">모임인원 ( <span id="nowCount">`+data[i].nowcount+`</span> / `+`<span id="totalCount">`+(data[i].count+1)+`<span> )</div>`;
+		                    addListHtml += `</div>`;}
+		                if(data.length<=8){
+		                	document.querySelector('#moreLBtn').style.display="none";
 		                	document.querySelector('#noMore').innerHTML+="더이상 모임이 없습니다.";
 		                }
 		                $(".gather-items").append(addListHtml);

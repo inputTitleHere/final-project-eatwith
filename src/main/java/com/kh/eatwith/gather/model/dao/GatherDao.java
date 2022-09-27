@@ -1,5 +1,6 @@
 package com.kh.eatwith.gather.model.dao;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +98,17 @@ public interface GatherDao {
 
 	@Select("select * from member_gather where user_no=#{loginId} and gather_no=#{gatherNo} and checked='1' ")
 	Integer checkAttendance(Map<String, Object> param);
+
+	@Select("select count(*) from gather where meet_date>sysdate and no=#{no}")
+	Integer gatherEnd(int no);
+
+	List<Map<String, Object>> gatherAllList();
+
+	List<Map<String, Object>> gatherMoreAll(int page);
+
+	List<Map<String, Object>> gatherLatestMore(int page);
+	@Select("select * from member where no=#{loginId}")
+	Member getMemberInfo(String loginId);
 
 	List<CustomMap> getRestaurantGatherings(Map<String, Object> no);
 

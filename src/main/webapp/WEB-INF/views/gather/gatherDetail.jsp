@@ -37,6 +37,8 @@ table{
     background-color: white;
     margin: 20px;
     padding: 30px;
+   	border:2px solid var(--indigo-blue);
+	border-radius:10px;
 }
 th{
     padding-right: 50px;
@@ -55,16 +57,18 @@ td{
     font-weight: bold;
     font-size: 24px;
 }
-#gatherIn{
+#gatherIn1,#gatherIn2{
     background-color: #DC948A;
     border: 0;
     color: white;
     margin-top: 10px;
     margin-left: 20px;
-    width: 80px;
-    height: 30px;
+    width: 100px;
+    height: 35px;
     font-size: 16px;
     cursor : pointer;
+	border-radius:10px;
+	font-size:18px;    font-weight:bold;
 }
 #gatherOut{
     background-color: #ECC7C5;
@@ -72,10 +76,13 @@ td{
     color: black;
     margin-top: 10px;
     margin-left: 20px;
-    width: 80px;
-    height: 30px;
+    width: 100px;
+    height: 35px;
     font-size: 16px;
     cursor : pointer;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
 }
 #inChat, #writeReview{
     background-color: #DC948A;
@@ -86,6 +93,7 @@ td{
     width: 500px;
     height: 50px;
     font-size: 20px;
+	border-radius:10px;
 }
 #gatherUpdate,#gatherDelete{
     background-color: #DC948A;
@@ -96,13 +104,27 @@ td{
     width: 200px;
     height: 40px;
     font-size: 16px;
+  	border-radius:10px;
 }
 #title{
 	font-size:24px;
 	font-weight:bold;
+	font-family:var(--short-font);
 }
 .gatherRes{
 	padding: 5px 0px 5px 0px;
+}
+.goRestaurant{
+	text-decoration : none;
+	color:black;
+}
+.goRestaurant:hover{
+	color:var(--jjin-pink);
+}
+#ended{
+	color:var(--red);
+	font-weight:bold;
+	padding-left:10px;
 }
 </style>
 </head>
@@ -117,10 +139,10 @@ td{
                     <th>
                         모임 장소<br><br><br>
                     </th>
-                    <td>
+                    <td><a href="${pageContext.request.contextPath}/restaurant/loadInfo?no=${gather.restaurantNo}"  class="goRestaurant">
                         <span class="gatherRes"><strong>${gatherD.name}</strong></span><br>
                         <span class="gatherRes">${gatherD.type}</span><br>
-                        <span class="gatherRes">${gatherD.locaName}</span>
+                        <span class="gatherRes">${gatherD.locaName}</span></a>
                     </td>
                 </tr>
                 <tr>
@@ -159,11 +181,21 @@ td{
                         <sec:authorize access="isAnonymous()">
                         <input type="hidden" name="gatherNo" id="gatherNo" value="${gather.no}" />
                         <span id="countNow">${count+n}</span>/<span id="">${gather.count+1}</span>
-                        <button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
+                        <span id="ended"></span>
+                        <button type="button" id="gatherIn1" onclick="gatherIn()">참여하기</button>
                         <script>
                         	var n=0;
                         	const gatherIn=()=>{
                         		alert("로그인을 하고 이용해주세요.");
+                        	}
+                        	if(${endGather}!=0){
+                        	    document.getElementById("gatherIn1").style.display="inline";
+                        	    document.getElementById("gatherOut").style.display="none";
+                        	}
+                        	else{
+                        	    document.getElementById("gatherIn1").style.display="none";
+                        	    document.getElementById("gatherOut").style.display="none";
+                        	    document.querySelector("#ended").innerHTML='[참여불가] 이미 지난 모임입니다.';
                         	}
                         </script>
                         </sec:authorize>
@@ -172,9 +204,20 @@ td{
                   		<input type="hidden" name="loginMember" id="loginMember" value="${loginMember}"/>
                        	<input type="hidden" name="gatherNo" id="gatherNo" value="${gather.no}" />
                         <span id="countNow">${count+n}</span>/<span id="">${gather.count+1}</span>
-						<button type="button" id="gatherIn" onclick="gatherIn()">참여하기</button>
+                        <span id="ended"></span>
+                       	<button type="button" id="gatherIn2" onclick="gatherIn()">참여하기</button>
                         <button type="button" id=gatherOut onclick="gatherOut()">참여취소</button>
-                       	
+                        <script>
+                    	if(${endGather}!=0){
+                    	    document.getElementById("gatherIn2").style.display="inline";
+                    	    document.getElementById("gatherOut").style.display="none";
+                    	}
+                    	else{
+                    	    document.querySelector("#ended").innerHTML='[참여불가] 이미 지난 모임입니다.';
+                    	    document.getElementById("gatherIn2").style.visibility="hidden";
+                    	    document.getElementById("gatherOut").style.display="none";
+                    	}
+                        </script>
                        	</sec:authorize>
                         <!-- applyGather form작성하기 -->
 
@@ -191,7 +234,9 @@ td{
                 </tr>
                 <tr>
                     <th>모임 시간</th>
-                    <td>${gather.meetDate}</td>
+                    <td><fmt:parseDate value="${gather.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
+                        <fmt:formatDate value="${meetTime}" pattern="MM월dd일 a KK:mm"/>
+                    </td>
                 </tr>
                 <tr>
                     <th>모임 설명</th>
@@ -250,8 +295,6 @@ td{
         </form>
     </div>
     <script>
-	    document.getElementById("gatherIn").style.display="inline";
-	    document.getElementById("gatherOut").style.display="none";
 	    const gatherNo=document.querySelector('#gatherNo').value;
 	    const loginMember=document.querySelector('#loginMember').value;
 		//참여하기 버튼 디스플레이 설정
@@ -266,10 +309,10 @@ td{
 				success(response){
 					console.log(response);
 					if(response==0){
-	       		        document.getElementById("gatherIn").style.display="inline";
+	       		        document.getElementById("gatherIn2").style.display="inline";
 	       		        document.getElementById("gatherOut").style.display="none";
 					}else{
-                    document.getElementById("gatherIn").style.display="none";
+                    document.getElementById("gatherIn2").style.display="none";
                     document.getElementById("gatherOut").style.display="inline";
 					}
 				},
@@ -289,9 +332,9 @@ td{
        			},
        			success(response){
        				console.log(response);
-                       document.getElementById("gatherIn").style.display="none";
+                       document.getElementById("gatherIn2").style.display="none";
                        document.getElementById("gatherOut").style.display="inline";
-                       document.querySelector('#countNow').innerText=${count+1};
+                       document.querySelector('#countNow').innerHTML=${count+1};
        			},
        			error:console.log
        		})
@@ -303,7 +346,7 @@ td{
 		    const genderRestriction = document.querySelector('#genderRestriction').value;
 		    
 		    console.log(genderRestriction);
-	    	if(confirm("모임 참여시 200포인트가 차감됩니다.")){
+	    	if(confirm("모임에 참여하시겠습니까?")){
 	        	if(loginMember==${gather.userNo}){
 	        		alert('이미 참가한 모임입니다.');
 	        	}
@@ -352,7 +395,7 @@ td{
 	       			},
 	       			success(response){
 	       				console.log(response);
-		       		        document.getElementById("gatherIn").style.display="inline";
+		       		        document.getElementById("gatherIn2").style.display="inline";
 		       		        document.getElementById("gatherOut").style.display="none";
 	                        document.querySelector('#countNow').innerText=${count-1};
 	       			},

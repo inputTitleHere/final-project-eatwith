@@ -27,7 +27,7 @@
 </head>
 <body bgcolor="#F0EBEC">
 	<div id="container">
-		<form name="gatherUpdateFrm" method="post"
+		<form class="form" name="gatherUpdateFrm" method="post"
 			action="${pageContext.request.contextPath}/gather/gatherUpdate">
 			<table>
 				<tbody>
@@ -128,8 +128,8 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td><input type="submit" id="gatherSubmit" onclick="chkAge"
-							value="등록"></td>
+						<td><input type="submit" id="gatherSubmit" 
+							value="수정"></td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -138,6 +138,9 @@
 						<input	type="hidden" name="userNo" id="userNo" value="${gatherO.userNo}" />
 						<input type="hidden" name="count" id="count"/>
 						<input type="hidden" name="no" id="gatherNo" value="${gatherO.no}">
+						<input type="hidden" name="writerAge" id="writerAge" value="${2023-member.bornAt}" />
+						<input type="hidden" name="writerGender" id="writerGender" value="${member.gender}" />
+						
 						<script>
 							
 						</script>
@@ -148,7 +151,58 @@
 		</form>
 	</div>
 	<script type="text/javascript"
-		src="/eatwith/resources/js/gather/gatherEnroll.js"></script>
+		src="/eatwith/resources/js/gather/gather.js">
+    //유효성검사
+
+    const chkForm=(e)=>{
+    	e.preventDefault();
+        const checkedGenderRestriction=document.querySelector('#ageChk').checked;
+        console.log(checkedGenderRestriction);
+        var gatherMin=document.querySelector('#gatherMin').value;
+        var gatherMax=document.querySelector('#gatherMax').value;
+        const frm=document.gatherEnrollFrm;
+        console.log("실행됨");
+        
+        if(frm.title.value==""){
+            alert("제목을 작성해주세요.");
+            frm.title.focus();
+            return false;
+        }
+               
+        if(frm.content.value==""){
+            alert("내용을 작성해주세요.");
+            frm.gatherContent.focus();
+            return false;
+        }
+        //나이설정문제
+        if(!checkedGenderRestriction){
+            if(gatherMin>gatherMax){
+                alert("나이 제한을 올바르게 입력해주세요.");
+                console.log("min"+gatherMin);
+                console.log("max"+gatherMax);
+                frm.gatherMin.focus();
+                return false;
+
+            }
+            if(gatherMin>=wAge||gatherMax<=wAge){
+            	console.log("나이제한");
+            	alert("나이 제한에 본인의 나이가 포함되지 않습니다.");
+            	frm.gatherMin.focus();
+            	return false;
+            }
+        }
+
+
+        //모임 장소선택
+        if(chkRestaurant==0){
+        	alert("모임 음식점 장소를 정해주세요.");
+        	return false;
+        }
+        frm.submit();
+    }
+    document.querySelector('#gatherUpdateFrm').addEventListener('submit',chkForm);
+	
+	</script>
 		    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		
 </body>
