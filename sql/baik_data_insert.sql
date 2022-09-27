@@ -1,7 +1,13 @@
 -- 시간대 변경하기
 alter session set time_zone = '09:00';
 
-
+--
+create or replace function get_notification_seq return number is
+begin
+    return seq_notification_no.nextval;
+end;
+/
+--
 select * from member order by no desc;
 select * from member where id= 'zxcv';
 select * from gather order by no desc;
@@ -55,6 +61,10 @@ select
     (select avg(overall_score) from review where  restaurant_no = rev.restaurant_no) as avg_score
 from (select * from review where overall_score = 5 order by no desc) rev join restaurant rest on rev.restaurant_no = rest.no
 where rownum <=5;
+
+select review.no, review.gather_no, review_image.image_name from review join review_image on (review.no = review_image.review_no);
+
+
 
 -- 마감임박 모임
 select 
@@ -115,7 +125,11 @@ select * from member where no=144;
 select * from notification;
 select * from favorite_restaurant;
 select * from member;
+select * from member_gather where user_no=144;
 
+select * from gather where user_no =144;
+
+select * from notification order by no desc;
 
 select * from restaurant where no in (select restaurant_no from favorite_restaurant where user_no=144);
 
@@ -151,6 +165,7 @@ select * from member;
 select * from authority;
 select * from member where id = 'zxcv';
 select * from review;
+select * from review_image;
 select * from gather order by no desc;
 
 select * from gather where gender_restriction is null order by no desc;
@@ -181,7 +196,15 @@ where
 
 --select * from review_image where restaurant_no = '3010000-101-2017-00021';
 
-
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as enrolled_count,
+	    (select type from food_type f where g.food_code = f.code) as food_type,
+	    (select name from district d where g.district_code = d.code) as district_name,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as restaurant_name
+		from 
+	    (select * from gather order by no desc) g
+		where  restaurant_no = '3100000-101-2022-00087' and meet_date > sysdate;
 
 
 

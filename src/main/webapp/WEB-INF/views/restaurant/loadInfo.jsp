@@ -286,9 +286,8 @@
 	        }
 	    }
 	    rateIt();
-		
 	}
-  
+	
 	window.addEventListener('load', ()=> {
 		const userNo = ${loginMember ne null} ? document.querySelector("#hiddenMemberNo").value : 0;
 		const restaurantNo = '${restaurant.no}';
