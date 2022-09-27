@@ -59,4 +59,12 @@ public interface MemberDao {
 	@Select("select m.name from review r join member m on r.user_no = m.no where r.user_no = #{userNo}")
 	String selectOneNameByNo(int userNo);
 
+	@Select("select * from member id=#{id} and password = #{password}")
+	Member login(Map<String, Object> param);
+
+	@Select("select no from member where name = #{name}")
+	int selectNoByName(String name);
+
+
+
 }

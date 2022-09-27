@@ -101,4 +101,13 @@ public class MemberServiceImpl implements MemberService {
 	public String selectOneNameByNo(int userNo) {
 		return memberDao.selectOneNameByNo(userNo);
 	}
+	@Override
+	public Member login(Map<String, Object> param) {
+		return memberDao.login(param);
+	}
+
+	@Override
+	public int selectNoByName(String userName) {
+		return memberDao.selectNoByName(userName);
+	}
 }

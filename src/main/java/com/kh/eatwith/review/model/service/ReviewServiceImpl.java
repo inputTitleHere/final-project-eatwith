@@ -70,7 +70,12 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 	@Override
-	public List<Review> deleteReviewInRest(Map<String, Object> param) {
-		return reviewDao.deleteReviewInRest(param);
+	public int deleteReviewInRest(int no) {
+		return reviewDao.deleteReviewInRest(no);
 	}
+	
+//	@Override
+//	public Attachment selectAttach(int no) {
+//		return reviewDao.selectAttach(no);
+//	}
 }

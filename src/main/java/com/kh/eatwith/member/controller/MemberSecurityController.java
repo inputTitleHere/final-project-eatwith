@@ -1,5 +1,6 @@
 package com.kh.eatwith.member.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.eatwith.common.CustomMap;
 import com.kh.eatwith.district.model.dto.District;
@@ -147,9 +150,31 @@ public class MemberSecurityController {
 	}
 
 	@GetMapping("/memberLogin")
-	public String memberLogin() {
-
-		return "member/memberLogin";
+	public void memberLogin() {
+		
+	}
+	
+	@PostMapping("/memberLogin")
+	public String memberLogin(
+						@RequestParam String memberId, 
+						@RequestParam String password,
+						Model model,
+						RedirectAttributes redirectAttr) {
+		Member loginMember = memberService.selectOneMember(memberId);
+		log.debug("member = {}", loginMember);
+		
+		String location = "/";
+		if(loginMember == null || bcpe.matches(password, loginMember.getPassword())) {
+			model.addAttribute("loginMember", null);
+			redirectAttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다");
+			location = "/member/memberLogin";
+		}
+		else {
+			model.addAttribute("loginMember", loginMember);
+			location = "/";
+		}
+		
+		return "redirect:/" + location;
 	}
 
 	@PostMapping("/memberLoginSuccess")
