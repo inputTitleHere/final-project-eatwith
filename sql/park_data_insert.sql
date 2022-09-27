@@ -82,8 +82,10 @@ select * from (select r.*, m.name as writer from review r join member m on r.use
 select * from gather where no = 61;
 select * from member_gather where gather_no = 61;
 select * from review;
+select * from restaurant where name like '%메종드%';
 select * from review_image;
-
+select * from review_image order by no desc;
+select * from favorite_restaurant where user_no = 148;
 select count(*) from favorite_restaurant where restaurant_no = '3010000-101-2017-00400';
 insert into favorite_restaurant values (148,'3010000-101-2017-00400');
 delete from favorite_restaurant where user_no = 148 and restaurant_no = '3010000-101-2017-00400';

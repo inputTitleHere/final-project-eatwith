@@ -11,17 +11,15 @@
 
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rc7grmbqo&submodules=geocoder"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/restaurant/map.css" />
 	
-	<!-- <div id="map" style="width: 1000px; height: 400px;"></div> -->
-	<div id="map" style="width:900px;height:600px; margin: 20px auto; padding: 20px; border: 2px solid #3a3c68; border-radius: 10px;"></div>
+	<div id="map"></div>
 	
 	<script>
 	
-   	//const address = ${restaurant.address};
 	var map = new naver.maps.Map("map", {
 		center: new naver.maps.LatLng(37.3595316, 127.1052133),
-		zoom: 15,
+		zoom: 16,
 		mapTypeControl: false
 	});
 	
@@ -103,14 +101,10 @@
 	    if (item.jibunAddress) {
 	      htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
 	    }
-	
-	    /* if (item.englishAddress) {
-	      htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-	    } */
-	
+		
 	    infoWindow.setContent([
 	      '<div style="padding:10px;min-width:200px;line-height:150%;">',
-	      '<h4 style="margin-top:5px;">가게명 : '+ `${restaurant.name}` +'</h4><br />',
+	      '<h2 id="resName">가게명 : '+ `${restaurant.name}` +'</h2>',
 	      htmlAddresses.join('<br />'),
 	      '</div>'
 	    ].join('\n'));

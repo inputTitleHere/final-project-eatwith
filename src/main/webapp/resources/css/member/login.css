@@ -1,0 +1,90 @@
+*{
+    font:var(--our-font);
+}
+#sec1{
+	background-color: #F0EBEC;
+	font:var(--our-font);
+	text-align: center;
+}
+body{
+	background-color: #F0EBEC;
+}
+#loginBtn{
+	color: white;
+	border: 0px solid #3a3c68;
+	background-color: #3a3c68;
+	width: 440px;
+	height: 40px;
+	font-size: 15px;
+	font-weight: bold;
+	cursor: pointer;
+}
+#find {
+	font-size: 20px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0 solid;
+	background-color: #f0ebec;
+	margin: 35px;
+}
+#enroll{
+	color: white;
+	border: 0px solid #81a6d3;
+	background-color: #81a6d3;
+	width: 300px;
+	height: 40px;
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 30px;
+	cursor: pointer;
+}
+#remember-me{
+	scale: 2;
+}
+#firstDiv{
+	display: flex; 
+	flex-direction: column;
+}
+#firstDiv h1 {
+	font-size: 32px; 
+	margin-bottom: 10px;
+}
+#firstDiv div {
+	display: flex; 
+	justify-content: center;
+}
+#firstDiv div span {
+	font-weight: bold; 
+	font-size: 20px; 
+	text-align: center; 
+	background-color: #f0ebec; 
+	border-top: 1px solid gray; 
+	padding-top: 10px; 
+	width: 500px; 
+	margin-bottom: 15px;
+}
+.divInFrm{
+	margin: 10px;
+}
+.inputInfo{
+	width: 440px; 
+	height: 40px;
+	font-size: 16px;
+}
+#rememId{
+	margin: 20px;
+}
+#loginLabel{
+	margin: 10px; 
+	font-size: 22px; 
+	font-weight: bold;
+	cursor: pointer;
+}
+#noMem{
+	font-size: 20px; 
+	font-weight: bold; 
+	margin: 25px;
+}
+#benefit{
+	font-size: 16px;
+}

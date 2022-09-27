@@ -3,76 +3,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>아이디/비밀번호 찾기</title>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-<style>
-body {
-	background-color: #F0EBEC;
-	text-align: center;
-}
-h2 {
-	border-bottom: 1px gray solid;
-	padding-bottom: 10px;
-	width: 500px;
-	display: flex;
-	position: relative;
-	justify-content: space-around;
-	margin-inline: auto;
-	margin-bottom: 20px;
-	font-size: 30px;
-}
-th{
-	text-align: left;
-	width: 125px;
-	font-weight: bold;
-}
-table{
-	border-spacing: 10px;
-	margin: 10px auto;
-}
-#findIdFrm {
-	margin: 0 auto;
-}
-#btn1 {
-	width: 400px;
-	height: 40px;
-	background-color: #3A3C68;
-	color: white;
-	font-weight: bold;
-	padding: 1px 0;
-}
-#findId span {
-	color: red;
-	margin: 15px auto;
-	font-weight: bold;
-}
-#findId {
-	margin-top: 30px;
-}
-#resetPw span {
-	color: red;
-	margin: 15px auto;
-	font-weight: bold;
-}
-#resetPw {
-	margin-top: 30px;
-}
-input {
-	width: 250px;
-	height: 25px;
-	font-size: 12px;
-}
-</style>
+	<link rel="shortcut icon"
+		href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+	<link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberFind.css" />
+
 </head>
 <body>
-<br />
-<br />
-<br />
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div>
         <section>
         <h2>아이디 찾기</h2>
@@ -81,11 +30,11 @@ input {
 	                <thead>
 	                    <tr>
 	                        <th>이름</th>
-	                        <td><input type="text" id="name" placeholder="이름을 입력해주세요" name="name" value="홍길동"></td>
+	                        <td><input type="text" id="name" placeholder="이름을 입력해주세요" name="name"></td>
 	                    </tr>
 	                    <tr>
 	                        <th>전화번호</th>
-	                        <td><input type="text" id="phone" placeholder="전화번호를 입력해주세요" name="phone" value="01012345678"></td>
+	                        <td><input type="text" id="phone" placeholder="전화번호를 입력해주세요" name="phone"></td>
 	                    </tr>
 	                </thead>
 	            </table>
@@ -94,7 +43,6 @@ input {
 	        </form>
         </section>
     </div>
-    <br /><br />
 	<script>
 	document.querySelector("#findIdFrm").addEventListener('submit', (e) => {
 		e.preventDefault();
@@ -127,15 +75,15 @@ input {
 		                <thead>
 		                    <tr>
 		                        <th>아이디</th>
-		                        <td><input type="text" id="id" placeholder="아이디를 입력해주세요" name="id" value="honggd"></td>
+		                        <td><input type="text" id="id" placeholder="아이디를 입력해주세요" name="id"></td>
 		                    </tr>
 		                    <tr>
 		                        <th>이름</th>
-		                        <td><input type="text" id="name2" placeholder="이름을 입력해주세요" name="name" value="홍길동"></td>
+		                        <td><input type="text" id="name2" placeholder="이름을 입력해주세요" name="name"></td>
 		                    </tr>
 		                    <tr>
 		                        <th>이메일</th>
-		                        <td><input type="text" id="email" placeholder="이메일을 입력해주세요" name="email" value="honggd@mail.com"></td>
+		                        <td><input type="text" id="email" placeholder="이메일을 입력해주세요" name="email"></td>
 		                    </tr>
 		                </thead>
 		            </table>
@@ -168,5 +116,6 @@ input {
 		});
 	})
 	</script>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

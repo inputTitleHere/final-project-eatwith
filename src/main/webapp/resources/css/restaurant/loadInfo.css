@@ -9,35 +9,33 @@ h1 {
 	font-weight: bold;
 	margin-top: 0;
 }
-#ul1{
-	margin: 0;
+.ul1{
+	margin: 10px;
 }
-#info1 {
-/* 	background-color: white; */
-/* 	margin: 30px 350px; */
+.ul1 li {
+	margin: 20px 0;
+}
+#info1, #info2 {
 	height: auto;
 	border-spacing: 20px;
 }
-#info2 {
-/* 	background-color: white; */
-/* 	margin: 30px 350px; */
-	height: auto;
-	border-spacing: 20px;
+#loadDiv{
+	display: flex; 
+	justify-content: space-between;
 }
 #like-restaurant {
 	background-color: white; 
-	border: 0 solid white; 
+	border: 1px solid white; 
 	font-size: 60px; 
 	cursor: pointer;
+	color: #ee4949;
+	width: 60px;
 }
 #restInfo1 {
 	border-left: 1px solid gray;
 }
 #restImg{
 	display: flex;
-}
-#reviewSummary {
-	text-align: center;
 }
 #lastDiv {
 	padding: 20px;
@@ -47,11 +45,12 @@ h1 {
 	border-radius: 10px;
 	background-color: white;
 	position: relative;
+	padding-bottom: 8px;
 }
 #gather {
 	font-size: 30px;
 	margin-bottom: 20px;
-	margin-left: 30px;
+	margin-left: 20px;
 	font-family: "Happiness-Sans-Title";
 }
 #addReview{
@@ -63,13 +62,12 @@ h1 {
 }
 #addGather{
 	display: flex; 
-	flex-direction: row; 
 	flex-wrap: wrap; 
-	justify-content: space-between; 
+	justify-content: flex-start; 
 	white-space: normal;
+	margin: 0 2px;
 }
 #loadInfoFrm{
-/* 	border-left: 10px; */
 	padding: 20px;
 	margin: 20px auto;
 	width: 900px;
@@ -77,6 +75,7 @@ h1 {
 	border-radius: 10px;
 	background-color: white;
 	position: relative;
+	padding-bottom: 50px;
 }
 p {
 	font-size: 30px;
@@ -127,26 +126,17 @@ hr {
 	width: 40%; 
 	padding: 5px 15px;
 }
-#moreReviewList{
-/* 	display: flex;  */
-	flex-direction: row; 
-	flex-wrap: wrap; 
-	justify-content: space-between; 
-	white-space: normal;
-}
-#moreGatherList{
-	display: flex; 
-	flex-direction: row; 
-	flex-wrap: wrap; 
-	justify-content: space-between; 
-	white-space: normal;
-}
 #gatherDiv{
-	background-color: #F1F1F1; 
-	width: 20%; 
-	padding: 5px 15px;
+	background-color: #e3e3e3; 
+/* 	background-color: #f1f1f1;  */
+	width: 30%; 
+	padding-top: 5px;
 	border: 2px solid #81a6d3;
 	border-radius: 10px;
+	margin: 5px;
+	position: relative;
+/* 	min-height: 250px; */
+	cursor: pointer;
 }
 #reviewStar{
 	color: #3a3c68;
@@ -171,20 +161,73 @@ hr {
 	width: 100%;
 }
 #btnMenuClose{
+	display: none;
 	width: 100%;
 	border: 0;
 	cursor: pointer;
 	height: 50px;
 	font-size: 20px;
 }
-#writer{
+#btnReviewMoreDiv{
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+#btnReviewMore{
+	width: 100%;
+	border: 0;
+	cursor: pointer;
+	height: 50px;
+	font-size: 20px;
+	border-radius: 0 0 10px 10px;
+}
+#btnReviewCloseDiv{
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+#btnReviewClose{
+	display: none;
+	width: 100%;
+	border: 0;
+	cursor: pointer;
+	height: 50px;
+	font-size: 20px;
+	border-radius: 0 0 10px 10px;
+}
+#btnGatherMoreDiv{
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+#btnGatherMore{
+	width: 100%;
+	border: 0;
+	cursor: pointer;
+	height: 50px;
+	font-size: 20px;
+	border-radius: 0 0 10px 10px;
+}
+#btnGatherCloseDiv{
+	left: 0;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+#btnGatherClose{
+	display: none;
+	width: 100%;
+	border: 0;
+	cursor: pointer;
+	height: 50px;
+	font-size: 20px;
+	border-radius: 0 0 10px 10px;
+}
+.writer{
 	font-size: 20px;
 	font-weight: bold;
 }
-
-
 #inner-star::before {
-/* 	color: #81a6d3; */
 	color: #3a3c68;
 }
 #outer-star {
@@ -205,4 +248,72 @@ hr {
   	font-family: "Font Awesome 5 free";
   	font-weight: 900;
   	font-size: 50px;
+}
+#btnGoGatherDetail{
+	width: 100%; 
+	border: 0; 
+	cursor: pointer; 
+	background-color: #dc948a; 
+	border-bottom-left-radius: 7px; 
+	border-bottom-right-radius: 7px;
+	position: absolute;
+	bottom: 0;
+}
+#totalAvg{
+	font-size: 35px; 
+	font-weight: bold;	
+}
+#favDiv{
+	border-left: 1px solid gray; 
+	border-spacing: 500px; 
+	display: flex; 
+	flex-direction:column; 
+	justify-content: flex-start;
+}
+#addImg{
+	font-size: 60px; 
+	cursor: pointer;
+}
+#fav{
+	font-size: 60px; 
+	display: none;
+}
+#imgP{
+	margin-top: 70px;
+}
+.textCenter{
+	text-align: center;
+}
+.nothingAdd{
+	text-align: center;
+	font-size: 20px;
+}
+.textCenter p {
+	margin-left: 0;
+}
+#totalAvg2{
+	font-weight: bold; 
+	font-size: 30px;
+}
+.reDiv{
+	padding: 10px 0;
+}
+#gaDiv{
+	padding: 5px 15px;
+}
+#district{
+	border-right: 3px solid #3a3c68;
+}
+#gaDiv div {
+	margin-bottom: 10px; 
+}
+.res{
+	border-left: 3px solid #3a3c68;
+    padding-left: 5px;
+}
+#district{
+	padding-right: 5px;
+}
+#food-type{
+	padding-left: 5px;
 }

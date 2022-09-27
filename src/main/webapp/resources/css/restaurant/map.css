@@ -1,0 +1,15 @@
+#map {
+	width:900px;
+	height:400px; 
+	margin: 20px auto; 
+	padding: 20px; 
+	border: 2px solid #3a3c68; 
+	border-radius: 10px;
+}
+
+#resName{
+	margin-top:5px;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+}

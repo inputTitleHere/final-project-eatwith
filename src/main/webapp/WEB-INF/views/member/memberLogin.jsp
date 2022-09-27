@@ -3,87 +3,67 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!-- csrf 토큰가져오는 용도 -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param name="title" value="eatwith" />
+</jsp:include>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>로그인</title>
-
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-<!-- bootstrap js: jquery load 이후에 작성할것.-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-<!-- bootstrap css -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
-<!-- 사용자작성 css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/style.css" />
-
+	<meta charset="UTF-8">
+	<title>로그인</title>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+	<link rel="shortcut icon"
+		href="${pageContext.request.contextPath }/resources/image/favicon.ico">
+	<link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/root.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/login.css" />
 
 </head>
 <body>
-
-	<!-- Modal시작 -->
-	<!-- https://getbootstrap.com/docs/4.1/components/modal/#live-demo -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
-		aria-labelledby="loginModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="loginModalLabel">로그인</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<!--로그인폼 -->
-				<!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
-				<form:form
-					action="${pageContext.request.contextPath}/member/memberLogin"
-					method="post">
-					<div class="modal-body">
-						<c:if test="${param.error != null}">
-							<div class="alert alert-primary alert-dismissible fade show" role="alert">
-							  아이디 또는 비밀번호가 일치하지 않습니다.
-							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							    <span aria-hidden="true">&times;</span>
-							  </button>
-							</div>
-						</c:if>
-						<input 
-							type="text" class="form-control" name="id"
-							placeholder="아이디" required> 
-						<br /> 
-						<input
-							type="password" class="form-control" name="password"
-							placeholder="비밀번호" required>
-					</div>
-					<div class="modal-footer justify-content-between">
-						<div>
-							<input type="checkbox" name="remember-me" id="remember-me" class="form-check-input"/>
-							<label for="remember-me" class="form-check-label">로그인 유지</label>
-						</div>
-						<div>
-							<button type="submit" class="btn btn-outline-success">로그인</button>
-							<button type="button" class="btn btn-outline-success" data-dismiss="modal">취소</button>
-						</div>
-					</div>
-				</form:form>
+	<section id="sec1">
+		<div id="firstDiv">
+			<h1>로그인 및 회원가입</h1>
+			
+			<div>
+				<span style="">로그인을 통해 다양한 혜택을 누리세요</span>
 			</div>
 		</div>
-	</div>
-	<!-- Modal 끝-->
-<script>
-
-$(loginModal).modal()
-			 .on("hide.bs.modal", (e) => {
-				location.href = "${pageContext.request.contextPath}"; 
-			 });
-
-</script>
+		<form:form
+			action="${pageContext.request.contextPath}/member/memberLogin"
+			method="post">
+			<div class="divInFrm">
+				<input type="text" name="id" class="inputInfo" placeholder="아이디" required> 
+			</div>
+			<div class="divInFrm">
+				<input type="password" name="password" class="inputInfo" placeholder="비밀번호" required>
+			</div>
+			<div>
+				<div id="rememId">
+					<input type="checkbox" name="remember-me" id="remember-me"/>
+					<label for="remember-me" id="loginLabel">로그인 상태 유지</label>
+				</div>
+				<div>
+					<button type="submit" id="loginBtn">로그인</button>
+				</div>
+			</div>
+		</form:form>
+	
+		<div>
+			<input type="button" value="아이디/비밀번호 찾기" id="find" onclick="location.href='${pageContext.request.contextPath}/member/memberFind'"/>
+		</div>
+		
+		<div>
+			<p id="noMem" style="">아직 같이먹을래 회원이 아니신가요?</p>
+			<p id="benefit">회원가입을 하시면 더 많은 정보와 혜택을 받으실 수 있습니다.</p>
+			<br />
+			<input type="button" value="회원가입하기" id="enroll" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll'"/>
+		</div>
+	</section>
+	
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
