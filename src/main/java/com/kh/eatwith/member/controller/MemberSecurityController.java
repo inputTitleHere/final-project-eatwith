@@ -24,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -203,6 +204,15 @@ public class MemberSecurityController {
 
 		return "redirect:" + location;
 	}
+	
+	@PostMapping("/memberQuit")
+	public String memberQuit(@CookieValue(value="no")Cookie cookie) {
+		int userNo = Integer.parseInt(cookie.getValue());
+		int result = memberService.memberQuit(userNo);
+		SecurityContextHolder.clearContext();
+		return "redirect:/";
+	}
+	
 	
 	@GetMapping("/memberFind")
 	public void memberFind() {

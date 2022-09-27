@@ -371,7 +371,18 @@ public class GatherController {
 		int inresult=gatherService.checkLeaderIn(param);
 		// userNo : 어떤 유저가
 		// gNo : 모임명 
-		
+		Gather gather = gatherService.selectOneGather(gNo);
+		String gatherDate = gather.getMeetDate().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 E요일 a hh시 mm분"));
+		String title=String.format("참가한 [%s]모임에 참여 확인이 되었습니다!", gather.getTitle());
+		String content = String.format("[%s]모임의 참여가 확인되었습니다!\n"
+				+ "[%s]에 진행된 [%s]모임의 모임장이 참여확인을 해주었습니다.\n"
+				+ "리뷰를 작성하러 모임 페이지로 가봐요!",gather.getTitle(),gatherDate,gather.getTitle());
+		Notification note = Notification.builder().userNo(userNo).gatherNo(gNo).restaurantNo(gather.getRestaurantNo()).type(NotificationType.N).title(title).content(content).build();
+		List<Notification> toSend = new ArrayList<Notification>();
+		toSend.add(note);
+		param = new HashMap<String, Object>();
+		param.put("toSend", toSend);
+		notificationSerivce.insertNotification(param);
 		
 		log.debug("inresult={}",inresult);
 		

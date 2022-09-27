@@ -34,6 +34,8 @@ public interface MemberService {
 	
 	String selectOneNameByNo(int userNo);
 
+	int memberQuit(int userNo);
+	
 	Member login(Map<String, Object> param);
 
 	int selectNoByName(String userName);

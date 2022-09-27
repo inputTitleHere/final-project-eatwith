@@ -166,3 +166,18 @@ span#userInfo{
     -ms-transform: scale(1.1,1.1);
     transform: scale(1.1,1.1);
 }
+
+.mypage{
+	position:relative;
+}
+
+#notification-count{
+	position:absolute;
+	right:-23px;
+	top:-12px;
+	padding:0px 5px;
+	background-color:var(--red);
+	border-radius:30px;
+}
+
+
