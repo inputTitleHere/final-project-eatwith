@@ -27,9 +27,26 @@ h1 {
 	background-color: white; 
 	border: 1px solid white; 
 	font-size: 60px; 
+	color: #ee4949;
+	width: 150px;
+	margin: 10px;
+}
+#like-restaurant-fav {
+	background-color: white; 
+	border: 1px solid white; 
+	font-size: 60px; 
 	cursor: pointer;
 	color: #ee4949;
 	width: 60px;
+	margin: 10px;
+}
+#deleteBtn{
+	color: white;
+	background-color: #de948a;
+	width: 60px;
+	border: 2px solid #de948a;
+	border-radius: 10px;
+	cursor: pointer;
 }
 #restInfo1 {
 	border-left: 1px solid gray;
@@ -80,6 +97,16 @@ h1 {
 	position: relative;
 	padding-bottom: 30px;
 }
+#loadInfoFrm2{
+	padding: 20px;
+	margin: 20px auto;
+	width: 900px;
+	border: 2px solid #3a3c68;
+	border-radius: 10px;
+	background-color: white;
+	position: relative;
+	padding-bottom: 50px;
+}
 p {
 	font-size: 30px;
 	margin-bottom: 20px;
@@ -97,9 +124,7 @@ hr {
 	width: 99%;
 	margin: 15px 0;
 }
-#info1 #loadInfoFrm section {
-	border-spacing: 20px;
-}
+
 .inner-star::before{
 	color: #3a3c68;
 }
@@ -131,14 +156,12 @@ hr {
 }
 #gatherDiv{
 	background-color: #e3e3e3; 
-/* 	background-color: #f1f1f1;  */
 	width: 30%; 
 	padding-top: 5px;
 	border: 2px solid #81a6d3;
 	border-radius: 10px;
 	margin: 5px;
 	position: relative;
-/* 	min-height: 250px; */
 	cursor: pointer;
 }
 #reviewStar{

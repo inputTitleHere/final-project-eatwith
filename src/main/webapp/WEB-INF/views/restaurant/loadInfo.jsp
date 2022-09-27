@@ -62,7 +62,7 @@
 								<div id="addImg">
 									<img
 										src="${pageContext.request.contextPath}/resources/image/empty.png"
-										onclick="like()" id="like-restaurant" />
+										onclick="like()" id="like-restaurant-fav" />
 								</div>
 								<script>
 								const like = () => {
@@ -74,7 +74,7 @@
 								<sec:authentication property="principal.no" var="loginMember" />
 
 								<div id="addImg">
-									<img src="#" id="like-restaurant" />
+									<img src="#" id="like-restaurant-fav" />
 								</div>
 								<input type="hidden" name="loginMember" id="hiddenMemberNo"
 									value="${loginMember}" />
@@ -140,7 +140,7 @@
 		</form>
 	</section>
 	<section id="info1">
-		<div id="loadInfoFrm">
+		<div id="loadInfoFrm2">
 			<section>
 				<div>
 					<p id="imgP">대표사진</p>
@@ -203,7 +203,6 @@
 					<div id="addReview">
 						<c:forEach var="review" items="${reviews}" begin="0" end="1" varStatus="status">
 							<div id="reviewDiv">
-								
 								<span class="writer"><c:out value="${review.writer}" /></span>
 								<div>
 									<c:if test="${review.overallScore eq '5'}">
@@ -228,18 +227,7 @@
 									<c:if test="${review.overallScore eq '0'}">
 										<span>☆☆☆☆☆</span>
 									</c:if>
-
-									<div>
-										<c:forEach var="attach" items="${attachs}">
-											<c:if test="${review.no eq attach.reviewNo}">
-												<img
-													src="${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}"
-													id="like-restaurant" />
-											</c:if>
-										</c:forEach>
-									</div>
-
-
+									&emsp;&emsp;
 									<sec:authorize access="isAuthenticated()">
 										<sec:authentication property="principal" var="loginMember" />
 										<c:if test="${review.userNo eq loginMember.no}">
@@ -248,21 +236,12 @@
 											<button type="button" id="deleteBtn" onclick="deleteReview(${review.no})">삭제</button>
 										</c:if>
 									</sec:authorize>
-
-
 								</div>
 								<div class="reDiv">
-									맛<span id="reviewStar">★</span>
-									<c:out value="${review.tasteScore}" />
-									&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span>
-									<c:out value="${review.priceScore}" />
-									&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span>
-									<c:out value="${review.serviceScore}" />
-									<br />
+									맛<span id="reviewStar">★</span><c:out value="${review.tasteScore}" />&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span><c:out value="${review.priceScore}" />&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span><c:out value="${review.serviceScore}" /><br />
 								</div>
 								<c:out value="${review.content}" />
 								<br />
-								<%-- 								<c:out value="<img src='${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}' id='img'/>" escapeXml="false"/> --%>
 								<c:forEach var="attachs" items="${attachs}">
 									<script>
 										console.log(${attachs.reviewNo});
@@ -273,7 +252,15 @@
 											escapeXml="false" />
 									</c:if>
 								</c:forEach>
-								<c:out value="${revAttach}" />
+								<div>
+									<c:forEach var="attach" items="${attachs}">
+										<c:if test="${review.no eq attach.reviewNo}">
+											<img
+												src="${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}"
+												id="like-restaurant" />
+										</c:if>
+									</c:forEach>
+								</div>
 							</div>
 						</c:forEach>
 					</div>
@@ -402,11 +389,11 @@
 				console.log(response);
 				if(response){
 					document.querySelector("#faved").checked = true;
-					newImg = document.querySelector("#like-restaurant");
+					newImg = document.querySelector("#like-restaurant-fav");
 					newImg.src = '${pageContext.request.contextPath}/resources/image/fill.png';
 				} else{
 					document.querySelector("#faved").checked = false;
-					newImg = document.querySelector("#like-restaurant");
+					newImg = document.querySelector("#like-restaurant-fav");
 					newImg.src = '${pageContext.request.contextPath}/resources/image/empty.png';
 				}
 			},
@@ -415,7 +402,7 @@
 		
 	});
 
-	document.querySelector("#like-restaurant").addEventListener('click', ()=>{
+	document.querySelector("#like-restaurant-fav").addEventListener('click', ()=>{
 		
 		const cancelFav = document.querySelector("#cancelFav");
 		const userNo = ${loginMember ne null} ? document.querySelector("#hiddenMemberNo").value : 0;
@@ -429,10 +416,10 @@
 			data:{"userNo":userNo, "restaurantNo":restaurantNo, "fav":fav},
 			success(response){
 				if(fav){
-					const newImg = document.querySelector("#like-restaurant");
+					const newImg = document.querySelector("#like-restaurant-fav");
 					newImg.src = '${pageContext.request.contextPath}/resources/image/empty.png';
 				} else {
-					const newImg = document.querySelector("#like-restaurant");
+					const newImg = document.querySelector("#like-restaurant-fav");
 					newImg.src = '${pageContext.request.contextPath}/resources/image/fill.png';
 				}
 				favBtn.checked=!fav;
@@ -489,34 +476,63 @@
 		
 		document.querySelector("#btnReviewMore").addEventListener('click', (e) => {
 			moreReviewList.innerHTML = `<div id="addReview">
-				<c:forEach var="review" items="${reviews}" begin="2">
+				<c:forEach var="review" items="${reviews}" begin="2" varStatus="status">
 				<div id="reviewDiv">
-					<span class="writer""><c:out value="${review.writer}"/></span>
+					<span class="writer"><c:out value="${review.writer}" /></span>
 					<div>
 						<c:if test="${review.overallScore eq '5'}">
-						<span id="reviewStar">★★★★★</span>
+							<span id="reviewStar">★★★★★</span>
 						</c:if>
 						<c:if test="${review.overallScore eq '4'}">
-						<span id="reviewStar">★★★★</span><span>☆</span>
+							<span id="reviewStar">★★★★</span>
+							<span>☆</span>
 						</c:if>
 						<c:if test="${review.overallScore eq '3'}">
-						<span id="reviewStar">★★★</span><span>☆☆</span>
+							<span id="reviewStar">★★★</span>
+							<span>☆☆</span>
 						</c:if>
 						<c:if test="${review.overallScore eq '2'}">
-						<span id="reviewStar">★★</span><span>☆☆☆</span>
+							<span id="reviewStar">★★</span>
+							<span>☆☆☆</span>
 						</c:if>
 						<c:if test="${review.overallScore eq '1'}">
-						<span id="reviewStar">★</span><span>☆☆☆☆</span>
+							<span id="reviewStar">★</span>
+							<span>☆☆☆☆</span>
 						</c:if>
 						<c:if test="${review.overallScore eq '0'}">
-						<span>☆☆☆☆☆</span>
+							<span>☆☆☆☆☆</span>
 						</c:if>
+						&emsp;&emsp;
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal" var="loginMember" />
+							<c:if test="${review.userNo eq loginMember.no}">
+								<input type="hidden" id="loginMemberNo" name="loginMemberNo" value="${loginMember.no}"/>
+								<input type="hidden" id="loginMemberWriter" name="loginMemberWriter" value="${loginMember.name}"/>
+								<button type="button" id="deleteBtn" onclick="deleteReview(${review.no})">삭제</button>
+							</c:if>
+						</sec:authorize>
 					</div>
-				
 					<div class="reDiv">
-						맛<span id="reviewStar">★</span><c:out value="${review.tasteScore}"/>&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span><c:out value="${review.priceScore}"/>&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span><c:out value="${review.serviceScore}"/><br />								
+						맛<span id="reviewStar">★</span><c:out value="${review.tasteScore}" />&nbsp;&nbsp;&nbsp;가격<span id="reviewStar">★</span><c:out value="${review.priceScore}" />&nbsp;&nbsp;&nbsp;서비스<span id="reviewStar">★</span><c:out value="${review.serviceScore}" /><br />
 					</div>
-					<c:out value="${review.content}" /><br />
+					<c:out value="${review.content}" />
+					<br />
+					<c:forEach var="attachs" items="${attachs}">
+						<c:if test="${'review.no' eq 'attach.reviewNo'}">
+							<c:out
+								value="<img src='${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}'/>"
+								escapeXml="false" />
+						</c:if>
+					</c:forEach>
+					<div>
+						<c:forEach var="attach" items="${attachs}">
+							<c:if test="${review.no eq attach.reviewNo}">
+								<img
+									src="${pageContext.request.contextPath}/resources/upload/review/${attach.imageName}"
+									id="like-restaurant" />
+							</c:if>
+						</c:forEach>
+					</div>
 				</div>
 			</c:forEach>
 		</div><br />`;
@@ -555,42 +571,52 @@
 		
 		document.querySelector("#btnGatherMore").addEventListener('click', (e) => {
 			moreGatherList.innerHTML = `<div id="addGather">
-				<c:forEach var="gathers" items="${gathers}" begin="3">
-				<div id="gatherDiv" onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gather.no}'">
+				<c:forEach var="gathers" items="${gathers}" begin="0" end="2">
+				<div id="gatherDiv"
+					onClick="location.href='${pageContext.request.contextPath}/gather/gatherDetail?no=${gathers.no}'">
 					<div id="gaDiv">
 						<div>
-							<span class="writer"><c:out value="${gathers.title}"/></span><br />
+							<span class="writer"><c:out value="${gathers.title}" /></span><br />
 						</div>
 						<div>
-							<span id="district"><c:out value="${district.name}"/></span><span id="food-type"><c:out value="${foodType.type}" /></span><br />
+							<span id="district"><c:out value="${district.name}" /></span><span
+								id="food-type"><c:out value="${foodType.type}" /></span><br />
 						</div>
 						<div>
-							<fmt:parseDate value="${gathers.meetDate}" var="meetTime" pattern="yyyy-MM-dd'T'HH:mm"/>
-							<span><fmt:formatDate value="${meetTime}" pattern="MM월dd일 a hh:mm"/></span><br />							
+							<fmt:parseDate value="${gathers.meetDate}" var="meetTime"
+								pattern="yyyy-MM-dd'T'HH:mm" />
+							<span><fmt:formatDate value="${meetTime}"
+									pattern="MM월dd일 a hh:mm" /></span><br />
 						</div>
 						<div>
-							<span><c:out value="모임인원 ( ${memGather} / ${gathers.count+1} )" /></span><br />
+							<span><c:out
+									value="모임인원 ( ${memGather} / ${gathers.count+1} )" /></span><br />
 						</div>
 						<div>
 							<c:if test="${gathers.ageRestrictionTop eq '0'}">
-								
+
 							</c:if>
 							<c:if test="${gathers.ageRestrictionTop ne '0'}">
-								<span class="res"><c:out value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살"/></span><br />
-							</c:if>							
+								<span class="res"><c:out
+										value="나이제한 : ${gathers.ageRestrictionBottom}살 ~ ${gathers.ageRestrictionTop}살" /></span>
+								<br />
+							</c:if>
 						</div>
 						<div>
 							<c:choose>
 								<c:when test="${gathers.genderRestriction eq 'M' }">
-									<span class="res"><c:out value="성별제한 : 남성만"/></span><br />
+									<span class="res"><c:out value="성별제한 : 남성만" /></span>
+									<br />
 								</c:when>
-								
+
 								<c:when test="${gathers.genderRestriction eq 'F' }">
-									<span class="res"><c:out value="성별제한 : 여성만"/></span><br />
+									<span class="res"><c:out value="성별제한 : 여성만" /></span>
+									<br />
 								</c:when>
-								
+
 								<c:otherwise>
-									<span class="res"><c:out value="성별제한 : 남녀무관" /></span><br />
+									<span class="res"><c:out value="성별제한 : 남녀무관" /></span>
+									<br />
 								</c:otherwise>
 							</c:choose>
 						</div>
