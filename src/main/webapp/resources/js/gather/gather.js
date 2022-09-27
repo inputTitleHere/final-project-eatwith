@@ -1,3 +1,9 @@
+    	console.log(document.querySelector('#countMember').innerText);
+		document.getElementById("count").value=document.querySelector('#countMember').innerText;
+		
+		const wAge = document.querySelector('#writerAge').value;
+		const wGender=document.querySelector('#writerGender').value;
+		
 		const minInput=document.querySelector('#gatherMin');
 		const maxInput=document.querySelector('#gatherMax');
 		
@@ -13,6 +19,25 @@
     		genderM.disabled=e.target.checked;
     		genderF.disabled=e.target.checked;
 		}
+		genderM.addEventListener("click",function(){
+			console.log("남자에체크");
+			if(genderM.value==wGender){
+			}
+			else{
+				alert("본인 성별이 아닙니다.");
+				genderM.checked=false;
+			}			
+		})
+		genderF.addEventListener("click",function(){
+			console.log("여자에체크");
+			if(genderF.value==wGender){
+			}
+			else{
+				alert("본인 성별이 아닙니다.");
+				genderF.checked=false;
+			}
+		})
+
 
     
     //모임시간설정
@@ -44,7 +69,6 @@
     const plusBtn=countMem.querySelector('#plus');
     const minusBtn=countMem.querySelector('#minus');
     const number = countMem.querySelector('span');
-
     plusBtn.addEventListener('click',function(){
         let count=Number(number.textContent)
         if(number.textContent<9){
@@ -63,30 +87,4 @@
         document.getElementById("count").value=count;
         console.log(document.getElementById("count").value);
     });
-
-    //유효성검사
-    document.gatherEnrollFrm.onsubmit=(e)=>{
-        const frm=e.target;
-        if(!/^.+$/.test(frm.gatherTitle.value)){
-            alert("제목을 작성해주세요.");
-            frm.gatherTitle.focus();
-            return false;
-        }
-        if(!/^(.|\n)+$/.test(frm.gatherContent.value)){
-            alert("내용을 작성해주세요.");
-            frm.gatherContent.focus();
-            return false;
-        }
-        //나이설정문제
-        if(frm.gatherMin.value>frm.gatherMax.value){
-            alert("나이 제한을 올바르게 입력해주세요.");
-            frm.gatherMin.focus();
-            return false;
-        }
-
-        //모임 장소선택
-        if(chkRestaurant==0){
-        	alert("모임 음식점 장소를 정해주세요.");
-        	return false;
-        }
-    }
+	

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8" 
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -36,6 +36,8 @@ aside{
     background-color: white;
     white-space: normal;
     height:fit-content;
+   	border:4px solid var(--indigo-blue);
+	border-radius:10px;
 }
 #review{
 	display:flex;
@@ -46,6 +48,8 @@ aside{
 	padding-right: 20px;
 	margin-right: 10px;
 	padding:30px;
+   	border:4px solid var(--indigo-blue);
+	border-radius:10px;
 }
 #makegather{
     float: right;
@@ -89,10 +93,14 @@ border: 0; /* 필드셋 테두리 제거 */
     background-color: #f5f5f5;
     height: 50px;
     width: 300px;
+    border-top-right-radius:10px;
+	border-bottom-right-radius:10px;
 }
 #starsName{
     background-color: #f5f5f5;
     width: 60px;
+   	border-top-left-radius:10px;
+	border-bottom-left-radius:10px;
 }
 #checkstars{
     width: 350px;
@@ -101,12 +109,24 @@ border: 0; /* 필드셋 테두리 제거 */
     height: 200px;
     width: 770px;
     margin: 20px;
+    border-radius:10px;
 }
 #counter{
     margin-left: 700px;
 }
-#attachFile{
-
+input[type=file]::file-selector-button {
+  width: 200px;
+  height: 40px;
+  background: var(--jjin-pink);
+  border:0;
+  color:white;
+  border-radius: 10px;
+  font-size:20px;
+  cursor: pointer;
+  &:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+  }
 }
 input[type=checkbox]{
     zoom:2;
@@ -121,27 +141,23 @@ input[type="submit"]{
     width: 500px;
     height: 40px;
     font-size: 20px;
+    border-radius:10px;
 }
 #restaurantName{
 	display:block;
 	font-size:20px;
  	font-weight:bold;
 }
-input[type="file"]{
-	background-color: #DC948A;
-    border: 0;
-    color: white;
-	margin: 0;
-    width: 100px;
-    height: 40px;
-    font-size: 20px;
-}
 label{
 	cursor:pointer;
-/* 	font-size:1em; */
+ 	font-size:1em;
 }
 input#file-upload-button{
-	visibility:hidden;
+	display:none;
+}
+#strong{
+	font-size:18px;
+	font-weight:bold;
 }
 </style>
 </head>
@@ -149,7 +165,6 @@ input#file-upload-button{
     <div id="container">
         <aside>
            	<div id="restaurantName">'<span>${reviewInfo.name}</span>' 평가하기</div>
-            <h4>음식점 사진</h4>
             <h4>${reviewInfo.naverFoodType}</h4>
             <h5>${reviewInfo.address} [${reviewInfo.dong} ]</h5>
             <h4>${reviewInfo.phone}</h4>
@@ -160,7 +175,7 @@ input#file-upload-button{
                 <tbody>
                     <tr>
                         <br>
-                        <td id="checkstars">전체평점 * <br>이 음식점에 대한 전반적인 평가를 해주세요.</td>
+                        <td id="checkstars"><span  id="strong">전체평점 * </span><br>이 음식점에 대한 전반적인 평가를 해주세요.</td>
                         <td id="starsName">평점</td>
                         <td id="stars">
                                 <fieldset id="rateStars">
@@ -178,7 +193,7 @@ input#file-upload-button{
             <table>
                 <tbody>
                     <tr>
-                        <td id="checkstars">항목별 평점 * <br>이 음식점의 맛, 가격, 서비스를 항목별로 나누어 평가해주세요.</td>
+                        <td id="checkstars"><span id="strong">항목별 평점 *</span> <br>이 음식점의 맛, 가격, 서비스를 항목별로 나누어 평가해주세요.</td>
                         <td id="starsName">
                             맛
                         </td>
@@ -228,22 +243,23 @@ input#file-upload-button{
                 </tbody>
             </table>
             <hr>
-            <div>방문후기*</div>
+            <div id="strong">방문후기*</div>
             <textarea name="content" id="content" cols="30" rows="10" placeholder="음식, 서비스, 분위기, 위생상태 등의 방문 경험을 적어주세요."></textarea>
             <p><span id="counter"></span> / <span id="max-counter"></span></p>
             <hr>
             <table>
                 <thead>
                     <tr>
-                        <td><strong>음식ㆍ실내외 사진 (<span id="countImg">0</span>/<span id="maxImg">3</span>)</strong></td>
+                        <td><strong>음식ㆍ실내외 사진 대표사진 1장</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td> - 본인이 직접 촬영하지 않은 사진</td>
                         <td>
+                        <div class="file">
                         <input type="file" name="upFile" id="attachFile" accept="image/*" value="사진첨부" multiple>
-                        <label class="file-name" for="attachFile">파일없음</label>
+                        </div>
                         </td>
                     </tr>
                     <tr>

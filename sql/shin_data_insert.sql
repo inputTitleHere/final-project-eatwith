@@ -8,7 +8,9 @@ select*from review_image;
 
 insert into member_gather values(141,102,sysdate,0);
 
-insert into gather values(seq_gather_no.nextval,'3220000-101-1997-12699','이동네 최고 중국집 당장가실분 =3',2,to_date('2022-09-11 11:30','YYYY-MM-DD hh24:mi'),'001','3220000','중국집조질사람구함',146,null,null,null);
+delete gather where no between 180 and 188;
+insert into gather values(seq_gather_no.nextval,'3220000-101-1997-12699','리스트 체크용이다',2,to_date('2022-10-20
+11:30','YYYY-MM-DD hh24:mi'),'001','3220000','중국집조질사람구함',146,null,null,null);
 insert into gather values(seq_gather_no.nextval,'3220000-101-2022-00526','족발은 살안쪄',3,to_date('2022-09-11 11:30','YYYY-MM-DD hh24:mi'),'007','3220000','귀한족발에서 족발 한번 조집시다.. 또래환영',142,24,27,null);
 
 insert into member_gather values(151,103,sysdate);
@@ -74,3 +76,15 @@ delete review where no=68;
 alter table review add user_no number not null;
 
 alter table review add foreign key (user_no) references member(no);
+
+select * from gather where meet_date>sysdate and no=140;
+
+		select 
+	    g.*,
+	    (select count(*) from member_gather where gather_no = g.no) as nowCount,
+	    (select type from food_type f where g.food_code = f.code) as type,
+	    (select name from district d where g.district_code = d.code) as locaName,
+	    (select name from restaurant rest where rest.no = g.restaurant_no) as name
+		from 
+	    (select * from gather where meet_date>(sysdate+9/24)) g
+		order by g.no desc
