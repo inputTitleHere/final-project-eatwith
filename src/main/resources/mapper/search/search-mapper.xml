@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.eatwith.search.model.dao.SearchDao">
+
+<!-- 일반 데이터 반환 시작 -->
+<select id="selectGatherSearch" resultType="TestMap">
+	SELECT * FROM gather g
+			left join (SELECT count(*) as attend, gather_no
+					from member_gather group by gather_no) c
+			on g.no = c.gather_no
+            left join district d on g.district_code = d.code
+				where <![CDATA[TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') < TO_CHAR(g.meet_date, 'YYYYMMDDHH24MISS')]]>
+					and (g.title like '%${searchWord}%' or g.content like '%${searchWord}%' or d.code like '%${searchWord}%')
+			ORDER BY CASE
+            	WHEN 1=#{typeCheck} THEN g.no
+            	else c.attend
+    		end desc NULLS LAST FETCH FIRST 9 ROWS ONLY
+</select>
+
+
+<select id="selectReviewSearch" resultType="TestMap">
+SELECT
+    rv.no no,
+    m.name userName,
+    rr.name restaurantName,
+    rr.no restaurantno,
+    rr.address address,
+    rv.overall_score overallScore,
+    rv.taste_score tasteScore,
+    rv.price_score priceScore,
+    rv.service_score serviceScore,
+    rv.content content,
+    rr.district_code districtCode,
+    d.name districtName,
+    ri.image_name image
+    FROM review rv 
+        left join restaurant rr on rv.restaurant_no = rr.no 
+        left join member m on rv.user_no = m.no
+        left join district d on rr.district_code = d.code
+        left join food_type f on rr.food_code = f.code
+        left join REVIEW_IMAGE  ri on ri.review_no = rv.no
+    where (m.name like '%${searchWord}%' or rr.name like '%${searchWord}%'
+                or rv.content like '%${searchWord}%' or rr.address like '%${searchWord}%'
+                or rr.menu like '%${searchWord}%')
+    ORDER BY CASE
+            WHEN 1=#{typeCheck} THEN rv.no
+           		else rv.overall_score
+    	end desc NULLS LAST FETCH FIRST 9 ROWS ONLY
+</select>
+
+<resultMap type="TestMap" id="clobToString">
+  <result property="name" column="name" />
+  <result property="address" column="address" />
+  <result property="hours" column="hours" />
+  <result property="menu" column="menu" jdbcType="CLOB" javaType="java.lang.String" />
+  <result property="phone" column="phone" />
+  <result property="type" column="type" />
+  <result property="pop" column="pop" />
+  <result property="rwn" column="rwn" />
+  <result property="overallScore" column="overallScore" />
+  <result property="imageName" column="imageName" />
+</resultMap>
+
+<select id="selectRestaurantSearch" parameterType="TestMap" resultType="TestMap" resultMap="clobToString">
+SELECT
+	rr.name name,
+	rr.no no, 
+	rr.address address, 
+	rr.work_hours hours, 
+	rr.menu menu, 
+	rr.phone phone, 
+	rr.naver_food_type type,
+	gc.pop pop,
+	rn.rwn rwn,
+    rv.overall_score overallScore,
+    ri.image_name imageName
+FROM restaurant rr
+	left join review rv on rr.no = rv.restaurant_no
+	left join (select count(*) as pop, restaurant_no
+				from gather group by restaurant_no) gc 
+					on rr.no = gc.restaurant_no
+	left join (select ROWNUM as rwn, r.*
+  		from RESTAURANT r) rn
+ 			on rn.no = rr.no
+    left join REVIEW_IMAGE  ri on ri.review_no = rv.no
+	where rr.menu like '%${searchWord}%'
+		or rr.address like '%${searchWord}%'
+		or rr.name like '%${searchWord}%'
+	order by case         
+		WHEN 1=#{typeCheck}
+			THEN rn.rwn
+           	else gc.pop
+	    	end desc NULLS LAST
+   	FETCH FIRST 10 ROWS ONLY
+</select>
+
+<!-- 일반 데이터 끝 -->
+
+
+
+
+
+<select id="getTotalGather" resultType="int">
+
+SELECT count(*) FROM (SELECT * FROM gather g
+			left join (SELECT count(*) as attend, gather_no
+					from member_gather group by gather_no) c
+			on g.no = c.gather_no
+            left join district d on g.district_code = d.code
+				where <![CDATA[TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') < TO_CHAR(g.meet_date, 'YYYYMMDDHH24MISS')]]>
+					and (g.title like '%${searchWord}%' or g.content like '%${searchWord}%' or d.code like '%${searchWord}%'))
+</select>
+
+<select id="getTotalReview" resultType="int">
+select count(*) from
+	(SELECT
+    rv.no no,
+    m.name userName,
+    rr.name restaurantName,
+    rr.address address,
+    rv.overall_score overallScore,
+    rv.taste_score tasteScore,
+    rv.price_score priceScore,
+    rv.service_score serviceScore,
+    rv.content content,
+    rr.district_code districtCode,
+    ri.image_name imageName
+    FROM review rv 
+        left join restaurant rr on rv.restaurant_no = rr.no 
+        left join member m on rv.user_no = m.no
+        left join district d on rr.district_code = d.code
+        left join food_type f on rr.food_code = f.code
+        left join REVIEW_IMAGE  ri on ri.review_no = rv.no
+    where (m.name like '%${searchWord}%' or rr.name like '%${searchWord}%'
+                or rv.content like '%${searchWord}%' or rr.address like '%${searchWord}%'
+                or rr.menu like '%${searchWord}%'))
+</select>
+
+<select id="getTotalRestaurant" resultType="int">
+select count(*) from
+(SELECT
+	*
+FROM restaurant rr
+	left join review rv on rr.no = rv.restaurant_no
+	left join (select count(*) as pop, restaurant_no
+				from gather group by restaurant_no) gc 
+					on rr.no = gc.restaurant_no
+	left join (select ROWNUM as rwn, r.*
+  		from RESTAURANT r) rn
+ 			on rn.no = rr.no
+    left join REVIEW_IMAGE  ri on ri.review_no = rv.no
+	where rr.menu like '%${searchWord}%'
+		or rr.address like '%${searchWord}%'
+		or rr.name like '%${searchWord}%')
+</select>
+
+
+
+
+
+
+
+
+<!-- 상세 -->
+
+<!-- <resultMap type="TestMap" id="resultSearchReview">
+  <result property="no" column="no" />
+  <result property="userName" column="userName" />
+  <result property="restaurantName" column="restaurantName" />
+  <result property="address" column="address" />
+  <result property="overallScore" column="overallScore" />
+  <result property="tasteScore" column="tasteScore" />
+  <result property="priceScore" column="priceScore" />
+  <result property="serviceScore" column="serviceScore" />
+  <result property="content" column="content" />
+  <result property="districtCode" column="districtCode" />
+</resultMap> -->
+
+<select id="selectReviewPersonal" resultType="TestMap">
+	SELECT
+    rv.no no,
+    m.name userName,
+    rr.name restaurantName,
+    rr.address address,
+    rv.overall_score overallScore,
+    rv.taste_score tasteScore,
+    rv.price_score priceScore,
+    rv.service_score serviceScore,
+    rv.content content,
+    rr.district_code districtCode,
+    f.code foodType,
+    ri.image_name imageName
+    FROM review rv 
+        left join restaurant rr on rv.restaurant_no = rr.no 
+        left join member m on rv.user_no = m.no
+        left join district d on rr.district_code = d.code
+        left join food_type f on rr.food_code = f.code
+        left join review_image ri on ri.review_no = rv.no
+    where (m.name like '%${keyword}%' or rr.name like '%${keyword}%'
+                or rv.content like '%${keyword}%' or rr.address like '%${keyword}%'
+                or rr.menu like '%${keyword}%')
+    and <![CDATA[rv.overall_score > ${overallScore}]]>
+    and <![CDATA[rv.taste_score > ${tasteScore}]]>
+    and <![CDATA[rv.price_score > ${priceScore}]]>
+    and <![CDATA[rv.service_score > ${serviceScore}]]>
+</select>
+
+ 
+<select id="selectGatherPersonal" resultType="TestMap"> 
+SELECT DISTINCT
+            g.title,
+            d.name districtName,
+            rr.name restaurantName,
+            rr.address address,
+            c.attend attend,
+            g.count,
+            m.name userName,
+            f.type foodType,
+            g.meet_date meetDate,
+            g.age_restriction_bottom,
+            g.age_restriction_top,
+            g.gender_restriction,
+           	d.code districtCode,
+            f.code foodCode
+        FROM gather g
+			left join (SELECT count(*) as attend, gather_no from member_gather group by gather_no) c on g.no = c.gather_no
+            left join restaurant rr on rr.no = g.restaurant_no 
+            left join district d on g.district_code = d.code
+            left join review rv on rv.restaurant_no = g.restaurant_no
+            left join member m on m.no = g.user_no
+            left join food_type f on f.code = rr.food_code
+				where (g.title like '%${keyword}%' or g.content like '%${keyword}%' or d.name like '%${keyword}%')
+                        and <![CDATA[(${ageRestrictionTop} >= g.age_Restriction_Top)]]>
+                        and <![CDATA[(g.age_Restriction_Bottom) >= ${ageRestrictionBottom}]]>
+                        and <![CDATA[g.count < ${count}]]>
+</select>
+
+
+<resultMap type="TestMap" id="clobToStringDetail">
+  <result property="name" column="name" />
+  <result property="address" column="address" />
+  <result property="hours" column="hours" />
+  <result property="menu" column="menu" jdbcType="CLOB" javaType="java.lang.String" />
+  <result property="phone" column="phone" />
+  <result property="type" column="type" />
+  <result property="pop" column="pop" />
+  <result property="rwn" column="rwn" />
+  <result property="overall" column="overall" />
+  <result property="taste" column="taste" />
+  <result property="price" column="price" />
+  <result property="service" column="service" />
+  <result property="imageName" column="imagename" />
+  <result property="districtCode" column="districtcode" />
+</resultMap>
+
+
+<select id="selectRestaurantPersonal" parameterType="TestMap"
+	resultType="TestMap" resultMap="clobToStringDetail">
+SELECT
+	rr.name name, 
+	rr.address address,
+	rr.work_hours hours,
+	rr.menu menu,
+	rr.phone phone, 
+	rr.naver_food_type type,
+	gc.pop pop,
+	rn.rwn rwn,
+    o.overall overall,
+    o.taste taste,
+    o.price price,
+    o.service service,
+    ri.image_name imagename,
+    d.code districtcode
+FROM restaurant rr
+	left join review rv on rr.no = rv.restaurant_no
+	left join (select count(*) as pop, restaurant_no
+				from gather group by restaurant_no) gc 
+					on rr.no = gc.restaurant_no
+	left join (select ROWNUM as rwn, r.*
+  		from RESTAURANT r) rn
+ 			on rn.no = rr.no
+    left join REVIEW_IMAGE  ri on ri.review_no = rv.no
+    left join district d on rr.district_code = d.code
+    left join (select avg(overall_score)overall,avg(taste_score) taste,
+    avg(service_score) service, avg(price_score) price, restaurant_no from review group by restaurant_no) o
+    on o.restaurant_no = rv.restaurant_no
+	where rr.menu like '%${searchWord}%'
+		or rr.address like '%${searchWord}%'
+		or rr.name like '%${searchWord}%'
+	    and <![CDATA[o.overall > ${overallScore}]]>
+    	and <![CDATA[o.taste > ${tasteScore}]]>
+   		and <![CDATA[o.price > ${priceScore}]]>
+    	and <![CDATA[o.service > ${serviceScore}]]>
+    
+</select>
+
+
+<select id="getTotalReviewPersonal" resultType="int">
+select count(*) from
+	(SELECT
+    rv.no no,
+    m.name userName,
+    rr.name restaurantName,
+    rr.address address,
+    rv.overall_score overallScore,
+    rv.taste_score tasteScore,
+    rv.price_score priceScore,
+    rv.service_score serviceScore,
+    rv.content content,
+    rr.district_code districtCode,
+    f.code foodType
+    FROM review rv 
+        join restaurant rr on rv.restaurant_no = rr.no 
+        join member m on rv.user_no = m.no
+        join district d on rr.district_code = d.code
+        join food_type f on rr.food_code = f.code
+    where (m.name like '%${keyword}%' or rr.name like '%${keyword}%'
+                or rv.content like '%${keyword}%' or rr.address like '%${keyword}%'
+                or rr.menu like '%${keyword}%')
+    and <![CDATA[rv.overall_score > ${overallScore}]]>
+    and <![CDATA[rv.taste_score > ${tasteScore}]]>
+    and <![CDATA[rv.price_score > ${priceScore}]]>
+    and <![CDATA[rv.service_score > ${serviceScore}]]>)
+</select>
+
+<select id="getTotalGatherPersonal" resultType="int">
+select count(*) from
+(SELECT DISTINCT
+            g.title,
+            c.attend,
+            d.code districtCode,
+            d.name districtName,
+            rr.name restaurantName,
+            rr.address address,
+            m.name userName,
+            f.type foodType
+        FROM gather g
+			left join (SELECT count(*) as attend, gather_no from member_gather group by gather_no) c on g.no = c.gather_no
+            left join restaurant rr on rr.no = g.restaurant_no 
+            left join district d on g.district_code = d.code
+            left join review rv on rv.restaurant_no = g.restaurant_no
+            left join member m on m.no = g.user_no
+            left join food_type f on f.code = rr.food_code
+	where (g.title like '%${keyword}%' or g.content like '%${keyword}%' or d.name like '%${keyword}%')  
+                   and <![CDATA[(${ageRestrictionTop} >= g.age_Restriction_Top)]]>
+		           and <![CDATA[(g.age_Restriction_Bottom) >= ${ageRestrictionBottom}]]>
+		           and <![CDATA[g.count < ${count}]]>)
+</select>
+
+<select id="getTotalRestaurantPersonal" resultType="int">
+select count(*) from
+(SELECT
+	rr.name name
+FROM restaurant rr
+	left join review rv on rr.no = rv.restaurant_no
+	left join (select count(*) as pop, restaurant_no
+				from gather group by restaurant_no) gc 
+					on rr.no = gc.restaurant_no
+	left join (select ROWNUM as rwn, r.*
+  		from RESTAURANT r) rn
+ 			on rn.no = rr.no
+    left join REVIEW_IMAGE  ri on ri.review_no = rv.no
+    left join district d on rr.district_code = d.code
+    left join (select avg(overall_score)overall,avg(taste_score)taste,
+            avg(service_score) service, avg(price_score) price, restaurant_no from review group by restaurant_no) o
+            on o.restaurant_no = rv.restaurant_no
+	where rr.menu like '%${searchWord}%'
+		or rr.address like '%${searchWord}%'
+		or rr.name like '%${searchWord}%'
+	    and <![CDATA[o.overall > ${overallScore}]]>
+    	and <![CDATA[o.taste > ${tasteScore}]]>
+   		and <![CDATA[o.price > ${priceScore}]]>
+    	and <![CDATA[o.service > ${serviceScore}]]>)
+</select>
+
+
+</mapper>

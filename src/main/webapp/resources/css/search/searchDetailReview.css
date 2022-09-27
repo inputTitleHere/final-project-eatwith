@@ -1,0 +1,83 @@
+/* sass -w .\scss\memberEnroll\member-enroll.scss  ..\src\main\webapp\resources\css\member-enroll\member-enroll.css */
+
+
+/********** header **********/
+section{
+	background-color: #ECC7C5;
+	padding: 10px 10px;
+	width: 60%;
+	margin: 0 auto;
+	margin-top:50px;
+	margin-bottom:50px;
+	border-radius: 10px;
+}
+ul{
+   list-style:none;
+}
+ul#reviewData-content li{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: word;
+  width: 600px;
+  height: 50px;
+  
+}
+div.whole-container{
+	display: flex;
+	background-color: #dc948a;
+	margin: 10px;
+	border-radius: 10px;
+}
+div#img-container{
+	margin-right: 20px;
+}
+div#content-container{
+	margin-left:30px;
+}
+
+ul#reviewData-score{
+	display:flex;
+}
+
+img#star{
+	padding-left:5px;
+	padding-right:5px;
+}
+
+div#districtList-button{
+		margin: 10px;
+}
+
+div#foodTypeList-button{
+		margin: 10px;
+}
+label.all-chk{
+	display:block;
+}
+ul#img-tag{
+	width:30%;
+}
+input[type="checkbox"]{
+  display : none;
+}
+label{
+	margin: 20px;
+	border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
