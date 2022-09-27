@@ -40,7 +40,7 @@
 			<table id="table-review" class="table-dataList">
 			<thead>
 				<tr id="reviewList-info-start">
-					<th id="reviewList-title">리뷰 (총 :  ${totalReview} 건)</th>
+					<th id="reviewList-title" class="th-title">리뷰 (총 :  ${totalReview} 건)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -52,7 +52,7 @@
 				<c:if test="${not empty resultReview}">
 					<c:forEach items="${resultReview}" var="review">
 						<tr class="reviewList-data" class ="reviewList- data" data-no="${review.no}" onClick="location.href='<%=request.getContextPath() %>/restaurant/loadInfo?no=${review.restaurantno}' ">
-							<td id="asdasd"><img src='${pageContext.request.contextPath}/resources/upload/review/${review.imagename}'
+							<td id="asdasd"><img src='${pageContext.request.contextPath}/resources/upload/review/${review.image}'
 					 alt="" onError="this.src='${pageContext.request.contextPath}/resources/image/no_img.svg';" height='150px' width='100%'/></td>
 							<td id="restaurantname">${review.restaurantname}</td>
 							<td id="adress">${review.address}</td>
@@ -74,13 +74,13 @@
 					</c:forEach>
 				</c:if>
 				</tbody>
-				<tfoot>
+<%-- 				<tfoot>
+							<td><button id="review-basic-more">더보기</button></td>
 					<c:if test="${totalReview > '3'}">
 						<tr id="ReviewList-fill-more"  class="more-review">			
 							<td>${totalReview <= 10 ? '다른 리뷰 검색하러가기': '검색결과 더보기'}</td>
 						</tr>
 						<tr id="ReviewList-fill-more">			
-							<td><button id="review-basic-more">더보기</button></td>
 						</tr>
 					</c:if>
 					<c:if test="${totalReview <= '3'}">
@@ -88,14 +88,14 @@
 							<td>다른 식당 검색하러가기</td>
 						</tr>
 					</c:if>
-			</tfoot>
+			</tfoot> --%>
 			</table>			
 		
 
 <table id="table-gather" class="table-dataList">
 				<thead>
 					<tr id="gatherList-title">
-						<th id="gatherList-title">모임 (총 : ${totalGather} 건)</th>
+						<th id="gatherList-title" class="th-title">모임 (총 : ${totalGather} 건)</th>
 					</tr>
 				</thead>
 				<tbody>						
@@ -124,7 +124,7 @@
 					</c:forEach>
 				</c:if>
 				</tbody>
-				<tfoot>	
+<%-- 				<tfoot>	
 					<c:if test="${totalGather > '3'}">
 						<tr id="GatherList-fill-more"  class="more-gather">			
 							<td>${totalGather <= 10 ? '다른 모임 검색하러가기': '검색결과 더보기'}</td>
@@ -138,13 +138,13 @@
 							<td>다른 모임 검색하기</td>
 						</tr>
 					</c:if>
-			</tfoot>
+			</tfoot> --%>
 			</table>
 
 			<table id="table-restaurant" class="table-dataList">
 			<thead>
 				<tr id="restaurantList-title">
-					<th id="restaurantList-title">가게 (총 : ${totalRestaurant} ) 건</th>
+					<th id="restaurantList-title" class="th-title">가게 (총 : ${totalRestaurant} ) 건</th>
 				</tr>
 			</thead>
 				<tbody id="restaurant-data-list">
@@ -156,7 +156,7 @@
 				<c:if test="${not empty resultRestaurant}">
 					<c:forEach items="${resultRestaurant}" var="restaurant">
 						<tr class ="restaurantList-data" class ="restaurantList- data" data-no="${restaurant.no}" onClick="location.href='<%=request.getContextPath() %>/restaurant/loadInfo?no=${restaurant.no}'">
-							<td id="asdasd"><img src='${pageContext.request.contextPath}/resources/upload/review/${restaurant.image}'
+							<td id="asdasd"><img src='${pageContext.request.contextPath}/resources/upload/review/${restaurant.imageName}'
 					 			alt="" onError="this.src='${pageContext.request.contextPath}/resources/image/no_img.svg';" height='150px' width='100%'/></td>
 							<td id="restaurantname">${restaurant.name}</td>
 							<td id="adress">${restaurant.address}</td>
@@ -166,7 +166,6 @@
 									 id="star" height='20px' width='20px'/> x ${restaurant.overallscore}
 							</td>
 							</c:if>							
-							<td id="hours">${restaurant.hours}</td>
 							<td id="phone">Tel) ${restaurant.phone}</td>
 							<c:if test="${restaurant.pop > '0'}">
 							<td id="pop">이 가게에서 열린 모임 : ${restaurant.pop} 건입니다.</td>
@@ -174,12 +173,11 @@
 							<c:if test="${restaurant.pop = '0'}">
 							<td id="pop">이 가게에서 열린 모임 : 0 건입니다.</td>
 							</c:if>
-							<td id="menu-tag">이 가게 대표 메뉴 : ${restaurant.menu}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
 				</tbody>
-				<tfoot>
+<%-- 				<tfoot>
 					<c:if test="${totalRestaurant > '3'}">
 						<tr id="RestaurantList-fill-more"  class="more-restaurant">			
 							<td>${totalRestaurant <= 10 ? '다른 모임 검색하러가기': '검색결과 더보기'}</td>
@@ -193,7 +191,7 @@
 							<td>다른 식당 검색하러가기</td>
 						</tr>
 					</c:if>
-				</tfoot>
+				</tfoot> --%>
 			</table>
 		
 		</div>	
@@ -263,7 +261,7 @@
 		
 
 <script>
-   	// 이거 곱하기 3개
+
 	$(document).ready(function(){
 		 
 
@@ -300,9 +298,7 @@
 				 $("#RestaurantList-fill-more").toggle();
 			  })
 		}else{
-/* 			 $("#table-restaurant tr:nth-child(n+2)").hide(); */
 			 $("#table-restaurant tr:last-child").show();
-
 			}
 		
 		if(${totalReview} > 3){	
@@ -325,8 +321,7 @@
 				 $("#ReviewList-fill-more").toggle();
 			  })
 		}else{
-			 /* $("#table-review tr:nth-child(n+3)").hide();
-			  */$("#ReviewList-fill-more").show();
+			  $("#ReviewList-fill-more").show();
 		}
 		
 		
