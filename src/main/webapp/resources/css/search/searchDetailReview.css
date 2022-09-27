@@ -25,7 +25,7 @@ ul#reviewData-content li{
 div.whole-container{
 	display: flex;
 	background-color: #dc948a;
-	margin: 10px;
+	margin: 10px 10px 20px 10px;
 	border-radius: 10px;
 }
 div#img-container{
@@ -33,6 +33,7 @@ div#img-container{
 }
 div#content-container{
 	margin-left:30px;
+	margin-top:30px;
 }
 
 ul#reviewData-score{
@@ -60,11 +61,10 @@ ul#img-tag{
 input[type="checkbox"]{
   display : none;
 }
-label{
+div#districtList-button label{
 	margin: 20px;
 	border: 1px solid black;
 }
-
 
 
 
