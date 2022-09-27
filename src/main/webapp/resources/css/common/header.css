@@ -7,58 +7,62 @@ header{
 	border-bottom : solid;
 	border-bottom-width : 4px;
 	border-color: #F2F2F2;
-	height: 120px;
+	height: 130px;
 	background-color: #fff;
-	padding: 10px 10px;
 	position: sticky;
 	top: 0;
 	z-index: 10;
 	margin:0 auto;
 	font-family:var(--short-font);
 }
-body{
-	margin:0px;
-}
 
 .header-container{
 	display:flex;
-	height: 110px;
+	height: 120px;
    	margin: 0px auto;
    width: fit-content;
 	overflow: hidden;
 }
 
 .header-container *{
-	margin-left : 10px;
-}
-
-.header-container *{
 	display: inline-block;
- 	text-decoration : none;
 	color: inherit;
 	font-weight: bolder;
+	text-decoration : none;
 }
 
+div.login-container{
+	 width: 400px;
+	 margin-top:25px;
+	 flex-direction: column;
+}
+div.common-container{
+	width: 800px;
+	 margin-top:1px;
+}
+div.nonlogin-container{
+	 width: 345px;
+	 display:flex;
+}
 .header-container div.common-container {
 	display: flex;
 	justify-content:center;
 	align-items: center;
-	padding : 0px 10px;
 	vertical-align : middle;
 }
 
-.header-container div.common-container img{
+/* .header-container div.common-container img{
 	height: 100px;
  	margin:0;
-}
+} */
 
 .header-container div.common-container form{
-	padding-top:5px;
+	padding-top:20px;
 	margin:0;
 }
 
 .header-container div.common-container form input{
-	width : 250px;
+	width : 350px;
 	height: 35px;
     margin: 0px 0px 0px 0px;
     border-radius: 7px;
@@ -69,10 +73,11 @@ body{
 	font-family: 'Happiness-Sans-Title';
 	height: 35px;
     border-radius: 7px;
+    margin-left: 7px;
 }
 
 .nonlogin-container ul{
-	margin-top : 45px;
+	margin-top : 55px;
 }
 
 .nonlogin-container ul li{
@@ -96,31 +101,40 @@ body{
 	display: flex;
 	align-items:center;
 	vertical-align : middle;
-	height: 120px;
+	height: 80px;
 }
 
 .login-container *{
 	display: inline-block;
-	vertical-align : middle;
 	font-family:var(--short-font);
 	
 }
 
-.login-container img{
+/* .login-container img{
 	height: 35px;
     width: 35px;
     margin-left : 15px;
     margin-right : 0px;
     margin-bottom : 5px;
-}
+} */
 
 .login-container ul{
-	margin-right : 0px;
-	padding-left : 30px;
+	margin-top : 15px;
+	padding-left : 10px;
+}
+
+span#userInfo{
+	width: 180px;
+	font-size: 12px;
+	vertical-align : middle;
+	  float: right;
+	  margin-left: 210px;
+	  color: #3A3C68;
+	  
 }
 
 .login-container ul li{
-	margin-right : 10px;
+	margin-right : 20px;
 	font-size : 20px;
 	cursor: pointer;
 	text-decoration : none;
