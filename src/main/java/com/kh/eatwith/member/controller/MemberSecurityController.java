@@ -111,9 +111,6 @@ public class MemberSecurityController {
 				params.put("favFood", favFoodType);
 				result=memberService.insertFavFood(params);
 			}
-			
-			
-			
 			log.debug("회원가입에 성공했습니다. : {}",member);
 		}catch(Exception e) {
 			log.error("회원 가입 오류 : "+e.getMessage(),e);

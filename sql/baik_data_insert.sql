@@ -149,8 +149,8 @@ insert into notification values(seq_notification_no.nextval, 144, '테스팅 001
 insert into favorite_restaurant values(144,'3100000-101-2022-00087');
 update notification set gather_no=105  where 1=1;
 update notification set restaurant_no='3100000-101-2022-00087' where 1=1;
-update notification set deleted_at=null where 1=1;
-update notification set read_at=null where 1=1;
+update notification set deleted_at=null where user_no=144;
+update notification set read_at=null where user_no=144;
 commit;
 
 select * from gather order by no desc;

@@ -91,7 +91,7 @@ public class ReviewController extends HttpServlet {
 	
 	@GetMapping("/getBestReviews")
 	@ResponseBody
-	@CrossOrigin(origins="*")
+//	@CrossOrigin(origins="*")
 	public ResponseEntity<?> getBestReviews(){
 		List<Map<String, Object>> reviews=reviewService.getBestReviews();
 		log.debug("reviews = {}",reviews);
@@ -101,7 +101,7 @@ public class ReviewController extends HttpServlet {
 	
 	@GetMapping("/getNewestReviews")
 	@ResponseBody
-	@CrossOrigin(origins = "*")
+//	@CrossOrigin(origins = "*")
 	public ResponseEntity<?> getNewestReviews(@RequestParam int currPage){
 		int itemsPerPage = 6;
 		Map<String, Integer> param = new HashMap<String, Integer>();

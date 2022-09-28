@@ -1,0 +1,350 @@
+$Petite-Orchid : #DC948A;
+$Rose-Fog :#ECC7C5;
+$Lavender : #81A6D3;
+$Indigo-Blue : #3A3C68;
+$Red : #EE4949;
+$Near-White : #FEFEFE;
+$Bright-Gray :  #F0EBEC;
+$Gray : #e3e3e3;
+$Dark-Gray : #b8b8b8;
+
+$Font-Happiness : 'Happiness-Sans-Title';
+$Font-Nanum : "NanumBarunGothic";
+
+body{
+  background-color: $Bright-Gray;
+}
+
+div.content-wrapper{
+  position: relative;
+  width: 900px;
+  border : 4px solid $Indigo-Blue;
+  border-radius: 10px;
+  background-color: $Near-White;
+  margin: 20px auto;
+  padding: 10px;
+
+  .inner-content{
+    width: 850px;
+    margin: 0px auto;
+  }
+
+  .inner-content-ext{
+    width: 100%;
+  }
+
+  .carousel-item{
+    height: 250px;
+    padding: 0px 10px;
+    display: flex;
+  }
+
+  h2.title{
+    padding-left: 10px;
+    font-family: $Font-Happiness;
+    font-size: 30px;
+    margin: 10px;
+  }
+
+
+}
+
+div.restaurant-info-wrapper{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  border-right: 2px solid $Indigo-Blue;
+  cursor: pointer;
+  .img-section{
+    height: 175px;
+    img{
+      
+      border: 2px solid $Indigo-Blue;
+      border-radius: 10px;
+    }
+  }
+  div.restaurant-info{
+    font-family: $Font-Nanum;
+    text-align: center;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 0px 15px;
+    h2.restaurant-title{
+      font-family: $Font-Happiness;
+      margin: 10px 0px;
+
+    }
+    .restaurant-loc-type{
+      margin: 10px 0px;
+      font-size: 20px;
+    }
+    .restaurant-score{
+      margin: 10px 0px;
+      display: flex;
+      flex-direction: column;
+      font-size: 20px;
+    }
+    span.stars{
+      font-size: 26px;
+      color: $Indigo-Blue;
+    }
+  }
+}
+
+div.review-info{
+  padding-left: 10px;
+
+  div.top-section{
+    display: flex;
+    font-family: $Font-Happiness;
+    font-size: 26px;
+
+    span{
+      padding: 0px 10px;
+      vertical-align: center;
+      &.stars{
+        font-size: 24px;
+        color: $Indigo-Blue;
+      }
+    }
+  }
+  ul.mid-section{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 240px;
+    margin: 10px 0px;
+    padding: 0px 10px;
+    font-size: 20px;
+    font-family: $Font-Nanum;
+    li{
+      margin-right: 15px;
+      white-space: nowrap;
+    }
+    .stars{
+      color:$Indigo-Blue;
+    }
+  }
+  div.bottom-section{
+    display: flex;
+    
+    .review-content{
+      padding: 0px 10px;
+      font-family: $Font-Nanum;
+    }
+  }
+
+}
+
+div.gather-info{
+  margin-left: 10px;
+  font-family: $Font-Nanum;
+  cursor: pointer;
+  h2{
+    margin: 5px 0px;
+    font-family: $Font-Happiness;
+  }
+  span{
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  div{
+    margin-top: 10px;
+  }
+}
+
+div.review-wrapper{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+
+  .individual-review{
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 45%;
+    border: 2px solid $Lavender;
+    border-radius: 10px;
+    h3{
+      font-size: 24px;
+      cursor: pointer;
+      font-family: $Font-Happiness;
+      margin: 5px 15px 0px 0px;
+      padding-bottom: 5px;
+      border-bottom: 3px solid $Lavender;
+      span.lighter{
+        padding-left: 5px;
+        margin-left: 5px;
+        border-left: 2px solid $Indigo-Blue;
+        font-family: $Font-Nanum;
+        font-weight: normal;
+      }
+    }
+   
+    .review-wrapper{
+      display: inline;
+      float: right;
+      .text{
+        margin: 5px;
+      }
+      .stars{
+        padding-left: 10px;
+        height: 24px;
+        font-size: 24px;
+        color: $Indigo-Blue;
+      }
+      span.bolder{
+        font-size: 22px;
+      }
+      .mid-wrapper{
+        display: flex;
+        align-items: center;
+        font-family: $Font-Nanum;
+        .img-section{
+          display: inline-block;
+          img{
+            width: 120px;
+            height: 120px;
+            border: 2px solid $Indigo-Blue;
+            border-radius: 10px;
+            margin: 15px 15px 15px 0px;
+          }
+        }
+        ul.mid-section{
+          display: inline-block;
+          list-style: none;
+          display: flex;
+          justify-content: space-between;
+          width: 240px;
+          margin: 10px 0px;
+          padding: 0px;
+          font-size: 18px;
+          font-family: $Font-Nanum;
+          li{
+            margin-right: 15px;
+            white-space: nowrap;
+          }
+          .stars{
+            font-size: 18px;
+            color:$Indigo-Blue;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+  
+  
+}
+
+#newest-reviews{
+  padding: 0px 10px 60px 10px;
+  .expand-wrapper{
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    left: 0px;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $Font-Happiness;
+    // background: linear-gradient($Near-White, $Dark-Gray);
+    background: $Gray;
+    border-radius: 0px 0px 10px 10px;
+    .button-text{
+      padding: 0px 10px;
+      font-size: 20px;
+    }
+  }
+} 
+
+
+span.bolder{
+  font-weight: bold;
+}
+
+
+#newest-gather{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+  .gather-item{
+    width: 28%;
+    margin: 5px;
+    user-select: none;
+    cursor: pointer;
+    padding: 5px 15px;
+    background: $Gray;
+    border-radius: 10px;
+    border: 2px solid $Lavender;
+
+    div{
+      margin-bottom: 10px;
+      &.restrictions{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5px;
+        padding-left: 5px;
+        border-left: 3px solid $Indigo-Blue;
+      }
+
+    }
+    h2.title{
+      padding: 0;
+      margin: 0 0 5px;
+      font-size: 18px;
+      font-family: $Font-Happiness;
+    }
+    span{
+      font-family: $Font-Nanum;
+      padding-right:5px;
+      &#restaurant-name{
+        font-size: 18px;
+        font-weight: bold;
+      }
+      &#district{
+        padding-left: 0px;
+        border-right: 3px solid $Indigo-Blue;
+      }
+      &#food-type{
+        padding-left: 5px;
+      }
+    }
+  }
+
+
+}
+#newest-gather-wrapper{
+  padding-bottom: 60px;
+
+  #button-section{
+    user-select: none;
+    cursor: pointer;
+    height: 60px;
+    width: 100%;
+    left: 0px;
+    position: absolute;
+    background-color: $Gray;
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    span{
+      font-family: $Font-Happiness;
+      padding: 0px 15px;
+    }
+    span::after{
+      font-weight: bold;
+      padding: 0px 5px;
+      content:'\276F'
+    }
+  }
+
+}
