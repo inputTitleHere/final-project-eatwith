@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'Happiness-Sans-Title';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Happiness-Sans-Title.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+  src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+
+@font-face {
+font-family: 'NanumBarunGothic';
+font-style: normal;
+font-weight: 700;
+src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+}
+
+@font-face {
+font-family: 'NanumBarunGothic';
+font-style: normal;
+font-weight: 300;
+src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+}
+
+.nanumbarungothic * {
+font-family: 'NanumBarunGothic', sans-serif;
+}
+
+/*
+  제목, 메뉴바, 짧은 길이에서만 해피니스 산스 타이틀 사용
+  나머지는 나눔고딕체 사용
+*/
+:root {
+	/*
+	  사용방법: 예시
+	  color: var(--이름);
+	  하면 됩니다.
+	*/
+	/* 색상 */
+	--indigo-blue:#3A3C68;
+	--lavender-blue:#81A6D3;
+	--jjin-pink:#DC948A;
+	--yeon-pink:#ECC7C5;
+	--red:#EE4949;
+	--bg-gray:#F0EBEC;
+	--seperate-gray:#E3E3E3;
+	/*나눔바른고딕*/
+	--our-font:'NanumBarunGothic', sans-serif;
+	
+}

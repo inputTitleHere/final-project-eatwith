@@ -172,6 +172,7 @@ span#userInfo{
 }
 
 #notification-count{
+	color:white;
 	position:absolute;
 	right:-23px;
 	top:-12px;
