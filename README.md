@@ -22,3 +22,7 @@
 - (Partial) React (React, React-Router, Slick)
 - Sass
 - CSS
+
+## Architecture
+
+Spring MVC 2 tier server (web server & DB server(Oracle Cloud))
