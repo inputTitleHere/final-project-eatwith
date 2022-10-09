@@ -25,4 +25,4 @@
 
 ## Architecture
 
-Spring MVC 2 tier server (web server & DB server(Oracle Cloud))
+Spring MVC Structure on a 2 tier server (web server & DB server(Oracle Cloud))
