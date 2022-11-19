@@ -5,6 +5,7 @@
 ### Backend
 
 - Java
+- JSP
 - Spring Framework
 - Mybatis
 - Oracle Cloud (Database)
